@@ -1,0 +1,68 @@
+---
+import Marca from './Marca.astro';
+import { site, whatsappLink } from '../data/site';
+import { unidades } from '../data/unidades';
+const ano = new Date().getFullYear();
+---
+<footer class="rodape on-petrol">
+  <div class="wrap rodape__grade">
+    <div class="rodape__marca">
+      <Marca tipo="simbolo" label={null} class="rodape__simbolo" />
+      <Marca tipo="wordmark" class="rodape__wordmark" />
+      <p class="rodape__desc">Escola Cultural 60+</p>
+    </div>
+
+    <div>
+      <h2 class="rodape__titulo">Unidades</h2>
+      <ul class="rodape__lista">
+        {unidades.map((u) => (
+          <li>
+            <strong>{u.cidade}</strong>
+            <span>{u.local ? `${u.local} · ` : ''}{u.endereco}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="rodape__titulo">Contato</h2>
+      <ul class="rodape__lista">
+        <li><a href={whatsappLink()} target="_blank" rel="noopener">WhatsApp {site.whatsapp.display}</a></li>
+        <li><a href={`mailto:${site.email}`}>{site.email}</a></li>
+        <li><a href={site.instagram} target="_blank" rel="noopener">Instagram {site.instagramHandle}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="wrap rodape__base">
+    <p>© {ano} CICLOS+. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<style>
+  .rodape {
+    background: linear-gradient(rgba(0, 45, 66, 0.6), rgba(0, 45, 66, 0.6)), var(--petrol) var(--tex-petrol) center / 1200px auto repeat;
+    color: var(--on-petrol-soft);
+    padding-block: clamp(3.5rem, 6vw, 5.5rem) 2rem;
+  }
+  .rodape__grade {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 3rem;
+  }
+  .rodape__marca { color: var(--on-petrol); }
+  .rodape__marca :global(.rodape__simbolo) { width: 5.5rem; color: var(--mint); margin-bottom: 1.5rem; }
+  .rodape__marca :global(.rodape__wordmark) { width: 13rem; height: auto; }
+  .rodape__desc { margin-top: 0.75rem; font-style: italic; }
+  .rodape__titulo { font-size: 1.9rem; color: var(--on-petrol); margin-bottom: 1rem; }
+  .rodape__lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.9rem; font-size: 1.05rem; }
+  .rodape__lista strong { display: block; color: var(--on-petrol); font-weight: 600; }
+  .rodape__lista a { color: var(--on-petrol-soft); }
+  .rodape__lista a:hover { color: var(--yellow); }
+  .rodape__base {
+    margin-top: 3.5rem; padding-top: 1.5rem;
+    position: relative;
+    font-size: 0.95rem;
+  }
+  .rodape__base::before { content: ''; position: absolute; top: 0; left: var(--gutter); right: var(--gutter); height: 1px; background: rgba(199, 227, 234, 0.25); }
+  @media (max-width: 52rem) { .rodape__grade { grid-template-columns: 1fr; } }
+</style>

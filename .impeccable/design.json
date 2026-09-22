@@ -1,0 +1,621 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-22T11:41:03.660Z",
+  "title": "Design System: CICLOS+",
+  "extensions": {
+    "colorMeta": {
+      "petrol": {
+        "role": "primary",
+        "displayName": "Azul-petróleo de feltro",
+        "canonical": "#005277",
+        "oklch": "oklch(41.6% 0.091 237.3)",
+        "tonalRamp": [
+          "#000d17",
+          "#02273b",
+          "#044564",
+          "#1e648a",
+          "#4588b0",
+          "#6badd7",
+          "#90d4ff",
+          "#dff2ff"
+        ]
+      },
+      "petrol-deep": {
+        "role": "primary",
+        "displayName": "Petróleo profundo",
+        "canonical": "#003d59",
+        "oklch": "oklch(34.1% 0.074 236.4)",
+        "tonalRamp": [
+          "#000d17",
+          "#01273b",
+          "#0c4561",
+          "#306482",
+          "#5387a7",
+          "#77accd",
+          "#9cd3f5",
+          "#def2fe"
+        ]
+      },
+      "petrol-ink": {
+        "role": "primary",
+        "displayName": "Tinta petróleo",
+        "canonical": "#0b3a52",
+        "oklch": "oklch(33.1% 0.064 236.4)",
+        "tonalRamp": [
+          "#000d17",
+          "#01273b",
+          "#18455d",
+          "#38637d",
+          "#5a86a2",
+          "#7eabc8",
+          "#a3d2ef",
+          "#def2ff"
+        ]
+      },
+      "mint": {
+        "role": "primary",
+        "displayName": "Verde-menta",
+        "canonical": "#1ad293",
+        "oklch": "oklch(76.5% 0.163 162.3)",
+        "tonalRamp": [
+          "#000f07",
+          "#022c1c",
+          "#044c33",
+          "#136e4d",
+          "#20966a",
+          "#1dc187",
+          "#47ebaa",
+          "#c3ffe0"
+        ]
+      },
+      "teal": {
+        "role": "secondary",
+        "displayName": "Teal",
+        "canonical": "#1a9e93",
+        "oklch": "oklch(63.2% 0.106 185.9)",
+        "tonalRamp": [
+          "#000f0d",
+          "#012b27",
+          "#034a45",
+          "#126c64",
+          "#1e9389",
+          "#44baae",
+          "#6fe1d5",
+          "#bafef5"
+        ]
+      },
+      "teal-ink": {
+        "role": "secondary",
+        "displayName": "Teal tinta",
+        "canonical": "#0f7d74",
+        "oklch": "oklch(53.2% 0.090 185.9)",
+        "tonalRamp": [
+          "#000f0d",
+          "#022b27",
+          "#054a45",
+          "#016d64",
+          "#309288",
+          "#5ab7ad",
+          "#82ded3",
+          "#bbfef5"
+        ]
+      },
+      "cyan": {
+        "role": "secondary",
+        "displayName": "Ciano",
+        "canonical": "#3cafc1",
+        "oklch": "oklch(69.8% 0.103 209.9)",
+        "tonalRamp": [
+          "#000e11",
+          "#022a2f",
+          "#044852",
+          "#146976",
+          "#0290a2",
+          "#45b6c8",
+          "#70ddf0",
+          "#cef7ff"
+        ]
+      },
+      "yellow": {
+        "role": "tertiary",
+        "displayName": "Amarelo de chamada",
+        "canonical": "#f4c33a",
+        "oklch": "oklch(83.8% 0.155 87.9)",
+        "tonalRamp": [
+          "#110a00",
+          "#2e2201",
+          "#503d01",
+          "#745a0d",
+          "#9d7b18",
+          "#ca9e12",
+          "#f5c33b",
+          "#feedc4"
+        ]
+      },
+      "yellow-hover": {
+        "role": "tertiary",
+        "displayName": "Amarelo claro",
+        "canonical": "#f7cf55",
+        "oklch": "oklch(86.7% 0.145 90.8)",
+        "tonalRamp": [
+          "#100a00",
+          "#2e2301",
+          "#4f3e01",
+          "#725b0c",
+          "#9a7d16",
+          "#c7a00f",
+          "#eec64b",
+          "#ffeebd"
+        ]
+      },
+      "lemon": {
+        "role": "tertiary",
+        "displayName": "Limão",
+        "canonical": "#f2df3a",
+        "oklch": "oklch(89.3% 0.172 102.4)",
+        "tonalRamp": [
+          "#0e0b00",
+          "#292501",
+          "#484100",
+          "#685f0b",
+          "#8e8215",
+          "#b7a70d",
+          "#e1ce1a",
+          "#fff288"
+        ]
+      },
+      "paper": {
+        "role": "neutral",
+        "displayName": "Papel",
+        "canonical": "#f8f6f0",
+        "oklch": "oklch(97.3% 0.008 91.5)",
+        "tonalRamp": [
+          "#0c0b07",
+          "#252420",
+          "#41403b",
+          "#5f5d58",
+          "#82807b",
+          "#a6a49f",
+          "#cccac5",
+          "#f0eee8"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "Papel 2",
+        "canonical": "#efece3",
+        "oklch": "oklch(94.3% 0.012 91.5)",
+        "tonalRamp": [
+          "#0d0b06",
+          "#26241d",
+          "#424038",
+          "#605d56",
+          "#838078",
+          "#a7a49c",
+          "#cdcac2",
+          "#f1eee5"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Tinta",
+        "canonical": "#16323f",
+        "oklch": "oklch(30.2% 0.041 230.3)",
+        "tonalRamp": [
+          "#000d16",
+          "#0b2834",
+          "#284452",
+          "#456271",
+          "#678594",
+          "#8baaba",
+          "#b0d0e1",
+          "#dcf3fe"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Tinta suave",
+        "canonical": "#3d5663",
+        "oklch": "oklch(43.8% 0.037 231.3)",
+        "tonalRamp": [
+          "#000d15",
+          "#0f2733",
+          "#2b4350",
+          "#48626f",
+          "#6a8593",
+          "#8ea9b8",
+          "#b3cfdf",
+          "#ddf2fe"
+        ]
+      },
+      "on-petrol": {
+        "role": "neutral",
+        "displayName": "Branco sobre petróleo",
+        "canonical": "#ffffff",
+        "oklch": "oklch(100.0% 0.000 89.9)",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#242424",
+          "#404040",
+          "#5d5d5d",
+          "#808080",
+          "#a4a4a4",
+          "#cacaca",
+          "#eeeeee"
+        ]
+      },
+      "on-petrol-soft": {
+        "role": "neutral",
+        "displayName": "Névoa sobre petróleo",
+        "canonical": "#c7e3ea",
+        "oklch": "oklch(89.8% 0.031 214.5)",
+        "tonalRamp": [
+          "#000e12",
+          "#10282d",
+          "#2c444a",
+          "#4a6269",
+          "#6c858c",
+          "#8faab1",
+          "#b5d0d7",
+          "#d8f4fb"
+        ]
+      },
+      "line-paper": {
+        "role": "neutral",
+        "displayName": "Linha de papel",
+        "canonical": "#e4e0d6",
+        "oklch": "oklch(90.7% 0.014 88.7)",
+        "tonalRamp": [
+          "#0e0b05",
+          "#27241c",
+          "#433f37",
+          "#615d55",
+          "#848077",
+          "#a8a49b",
+          "#cecac0",
+          "#f2eee4"
+        ]
+      },
+      "rule-paper": {
+        "role": "neutral",
+        "displayName": "Fio de papel",
+        "canonical": "#d9d4c7",
+        "oklch": "oklch(87.0% 0.018 89.4)",
+        "tonalRamp": [
+          "#0e0b04",
+          "#28241a",
+          "#443f35",
+          "#625d52",
+          "#848074",
+          "#a9a498",
+          "#cfcabd",
+          "#f3eee1"
+        ]
+      },
+      "field-border": {
+        "role": "neutral",
+        "displayName": "Borda de campo",
+        "canonical": "#b9c7cc",
+        "oklch": "oklch(82.0% 0.017 221.1)",
+        "tonalRamp": [
+          "#040d10",
+          "#1b262a",
+          "#364246",
+          "#546064",
+          "#768387",
+          "#9aa7ac",
+          "#bfcdd2",
+          "#e3f1f7"
+        ]
+      },
+      "error": {
+        "role": "error",
+        "displayName": "Erro",
+        "canonical": "#b3261e",
+        "oklch": "oklch(50.1% 0.178 28.7)",
+        "tonalRamp": [
+          "#1f0000",
+          "#490403",
+          "#7a0b08",
+          "#ac1d17",
+          "#d64a3d",
+          "#fb7666",
+          "#feb6ab",
+          "#fee9e6"
+        ]
+      },
+      "error-text": {
+        "role": "error",
+        "displayName": "Texto de erro",
+        "canonical": "#9b1c14",
+        "oklch": "oklch(44.8% 0.163 29.1)",
+        "tonalRamp": [
+          "#1e0100",
+          "#4b0100",
+          "#7d0000",
+          "#a6291f",
+          "#d05143",
+          "#fa7766",
+          "#fdb6ab",
+          "#ffe9e5"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Só o título do hero, uma palavra por linha, caixa-alta."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Títulos de seção (h2), League Gothic caixa-alta."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "h3, nomes de disciplina, cidades, anos, nomes da equipe, palavras dos braços do símbolo."
+      },
+      "voice": {
+        "displayName": "Voz itálica",
+        "purpose": "Frase em Playfair itálico teal-ink logo abaixo de cada título."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Texto corrido, 40–50ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Botões, navegação, links com seta: Playfair caixa-alta espaçada 0.14–0.24em."
+      }
+    },
+    "textures": [
+      {
+        "name": "tex-paper",
+        "value": "url('/textures/papel-tile.webp')",
+        "purpose": "Chão de papel amassado do body e do painel do formulário, tile de 1800px."
+      },
+      {
+        "name": "tex-petrol",
+        "value": "url('/textures/feltro-azul.webp')",
+        "purpose": "Feltro petróleo nas faixas e campos petróleo (cover ou tile de 1200px)."
+      }
+    ],
+    "shadows": [
+      {
+        "name": "button-rest",
+        "value": "0 6px 18px -8px rgba(0, 61, 89, 0.45)",
+        "purpose": "Botões pílula em repouso."
+      },
+      {
+        "name": "button-hover",
+        "value": "0 12px 24px -10px rgba(0, 61, 89, 0.5)",
+        "purpose": "Botões em hover, com translateY(-2px)."
+      },
+      {
+        "name": "photo-lift",
+        "value": "0 24px 48px -30px rgba(0, 61, 89, 0.55)",
+        "purpose": "Fotos erguidas do papel."
+      },
+      {
+        "name": "header-scrolled",
+        "value": "0 8px 24px -20px rgba(0, 61, 89, 0.5)",
+        "purpose": "Cabeçalho depois de rolar 8px."
+      },
+      {
+        "name": "panel-on-yellow",
+        "value": "0 30px 60px -40px rgba(80, 60, 0, 0.55)",
+        "purpose": "Painel do formulário sobre o campo amarelo."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Easing de toda transição e da abertura."
+      },
+      {
+        "name": "hover",
+        "value": "0.35s ease-out",
+        "purpose": "Botões e sublinhados de navegação."
+      },
+      {
+        "name": "symbol-turn",
+        "value": "rotate(-120deg) scale(0.92) -> none, 1.8s",
+        "purpose": "O símbolo gira um terço de volta ao carregar."
+      },
+      {
+        "name": "photo-settle",
+        "value": "scale(0.82) -> none, 1.4s, atrasos 0.15s / 0.3s / 0.45s",
+        "purpose": "Fotos dos braços assentam em cascata."
+      },
+      {
+        "name": "curve-draw",
+        "value": "stroke-dashoffset 4200 -> 0, 2.8s, atraso 0.2s",
+        "purpose": "A curva amarela se desenha."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Desliga toda animação e transição."
+      }
+    ],
+    "focus": [
+      {
+        "name": "focus-default",
+        "value": "outline: 3px solid #005277; outline-offset: 3px",
+        "purpose": "Foco em fundos claros e amarelos."
+      },
+      {
+        "name": "focus-on-petrol",
+        "value": "outline-color: #f4c33a",
+        "purpose": "Foco dentro de campos .on-petrol."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "30rem"
+      },
+      {
+        "name": "schedule-list",
+        "value": "40rem"
+      },
+      {
+        "name": "mosaic",
+        "value": "48rem"
+      },
+      {
+        "name": "stack-lg",
+        "value": "52rem"
+      },
+      {
+        "name": "stack",
+        "value": "56rem"
+      },
+      {
+        "name": "hero-stack",
+        "value": "60rem"
+      },
+      {
+        "name": "nav-collapse",
+        "value": "76rem"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão primário",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Pílula amarela \"Quero conhecer\"; toda chamada de inscrição.",
+      "html": "<a class=\"ds-btn\" href=\"#\">Quero conhecer</a>",
+      "css": ".ds-btn{display:inline-flex;align-items:center;justify-content:center;min-height:3.5rem;padding:.85rem 2rem;border:0;border-radius:999px;background:#f4c33a;color:#0b3a52;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;box-shadow:0 6px 18px -8px rgba(0,61,89,.45);transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s cubic-bezier(.16,1,.3,1),background-color .2s}.ds-btn:hover{transform:translateY(-2px);box-shadow:0 12px 24px -10px rgba(0,61,89,.5);background:#f7cf55}.ds-btn:active{transform:none}.ds-btn:focus-visible{outline:3px solid #005277;outline-offset:3px}"
+    },
+    {
+      "name": "Botão petróleo",
+      "kind": "button",
+      "refersTo": "button-petrol",
+      "description": "Envio do formulário, largura total.",
+      "html": "<button class=\"ds-btn-petrol\" type=\"button\">Quero conhecer</button>",
+      "css": ".ds-btn-petrol{display:inline-flex;align-items:center;justify-content:center;width:100%;min-height:3.75rem;padding:.85rem 2rem;border:0;border-radius:999px;background:#005277;color:#fff;font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:1.15rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 18px -8px rgba(0,61,89,.45);transition:transform .35s cubic-bezier(.16,1,.3,1),background-color .2s}.ds-btn-petrol:hover{background:#003d59;transform:translateY(-2px)}.ds-btn-petrol:focus-visible{outline:3px solid #005277;outline-offset:3px}"
+    },
+    {
+      "name": "Link com seta",
+      "kind": "button",
+      "refersTo": "link-arrow",
+      "description": "Ação secundária ao lado do botão (WhatsApp, mapa).",
+      "html": "<a class=\"ds-link\" href=\"#\">Falar no WhatsApp</a>",
+      "css": ".ds-link{font-family:'Playfair Display',Georgia,serif;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.95rem;color:#0f7d74;text-decoration:underline;text-underline-offset:.22em;text-decoration-thickness:1.5px}.ds-link:hover{color:#005277}.ds-link:focus-visible{outline:3px solid #005277;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Campo de texto",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Input com rótulo visível, borda de 2px e foco petróleo.",
+      "html": "<label class=\"ds-campo\"><span>Seu nome</span><input type=\"text\" placeholder=\"Ex.: Maria\"></label>",
+      "css": ".ds-campo{display:grid;gap:.5rem;font-family:'Playfair Display',Georgia,serif}.ds-campo span{font-weight:700;font-size:1.1rem;color:#0b3a52}.ds-campo input{min-height:3.5rem;padding:.75rem 1rem;border:2px solid #b9c7cc;border-radius:.9rem;background:#fff;color:#16323f;font:inherit;font-size:1.125rem;transition:border-color .2s}.ds-campo input::placeholder{color:#6a7f89}.ds-campo input:hover{border-color:#1a9e93}.ds-campo input:focus-visible{outline:3px solid #005277;outline-offset:1px;border-color:#005277}"
+    },
+    {
+      "name": "Opção pílula",
+      "kind": "chip",
+      "refersTo": "option-pill",
+      "description": "Rádio ou checkbox em forma de pílula; selecionado vira petróleo cheio.",
+      "html": "<label class=\"ds-opcao\"><input type=\"radio\" name=\"u\" checked><span>Porto Alegre</span></label><label class=\"ds-opcao\"><input type=\"radio\" name=\"u\"><span>Pelotas</span></label>",
+      "css": ".ds-opcao{position:relative;display:inline-block;margin:.3rem;cursor:pointer;font-family:'Playfair Display',Georgia,serif}.ds-opcao input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}.ds-opcao span{display:inline-flex;align-items:center;min-height:3rem;padding:.55rem 1.2rem;border:2px solid #b9c7cc;border-radius:999px;background:#fff;color:#16323f;font-size:1.05rem;transition:background-color .2s,border-color .2s,color .2s}.ds-opcao:hover span{border-color:#1a9e93}.ds-opcao input:checked+span{background:#005277;border-color:#005277;color:#fff}.ds-opcao input:focus-visible+span{outline:3px solid #005277;outline-offset:2px}"
+    },
+    {
+      "name": "Navegação",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "Links do cabeçalho em caixa-alta espaçada com sublinhado amarelo que se desenha no hover.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Sobre</a><a href=\"#\">Disciplinas</a><a href=\"#\">Viagens</a></nav>",
+      "css": ".ds-nav{display:flex;gap:2rem;padding:1rem 1.5rem;background:#f8f6f0}.ds-nav a{padding-block:.5rem;font-family:'Playfair Display',Georgia,serif;font-size:.95rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:#0b3a52;text-decoration:none;background:linear-gradient(#f4c33a,#f4c33a) left 100%/0 2px no-repeat;transition:background-size .35s cubic-bezier(.16,1,.3,1)}.ds-nav a:hover{background-size:100% 2px}.ds-nav a:focus-visible{outline:3px solid #005277;outline-offset:3px;border-radius:4px}"
+    },
+    {
+      "name": "Faixa de atuações",
+      "kind": "nav",
+      "refersTo": "faixa",
+      "description": "Faixa petróleo com links separados por pontos menta.",
+      "html": "<nav class=\"ds-faixa\"><a href=\"#\">Disciplinas</a><i></i><a href=\"#\">Cursos livres</a><i></i><a href=\"#\">Viagens</a></nav>",
+      "css": ".ds-faixa{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:1.5rem;padding:1.75rem 1rem;background:#005277;color:#fff}.ds-faixa i{width:.4rem;height:.4rem;border-radius:50%;background:#1ad293}.ds-faixa a{font-family:'Playfair Display',Georgia,serif;font-weight:600;font-size:1.1rem;letter-spacing:.24em;text-transform:uppercase;color:#fff;text-decoration:none;padding-block:.4rem;background:linear-gradient(#f4c33a,#f4c33a) left 100%/0 2px no-repeat;transition:background-size .35s cubic-bezier(.16,1,.3,1)}.ds-faixa a:hover{background-size:100% 2px}.ds-faixa a:focus-visible{outline:3px solid #f4c33a;outline-offset:3px}"
+    },
+    {
+      "name": "Cartão de unidade",
+      "kind": "card",
+      "refersTo": "card-unidade",
+      "description": "Cartão translúcido sobre petróleo, cidade em League Gothic menta.",
+      "html": "<div class=\"ds-fundo\"><div class=\"ds-unidade\"><h3>Pelotas</h3><p class=\"l\">Rampa Innovation Hub</p><p class=\"e\">Rua Boulevard Quartier, 500</p><a href=\"#\">Ver no mapa</a></div></div>",
+      "css": ".ds-fundo{background:#005277;padding:2rem}.ds-unidade{display:flex;flex-direction:column;gap:.4rem;padding:2rem;border-radius:1.5rem;background:rgba(255,255,255,.07);font-family:'Playfair Display',Georgia,serif;color:#fff;max-width:22rem}.ds-unidade h3{margin:0;font-family:'League Gothic','Arial Narrow',sans-serif;font-weight:400;text-transform:uppercase;font-size:3.5rem;line-height:.92;color:#1ad293}.ds-unidade p{margin:0}.ds-unidade .l{font-weight:600;margin-top:.5rem}.ds-unidade .e{color:#c7e3ea}.ds-unidade a{margin-top:1.5rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;font-size:.95rem;color:#f2df3a;text-underline-offset:.22em}.ds-unidade a:hover{color:#fff}.ds-unidade a:focus-visible{outline:3px solid #f4c33a;outline-offset:3px}"
+    },
+    {
+      "name": "Foto no braço do ciclo",
+      "kind": "custom",
+      "refersTo": "ciclo-braco",
+      "description": "Foto circular com anel menta que vira amarelo no hover; usada nos braços do símbolo.",
+      "html": "<a class=\"ds-braco\" href=\"#\"><span class=\"f\"></span><span class=\"p\">Aprender</span></a>",
+      "css": ".ds-braco{display:inline-flex;align-items:center;gap:1rem;text-decoration:none;color:#005277}.ds-braco .f{display:block;width:9rem;aspect-ratio:1;border-radius:50%;border:8px solid #1ad293;background:#efece3 radial-gradient(circle at 40% 35%,#c7e3ea,#3cafc1);box-shadow:0 18px 40px -26px rgba(0,61,89,.55);transition:transform .6s cubic-bezier(.16,1,.3,1),border-color .3s}.ds-braco:hover .f{transform:scale(1.03);border-color:#f4c33a}.ds-braco .p{font-family:'League Gothic','Arial Narrow',sans-serif;text-transform:uppercase;font-size:3rem;line-height:1}.ds-braco:focus-visible{outline:none}.ds-braco:focus-visible .f{outline:3px solid #005277;outline-offset:4px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "O ciclo em papel e feltro",
+    "overview": "O site da CICLOS+ é o próprio símbolo da marca em escala: três espirais (Aprender, Conectar, Viver) que desembocam em momentos reais da escola. O material é tátil e caseiro sem ser rústico: um chão de papel claro amassado, faixas de feltro azul-petróleo que atravessam a página de ponta a ponta, o símbolo em verde-menta e uma linha curva amarela que costura as partes. A tipografia fala em duas vozes: League Gothic em caixa-alta, condensada e monumental, para afirmar; Playfair Display, sobretudo em itálico, para acolher e conversar.\n\nA densidade é baixa e o tamanho é generoso, porque o público é 60+: corpo a partir de 18px, alvos de toque de 48px ou mais, contraste AA como piso. O ritmo da página alterna campos de cor inteiros (papel → petróleo → papel → menta → papel → petróleo → amarelo → petróleo) em vez de cartões empilhados; cada campo é uma seção. As fotos são sempre reais, recortadas em formas da marca (círculo, arco, pílula) e frequentemente emolduradas por anéis grossos de menta ou amarelo.\n\nO manual da marca pede que tudo transmita **leveza, acolhimento e vitalidade**. A direção recusa o herói genérico de \"foto sorridente de idosos + slogan\": a abertura é o símbolo, e as pessoas aparecem dentro dele.",
+    "keyCharacteristics": [
+      "Chão de papel texturizado (`papel-tile.webp`) no `body`; faixas petróleo com textura de feltro (`feltro-azul.webp`).",
+      "Campos de cor de largura total como divisores de seção; nada de cartões flutuando sobre cinza.",
+      "Títulos League Gothic caixa-alta com entrelinha abaixo de 1; voz em Playfair itálico teal.",
+      "Fotos reais em círculo, arco ou pílula, com anel sólido de menta ou amarelo.",
+      "Símbolo de três espirais como estrutura (hero), marca d'água (campos menta e amarelo, cartões de unidade) e assinatura (rodapé).",
+      "Linha curva amarela desenhada à mão como fio condutor (hero, linha do tempo).",
+      "Movimento único e de marca: o símbolo gira um terço de volta ao carregar; tudo desligado em `prefers-reduced-motion`."
+    ],
+    "rules": [
+      {
+        "name": "A Regra da Paleta Fechada",
+        "body": "Só as cores do manual aparecem como cor de marca: petróleo, menta, teal, ciano, amarelo e limão. Tons novos só existem como derivações escuras para contraste de texto (`petrol-ink`, `teal-ink`) ou claras para hover, nunca como matizes novos.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra do Amarelo que Chama",
+        "body": "Amarelo é a cor da ação e do convite: CTA de inscrição, campo do formulário, sexta-feira (o dia dos eventos). A linha curva amarela é o único uso decorativo sustentado; não acrescente novos ornamentos amarelos.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra do Menta que Não Fala",
+        "body": "Menta desenha, emoldura e marca; não carrega texto corrido. Texto sobre menta é `petrol-ink` ou `petrol`.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra das Duas Famílias",
+        "body": "Só League Gothic e Playfair Display, como o manual exige. Rótulos e botões usam Playfair em caixa-alta espaçada, não uma terceira família sem serifa.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra da Voz Itálica",
+        "body": "Todo título de seção pode ter uma frase em Playfair itálico logo abaixo; é ela que acolhe. Não use itálico para ênfase aleatória no corpo.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra da Sombra Tingida",
+        "body": "Toda sombra carrega a cor do campo onde está (petróleo sobre papel, âmbar sobre amarelo) e tem espalhamento negativo, para ficar sob o objeto e não em volta dele.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** apoiar toda página no chão de papel texturizado e separar seções com campos de cor inteiros (papel, petróleo com feltro, menta, amarelo).",
+      "**Do** escrever títulos em League Gothic caixa-alta com entrelinha 0.86–0.95 e acompanhar cada título com uma frase em Playfair itálico `teal-ink`.",
+      "**Do** recortar fotos reais em círculo, arco ou pílula e emoldurá-las com anel sólido menta ou amarelo.",
+      "**Do** usar o botão pílula amarelo com texto `petrol-ink` para \"Quero conhecer\" e toda chamada de inscrição, e sempre oferecer o WhatsApp ao lado como link com seta.",
+      "**Do** manter corpo a partir de 1.125rem, alvos de toque de 3rem ou mais, e foco visível de 3px (petróleo sobre claro, amarelo sobre petróleo).",
+      "**Do** usar o wordmark espaçado CICLOS+ como assinatura principal (cabeçalho, rodapé) e o símbolo como estrutura ou marca d'água colorida por `currentColor`.",
+      "**Do** colocar todo movimento dentro de `prefers-reduced-motion: no-preference` e usar `--ease-out` (`cubic-bezier(0.16, 1, 0.3, 1)`)."
+    ],
+    "donts": [
+      "**Don't** introduzir uma terceira família tipográfica, nem pesos ou larguras fora do padrão; o manual pede para evitar variações.",
+      "**Don't** abrir uma página com o herói genérico de \"foto sorridente de idosos + slogan\"; a abertura parte do símbolo ou de um momento real da escola.",
+      "**Don't** colocar texto corrido em `mint`, `teal` ou `cyan` sobre papel ou petróleo; esses tons só carregam texto em tamanho display.",
+      "**Don't** usar sombras cinza, duras ou deslocadas em bloco; toda sombra é difusa e tingida de petróleo ou âmbar.",
+      "**Don't** empilhar cartões com borda sobre o papel; conteúdo em lista usa fios finos.",
+      "**Don't** criar matizes fora da paleta do manual; derive apenas tons mais escuros ou claros das cores existentes.",
+      "**Don't** representar pessoas 60+ como frágeis ou sendo cuidadas; as fotos mostram adultos protagonistas em aula, festa e viagem."
+    ]
+  }
+}

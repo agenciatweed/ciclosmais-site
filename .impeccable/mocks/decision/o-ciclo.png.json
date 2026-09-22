@@ -1,0 +1,7 @@
+{
+  "approved": true,
+  "approvedBy": "user, decision page round 28b51121 (surface scope, seed 77569fe4)",
+  "tool": "Magnific images_generate, model gpt-2, 16:9, 2k, high",
+  "references": ["moodboard p.6 (palette) as style", "logo horizontal b/w", "Historia-Geral_02.jpg", "Confraternizacoes - 3ed0acf4fd23.jpg", "Viagens Culturais - IMG_65551"],
+  "prompt": "Desktop website homepage design mockup, full first viewport, flat screen UI (no device frame), for \"CICLOS+ — Escola Cultural 60+\"... Concept: \"O ciclo\" — the brand's triple-spiral symbol becomes the structure of the page (full prompt in session transcript; structure: nav / left headline APRENDER, CONECTAR, VIVER. + Playfair italic + CTA / center mint triskelion with three circular photos labeled APRENDER, CONECTAR, VIVER / petrol band DISCIPLINAS · CURSOS LIVRES · VIAGENS · CONFRATERNIZAÇÕES)"
+}

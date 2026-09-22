@@ -1,0 +1,169 @@
+---
+import { Image } from 'astro:assets';
+import { disciplinas, grade } from '../data/disciplinas';
+import aquarela from '../assets/img/Disciplinas Semestrais - Aula-de-aquarela-CICLOS.jpeg';
+---
+<section class="disc on-petrol" id="disciplinas" aria-labelledby="disc-titulo">
+  <div class="wrap">
+    <div class="disc__topo">
+      <h2 id="disc-titulo" class="disc__titulo">Seu próximo assunto favorito começa aqui.</h2>
+      <p class="disc__intro">
+        Disciplinas semestrais, com encontros semanais e professores de cada área.
+        Conhecimento pela cultura, com convívio de verdade.
+      </p>
+    </div>
+
+    <div class="disc__corpo">
+      <ul class="disc__lista">
+        {disciplinas.map((d) => (
+          <li>
+            <span class="disc__nome">{d.nome}</span>
+            <span class="disc__frase">{d.frase}</span>
+          </li>
+        ))}
+      </ul>
+
+      <figure class="disc__foto">
+        <Image src={aquarela} alt="Alunas pintando numa aula de aquarela do Atelier de Criação" widths={[400, 640, 880]} sizes="(max-width: 60rem) 100vw, 30vw" />
+        <figcaption>Atelier de Criação, aula de aquarela.</figcaption>
+      </figure>
+    </div>
+
+    <div class="semana">
+      <h3 class="semana__titulo">A semana na CICLOS+</h3>
+      <div class="semana__rolagem" role="region" aria-labelledby="semana-cap" tabindex="0">
+        <table class="semana__tabela">
+          <caption id="semana-cap">Grade de horários {grade.periodo}. Os horários podem variar entre unidades.</caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="visually-hidden">Horário</span></th>
+              {grade.dias.map((d) => <th scope="col">{d.dia}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            {grade.horarios.map((h, i) => (
+              <tr>
+                <th scope="row">{h}</th>
+                {grade.dias.map((d) =>
+                  d.aulas.length === 1
+                    ? (i === 0 ? <td rowspan="2" class="semana__sexta">{d.aulas[0]}</td> : null)
+                    : <td>{d.aulas[i]}</td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <ol class="semana__lista" aria-label={`Grade de horários ${grade.periodo}`}>
+        {grade.dias.map((d) => (
+          <li>
+            <span class="semana__dia">{d.dia}</span>
+            {d.aulas.length === 1
+              ? <p class="semana__item semana__item--sexta">{d.aulas[0]}</p>
+              : d.aulas.map((a, i) => <p class="semana__item"><span>{grade.horarios[i]}</span>{a}</p>)}
+          </li>
+        ))}
+      </ol>
+      <p class="semana__nota">Grade de horários {grade.periodo}. Os horários podem variar entre unidades.</p>
+      <a class="btn disc__cta" href="#quero-conhecer">Quero conhecer as turmas</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .disc {
+    background: var(--petrol) var(--tex-petrol) center / 1200px auto repeat;
+    color: var(--on-petrol);
+    padding-block: clamp(4.5rem, 9vw, 8rem);
+  }
+
+  .disc__topo { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 2rem 4rem; align-items: end; }
+  .disc__titulo { font-size: clamp(3rem, 1.5rem + 4.6vw, 6.5rem); color: var(--on-petrol); }
+  .disc__intro { color: var(--on-petrol-soft); max-width: 36ch; }
+
+  .disc__corpo {
+    display: grid; grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+    gap: clamp(2.5rem, 5vw, 5rem); align-items: start;
+    margin-top: clamp(3rem, 5vw, 4.5rem);
+  }
+
+  .disc__lista { list-style: none; margin: 0; padding: 0; border-top: 1px solid rgba(199, 227, 234, 0.25); }
+  .disc__lista li {
+    display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 0.25rem 2rem; align-items: baseline;
+    padding-block: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(199, 227, 234, 0.25);
+  }
+  .disc__nome {
+    font-family: var(--font-display); text-transform: uppercase;
+    font-size: clamp(2.4rem, 1.6rem + 2.6vw, 4.25rem); line-height: 0.95;
+    color: var(--cyan);
+    transition: color 0.3s;
+  }
+  .disc__lista li:nth-child(even) .disc__nome { color: var(--on-petrol); }
+  .disc__frase {
+    font-style: italic; font-size: clamp(1.1rem, 1rem + 0.35vw, 1.35rem); line-height: 1.35;
+    color: var(--on-petrol-soft);
+    transition: color 0.3s;
+  }
+  .disc__lista li:hover .disc__frase { color: var(--lemon); }
+  .disc__lista li:hover .disc__nome { color: var(--lemon); }
+
+  .disc__foto { margin: 0; position: sticky; top: 7rem; }
+  .disc__foto :global(img) {
+    width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+    border-radius: 50% 50% 1.25rem 1.25rem / 36% 36% 1.25rem 1.25rem;
+    border: 8px solid var(--mint);
+  }
+  .disc__foto figcaption { margin-top: 1rem; font-style: italic; color: var(--on-petrol-soft); font-size: 1.05rem; }
+
+  .semana { margin-top: clamp(4.5rem, 8vw, 7rem); }
+  .semana__titulo { font-size: clamp(2.25rem, 1.6rem + 2vw, 3.75rem); color: var(--on-petrol); }
+  .semana__rolagem { margin-top: 1.75rem; overflow-x: auto; border-radius: 1.25rem; }
+  .semana__rolagem:focus-visible { outline-offset: 4px; }
+  .semana__tabela {
+    width: 100%; min-width: 46rem; table-layout: fixed;
+    border-collapse: separate; border-spacing: 6px;
+    font-size: 1.05rem; line-height: 1.35;
+  }
+  .semana__tabela caption {
+    caption-side: bottom; text-align: left; padding: 1rem 0 0 0.35rem;
+    font-style: italic; color: var(--on-petrol-soft); font-size: 1rem;
+  }
+  .semana__tabela thead th {
+    font-family: var(--font-display); font-weight: 400; text-transform: uppercase;
+    font-size: 1.9rem; text-align: left; padding: 0.25rem 1rem 0.5rem; color: var(--mint);
+  }
+  .semana__tabela thead th:first-child { width: 9.5rem; }
+  .semana__tabela tbody th {
+    font-weight: 600; text-align: left; white-space: nowrap;
+    padding: 1rem; color: var(--on-petrol); font-size: 1rem; vertical-align: top;
+  }
+  .semana__tabela td {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 0.9rem;
+    padding: 1rem 1.1rem; vertical-align: top;
+    font-weight: 600;
+  }
+  .semana__tabela td.semana__sexta {
+    background: var(--yellow); color: var(--petrol-ink); font-style: italic; font-weight: 400;
+  }
+  .disc__cta { margin-top: 2.25rem; }
+
+  @media (max-width: 60rem) {
+    .disc__topo, .disc__corpo { grid-template-columns: 1fr; }
+    .disc__foto { position: static; max-width: 26rem; }
+  }
+  .semana__lista, .semana__nota { display: none; }
+  @media (max-width: 40rem) {
+    .disc__lista li { grid-template-columns: 1fr; }
+    .semana__rolagem { display: none; }
+    .semana__lista { display: grid; gap: 1.25rem; list-style: none; margin: 1.5rem 0 0; padding: 0; }
+    .semana__lista li { display: grid; gap: 0.4rem; }
+    .semana__dia { font-family: var(--font-display); text-transform: uppercase; font-size: 1.9rem; line-height: 1; color: var(--mint); }
+    .semana__item { background: rgba(255, 255, 255, 0.08); border-radius: 0.9rem; padding: 0.8rem 1rem; font-weight: 600; }
+    .semana__item span { display: block; font-weight: 400; font-size: 0.95rem; color: var(--on-petrol-soft); }
+    .semana__item--sexta { background: var(--yellow); color: var(--petrol-ink); font-style: italic; font-weight: 400; }
+    .semana__nota { display: block; margin-top: 1rem; font-style: italic; color: var(--on-petrol-soft); font-size: 1rem; }
+  }
+</style>

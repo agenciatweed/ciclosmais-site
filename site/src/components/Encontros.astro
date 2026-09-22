@@ -1,0 +1,72 @@
+---
+import { Image } from 'astro:assets';
+import Marca from './Marca.astro';
+import f1 from '../assets/img/Confraternizacoes - 06a.jpg';
+import f2 from '../assets/img/Confraternizacoes - 20241025_1609472-scaled.jpg';
+import f3 from '../assets/img/Confraternizacoes - 32.jpg';
+import f4 from '../assets/img/Confraternizacoes - IMG_2716-scaled.jpg';
+import f5 from '../assets/img/Confraternizacoes - IMG_58841-scaled.jpg';
+---
+<section class="encontros" id="encontros" aria-labelledby="encontros-titulo">
+  <Marca tipo="simbolo" label={null} class="encontros__marca" />
+  <div class="wrap">
+    <div class="encontros__topo">
+      <h2 id="encontros-titulo" class="encontros__titulo">A CICLOS+ não oferece apenas cursos.</h2>
+      <p class="encontros__voz">Aqui é um lugar de pertencimento.</p>
+    </div>
+    <p class="encontros__texto">
+      As confraternizações vão muito além do encontro social: são parte do jeito CICLOS+ de viver a
+      maturidade com alegria, amizade e novas histórias para contar.
+    </p>
+
+    <div class="encontros__mosaico">
+      <Image class="m1" src={f4} alt="Alunas sorrindo à mesa num jantar de confraternização da CICLOS+" widths={[480, 720, 960]} sizes="(max-width: 48rem) 100vw, 40vw" />
+      <Image class="m2" src={f1} alt="Duas alunas sorriem juntas durante uma confraternização" widths={[320, 480, 640]} sizes="(max-width: 48rem) 50vw, 22vw" />
+      <Image class="m3" src={f2} alt="Três amigas da CICLOS+ sorriem à mesa, com lanches e bebidas" widths={[320, 480, 640]} sizes="(max-width: 48rem) 50vw, 22vw" />
+      <Image class="m4" src={f3} alt="Grupo reunido numa sala decorada para o Natal" widths={[320, 480, 640]} sizes="(max-width: 48rem) 50vw, 22vw" />
+      <Image class="m5" src={f5} alt="Três alunos posam juntos durante um encontro" widths={[320, 480, 640]} sizes="(max-width: 48rem) 50vw, 18vw" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .encontros {
+    position: relative; overflow: clip;
+    background: var(--mint);
+    color: var(--petrol-ink);
+    padding-block: clamp(4.5rem, 9vw, 8rem);
+  }
+  .encontros :global(.encontros__marca) {
+    position: absolute; right: -8rem; top: -6rem; width: min(38rem, 60vw);
+    color: #2fe0a2; pointer-events: none;
+  }
+  .encontros .wrap { position: relative; }
+
+  .encontros__titulo { font-size: clamp(3rem, 1.4rem + 5vw, 7rem); max-width: 14ch; color: var(--petrol-ink); }
+  .encontros__voz {
+    margin-top: 0.75rem;
+    font-style: italic; font-weight: 700;
+    font-size: clamp(1.75rem, 1.2rem + 1.8vw, 3rem); line-height: 1.15; color: var(--petrol);
+  }
+  .encontros__texto { margin-top: 1.5rem; max-width: 50ch; font-size: clamp(1.15rem, 1.05rem + 0.3vw, 1.35rem); }
+
+  .encontros__mosaico {
+    margin-top: clamp(3rem, 5vw, 4.5rem);
+    display: grid; gap: clamp(0.75rem, 1.4vw, 1.25rem);
+    grid-template-columns: 5fr 3fr 3fr;
+    grid-template-rows: repeat(2, clamp(12rem, 18vw, 17rem));
+  }
+  .encontros__mosaico :global(img) {
+    width: 100%; height: 100%; object-fit: cover; border-radius: 1.25rem;
+    box-shadow: 0 24px 48px -32px rgba(0, 61, 89, 0.7);
+  }
+  .encontros__mosaico :global(.m1) { grid-row: 1 / 3; border-radius: 999px 999px 1.25rem 1.25rem; }
+  .encontros__mosaico :global(.m4) { border-radius: 1.25rem 999px 999px 1.25rem; }
+
+  @media (max-width: 48rem) {
+    .encontros__mosaico { grid-template-columns: 1fr 1fr; grid-template-rows: 22rem 11rem 11rem; }
+    .encontros__mosaico :global(.m4) { grid-column: 1 / 3; border-radius: 1.25rem; }
+    .encontros__mosaico :global(.m1) { grid-column: 1 / 3; grid-row: 1; }
+    .encontros__mosaico :global(.m5) { display: none; }
+  }
+</style>

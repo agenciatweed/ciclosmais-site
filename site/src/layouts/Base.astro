@@ -1,0 +1,42 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props { title: string; description: string }
+const { title, description } = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#005277" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/textures/papel-tile.webp" as="image" />
+  </head>
+  <body>
+    <!--
+THESIS: A Home é o próprio símbolo CICLOS+ em escala: três espirais (Aprender, Conectar, Viver) que terminam em momentos reais da escola. Recusa o herói genérico de "foto sorridente de idosos + slogan".
+OWN-WORLD: papel claro amassado (#F8F6F0), faixas azul-petróleo com textura de feltro (#005277), símbolo em verde-menta (#1AD293), linhas curvas e botões amarelos (#F4C33A); títulos League Gothic caixa-alta, voz em Playfair Display itálico.
+STORY: o visitante entende que é uma escola cultural 60+ sem provas, vê aulas, encontros e viagens reais, acha sua unidade e pede para conhecer.
+FIRST VIEWPORT: à esquerda "APRENDER, CONECTAR, VIVER." gigante em petróleo, frase itálica teal, parágrafo e botão amarelo "Quero conhecer" + link WhatsApp; à direita o símbolo menta com três fotos circulares nos braços e a linha amarela passando por trás; faixa petróleo com as quatro atuações na base.
+FORM: estrutura 4 de 7 (O ciclo), escolhida pela cliente; seed 77569fe4.
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+    -->
+    <a class="skip" href="#conteudo">Ir para o conteúdo</a>
+    <Header />
+    <main id="conteudo">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,81 @@
+---
+import { Image } from 'astro:assets';
+import monet from '../assets/img/Viagens Culturais - IMG-20250608-WA0031.jpg';
+import expo from '../assets/img/Viagens Culturais - IMG-20250608-WA00271.jpg';
+import vida from '../assets/img/Viagens Culturais - IMG_6591-min-scaled.jpg';
+import mural from '../assets/img/Viagens Culturais - IMG_6631-min-scaled.jpg';
+
+const roteiros = [
+  { ano: '2023', nome: 'Rio de Janeiro com Burle Marx' },
+  { ano: '2024', nome: 'São Paulo Arte & Design' },
+  { ano: '2025', nome: 'São Paulo Arte & Design' },
+];
+---
+<section class="viagens" id="viagens" aria-labelledby="viagens-titulo">
+  <div class="wrap viagens__grade">
+    <figure class="viagens__destaque">
+      <Image src={monet} alt="Alunas da CICLOS+ observam de perto uma pintura impressionista num museu" widths={[480, 720, 1000]} sizes="(max-width: 56rem) 100vw, 44vw" />
+    </figure>
+
+    <div class="viagens__texto">
+      <h2 id="viagens-titulo" class="viagens__titulo">Viagens culturais</h2>
+      <p class="viagens__voz">Aprender também é chegar num lugar novo com os amigos.</p>
+      <p>
+        Cada roteiro une aprendizado, lazer e convivência, com segurança, conforto e um olhar atento
+        ao bem-estar e ao ritmo de cada participante.
+      </p>
+
+      <ol class="roteiros" aria-label="Roteiros já realizados">
+        {roteiros.map((r) => (
+          <li><span class="roteiros__ano">{r.ano}</span><span class="roteiros__nome">{r.nome}</span></li>
+        ))}
+      </ol>
+    </div>
+  </div>
+
+  <div class="wrap viagens__tira">
+    <Image src={expo} alt="Grupo da CICLOS+ reunido na entrada da exposição A ecologia de Monet" widths={[360, 560, 760]} sizes="(max-width: 48rem) 100vw, 33vw" />
+    <Image src={vida} alt="Duas alunas leem a frase Vida que se revela na parede de uma exposição" widths={[360, 560, 760]} sizes="(max-width: 48rem) 100vw, 33vw" />
+    <Image src={mural} alt="Grupo posa diante de um grande mural de arte urbana" widths={[360, 560, 760]} sizes="(max-width: 48rem) 100vw, 33vw" />
+  </div>
+</section>
+
+<style>
+  .viagens { padding-block: clamp(4.5rem, 9vw, 8rem); }
+  .viagens__grade {
+    display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    gap: clamp(2.5rem, 6vw, 6rem); align-items: center;
+  }
+  .viagens__destaque { margin: 0; }
+  .viagens__destaque :global(img) {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 999px 999px 1.5rem 1.5rem;
+    border: 8px solid var(--yellow);
+  }
+  .viagens__titulo { font-size: clamp(3.25rem, 2rem + 4vw, 6.5rem); color: var(--petrol); }
+  .viagens__voz {
+    margin: 1.25rem 0; font-style: italic; color: var(--teal-ink);
+    font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.85rem); line-height: 1.3; max-width: 24ch;
+  }
+  .viagens__texto > p:not(.viagens__voz) { max-width: 44ch; }
+
+  .roteiros { list-style: none; margin: 2.5rem 0 0; padding: 0; border-top: 2px solid var(--petrol); }
+  .roteiros li {
+    display: grid; grid-template-columns: 5.5rem 1fr; align-items: baseline; gap: 1rem;
+    padding-block: 0.9rem; border-bottom: 1px solid #d9d4c7;
+  }
+  .roteiros__ano { font-family: var(--font-display); font-size: 2.4rem; line-height: 1; color: var(--teal); }
+  .roteiros__nome { font-weight: 600; font-size: 1.2rem; }
+
+  .viagens__tira {
+    margin-top: clamp(3rem, 6vw, 5rem);
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.75rem, 1.4vw, 1.25rem);
+  }
+  .viagens__tira :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 1.25rem; }
+
+  @media (max-width: 56rem) {
+    .viagens__grade { grid-template-columns: 1fr; }
+    .viagens__destaque { max-width: 30rem; }
+  }
+  @media (max-width: 48rem) { .viagens__tira { grid-template-columns: 1fr; } }
+</style>

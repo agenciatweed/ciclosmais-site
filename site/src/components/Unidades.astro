@@ -1,0 +1,68 @@
+---
+import Marca from './Marca.astro';
+import { unidades } from '../data/unidades';
+import { site, whatsappLink } from '../data/site';
+---
+<section class="unidades on-petrol" id="unidades" aria-labelledby="unidades-titulo">
+  <div class="wrap">
+    <h2 id="unidades-titulo" class="unidades__titulo">Onde a CICLOS+ acontece</h2>
+
+    <ul class="unidades__lista">
+      {unidades.map((u) => (
+        <li class="unidade">
+          <Marca tipo="simbolo" label={null} class="unidade__marca" />
+          <h3 class="unidade__cidade">{u.cidade}</h3>
+          {u.local && <p class="unidade__local">{u.local}</p>}
+          <p class="unidade__end">{u.endereco} · {u.cidade}/{u.uf}</p>
+          <div class="unidade__acoes">
+            <a class="link-arrow" href={u.mapa} target="_blank" rel="noopener">Ver no mapa</a>
+            <a class="link-arrow" href={whatsappLink(`Olá! Quero conhecer a CICLOS+ ${u.cidade}.`, u.whatsapp?.e164)} target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+        </li>
+      ))}
+      <li class="unidade unidade--nova">
+        <h3 class="unidade__cidade">Sua cidade?</h3>
+        <p class="unidade__end">A CICLOS+ cresce por franquias. Quer levar a escola para a sua cidade?</p>
+        <div class="unidade__acoes">
+          <a class="link-arrow" href={whatsappLink('Olá! Quero saber como levar a CICLOS+ para a minha cidade.')} target="_blank" rel="noopener">Conversar sobre franquia</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<style>
+  .unidades {
+    background: var(--petrol) var(--tex-petrol) center / 1200px auto repeat;
+    color: var(--on-petrol);
+    padding-block: clamp(4.5rem, 9vw, 8rem);
+  }
+  .unidades__titulo { font-size: clamp(3rem, 1.6rem + 4.2vw, 6rem); max-width: 14ch; }
+
+  .unidades__lista {
+    list-style: none; margin: clamp(2.5rem, 5vw, 4rem) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.75rem);
+  }
+  .unidade {
+    position: relative; overflow: hidden;
+    padding: clamp(1.75rem, 3vw, 2.5rem);
+    border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.07);
+    display: flex; flex-direction: column; gap: 0.4rem;
+    min-height: 19rem;
+  }
+  .unidade :global(.unidade__marca) {
+    position: absolute; right: -2.75rem; top: -2.75rem; width: 10rem; color: var(--mint); opacity: 0.22;
+  }
+  .unidade__cidade { font-size: clamp(2.75rem, 2rem + 2.4vw, 4.25rem); color: var(--mint); }
+  .unidade__local { font-weight: 600; color: var(--on-petrol); margin-top: 0.5rem; }
+  .unidade__end { color: var(--on-petrol-soft); max-width: 28ch; }
+  .unidade__acoes { margin-top: auto; padding-top: 1.5rem; display: flex; flex-wrap: wrap; gap: 0.75rem 1.75rem; position: relative; }
+  .unidade .link-arrow { color: var(--lemon); }
+  .unidade .link-arrow:hover { color: #fff; }
+
+  .unidade--nova { background: transparent; border: 2px dashed rgba(199, 227, 234, 0.45); }
+  .unidade--nova .unidade__cidade { color: var(--on-petrol); }
+
+  @media (max-width: 60rem) { .unidades__lista { grid-template-columns: 1fr; } .unidade { min-height: 0; } }
+</style>

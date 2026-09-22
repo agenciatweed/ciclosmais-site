@@ -1,0 +1,144 @@
+@import '@fontsource/league-gothic/400.css';
+@import '@fontsource/playfair-display/400.css';
+@import '@fontsource/playfair-display/400-italic.css';
+@import '@fontsource/playfair-display/600.css';
+@import '@fontsource/playfair-display/700.css';
+@import '@fontsource/playfair-display/700-italic.css';
+
+/* Tokens: paleta do manual CICLOS+ (moodboard p.6) */
+:root {
+  --petrol: #005277;
+  --petrol-deep: #003d59;
+  --petrol-ink: #0b3a52;
+  --mint: #1ad293;
+  --teal: #1a9e93;
+  --teal-ink: #0f7d74;
+  --cyan: #3cafc1;
+  --yellow: #f4c33a;
+  --lemon: #f2df3a;
+  --paper: #f8f6f0;
+  --paper-2: #efece3;
+  --ink: #16323f;
+  --ink-soft: #3d5663;
+  --on-petrol: #ffffff;
+  --on-petrol-soft: #c7e3ea;
+
+  --font-display: 'League Gothic', 'Oswald', 'Arial Narrow', sans-serif;
+  --font-text: 'Playfair Display', Georgia, 'Times New Roman', serif;
+
+  --gutter: clamp(1.25rem, 4vw, 4rem);
+  --maxw: 88rem;
+  --radius-pill: 999px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --tex-paper: url('/textures/papel-tile.webp');
+  --tex-petrol: url('/textures/feltro-azul.webp');
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  scrollbar-color: var(--teal) var(--paper-2);
+}
+
+body {
+  margin: 0;
+  background: var(--paper) var(--tex-paper) 0 0 / 1800px auto repeat;
+  color: var(--ink);
+  font-family: var(--font-text);
+  font-size: clamp(1.125rem, 1.02rem + 0.35vw, 1.3rem);
+  line-height: 1.6;
+  font-variant-numeric: lining-nums;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { display: block; max-width: 100%; }
+img { height: auto; }
+
+::selection { background: var(--lemon); color: var(--petrol-ink); }
+
+a { color: inherit; text-underline-offset: 0.22em; text-decoration-thickness: 1.5px; }
+
+/* Foco: petróleo em fundos claros e amarelos; amarelo nos campos petróleo */
+:focus-visible {
+  outline: 3px solid var(--petrol);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: 0.005em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+p { margin: 0; text-wrap: pretty; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--maxw);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.on-petrol :focus-visible { outline-color: var(--yellow); }
+
+.skip {
+  position: absolute; left: 1rem; top: -4rem; z-index: 100;
+  background: var(--yellow); color: var(--petrol-ink);
+  padding: 0.75rem 1.25rem; border-radius: var(--radius-pill);
+  font-weight: 700; text-decoration: none;
+}
+.skip:focus { top: 1rem; }
+
+/* Botões */
+.btn {
+  --bg: var(--yellow);
+  --fg: var(--petrol-ink);
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.6em;
+  min-height: 3.5rem;
+  padding: 0.85rem 2rem;
+  border: 0; border-radius: var(--radius-pill);
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-text); font-weight: 700;
+  font-size: 1.05rem; letter-spacing: 0.14em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  box-shadow: 0 6px 18px -8px rgba(0, 61, 89, 0.45);
+  transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out), background-color 0.2s;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 12px 24px -10px rgba(0, 61, 89, 0.5); background: #f7cf55; }
+.btn:active { transform: translateY(0); }
+@media (max-width: 30rem) { .btn { letter-spacing: 0.08em; padding-inline: 1.5rem; text-align: center; } }
+
+.link-arrow {
+  display: inline-flex; align-items: center; gap: 0.5em;
+  font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.95rem;
+  color: var(--teal-ink);
+  text-decoration: underline; text-decoration-color: currentColor;
+}
+.link-arrow:hover { color: var(--petrol); }
+
+.italic-voice { font-style: italic; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+}

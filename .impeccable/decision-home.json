@@ -1,0 +1,43 @@
+{
+  "title": "Home institucional CICLOS+: escolha a estrutura",
+  "question": "A identidade já está definida pelo manual (cores, League Gothic + Playfair, logo). Aqui você escolhe a composição da Home. As três estruturas abaixo vieram do sorteio; trave uma, peça outra rodada ou dê uma direção.",
+  "options": [
+    {
+      "id": "casa-ciclos",
+      "label": "Casa Ciclos",
+      "kicker": "THE ROLL",
+      "lineage": "o conceito 'Vem para a Casa Ciclos' do moodboard",
+      "thesis": "A Home é uma casa de portas abertas: cada cômodo é uma parte da vida cultural, e você é convidado a entrar.",
+      "palette": ["#005277", "#1A9E93", "#1AD293", "#F4C33A", "#EEF0EE"],
+      "materials": ["azul texturizado do moodboard", "papel amassado claro", "fotos reais de aula, museu e festa"],
+      "viewport": "Campo azul texturizado, 'A CICLOS+ NÃO OFERECE APENAS CURSOS.' em League Gothic, 'Aqui é um lugar de pertencimento.' em Playfair itálico amarelo; à direita uma moldura de porta com foto real de turma; botão amarelo 'Quero conhecer'.",
+      "risk": "A metáfora da casa pode puxar para 'residência' se a imagem ficar doméstica; precisa ser casa cultural, cheia de gente e assunto.",
+      "comp": ".impeccable/mocks/decision/casa-ciclos.png"
+    },
+    {
+      "id": "assunto-favorito",
+      "label": "Seu próximo assunto favorito",
+      "lineage": "o índice de disciplinas como cartaz, na tipografia do manual",
+      "thesis": "A Home abre com os assuntos, não com a idade: uma lista enorme de disciplinas, cada uma com sua frase, e a escolha do assunto é o primeiro passo.",
+      "palette": ["#005277", "#3CAFC1", "#F2DF3A", "#FFFFFF", "#1AD293"],
+      "materials": ["tipografia League Gothic em escala de cartaz", "Playfair itálico como voz", "uma foto real por assunto"],
+      "viewport": "Fundo azul-petróleo; FILOSOFIA, CINEMA, HISTÓRIA DA ARTE, AQUARELA, ARTE MUSICAL empilhados em League Gothic gigante, cada um com uma linha em Playfair itálico amarelo ('Grandes perguntas não se aposentam.'); à direita uma foto real que muda por assunto; 'Quero conhecer' em amarelo.",
+      "risk": "Pode parecer catálogo de cursos e esconder a convivência se os encontros e viagens não aparecerem logo na dobra seguinte.",
+      "comp": ".impeccable/mocks/decision/assunto-favorito.png"
+    },
+    {
+      "id": "o-ciclo",
+      "label": "O ciclo",
+      "lineage": "as três espirais do símbolo CICLOS+",
+      "thesis": "O símbolo vira a estrutura da página: três espirais, Aprender, Conectar e Viver, cada uma levando a momentos reais da escola.",
+      "palette": ["#1AD293", "#005277", "#1A9E93", "#F4C33A", "#F4F5F2"],
+      "materials": ["símbolo de espirais em grande escala", "fotos reais recortadas em círculo", "linhas curvas amarelas do moodboard"],
+      "viewport": "Fundo claro; o símbolo de espirais em verde ocupa o centro; cada braço termina numa foto real (aula, café e conversa, viagem ao museu) com a palavra em League Gothic; título 'Aprender, conectar, viver.' e 'Quero conhecer' em amarelo abaixo.",
+      "risk": "O símbolo grande pode virar enfeite abstrato, e as três palavras soam genéricas se não virarem momentos concretos.",
+      "comp": ".impeccable/mocks/decision/o-ciclo.png"
+    }
+  ],
+  "reroll": true,
+  "steer": true,
+  "buildPath": { "value": "comp", "toggle": true }
+}

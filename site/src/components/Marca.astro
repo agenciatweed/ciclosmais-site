@@ -1,0 +1,21 @@
+---
+// Marca CICLOS+ vetorizada a partir do MIV. Cor via `color` (currentColor).
+import simbolo from '../assets/brand/ciclos-simbolo.svg?raw';
+import wordmark from '../assets/brand/ciclos-wordmark.svg?raw';
+import horizontal from '../assets/brand/ciclos-logo-horizontal.svg?raw';
+
+interface Props {
+  tipo?: 'wordmark' | 'simbolo' | 'horizontal';
+  class?: string;
+  label?: string | null;
+}
+const { tipo = 'wordmark', class: cls = '', label = 'CICLOS+' } = Astro.props;
+const src = { wordmark, simbolo, horizontal }[tipo];
+const uid = `m${Math.random().toString(36).slice(2, 8)}`;
+let svg = src.replace(/id="([^"]+)"/g, `id="${uid}"`).replace(/url\(#([^)]+)\)/g, `url(#${uid})`);
+svg = label
+  ? svg.replace(/aria-label="[^"]*"/, `aria-label="${label}"`)
+  : svg.replace(/role="img" aria-label="[^"]*"/, 'aria-hidden="true" focusable="false"');
+svg = svg.replace('<svg ', `<svg class="marca marca--${tipo} ${cls}" `);
+---
+<Fragment set:html={svg} />

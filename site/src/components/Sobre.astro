@@ -1,0 +1,112 @@
+---
+import { Image } from 'astro:assets';
+import Marca from './Marca.astro';
+import aula from '../assets/img/Disciplinas Semestrais - IMG_9955-scaled.jpg';
+
+const jeito = [
+  'Encontros semanais, à tarde, com professores qualificados em cada área.',
+  'Sem provas, sem notas e sem pressão. O ritmo é o da turma.',
+  'A aula continua no café, no museu, no teatro e na estrada.',
+];
+
+const historia = [
+  { ano: '2019', texto: 'Nasce a ideia, da experiência dos cofundadores.' },
+  { ano: '2020', texto: 'A primeira turma: 13 pessoas, pelo Zoom.' },
+  { ano: '2022', texto: 'Aulas presenciais de História da Arte, Filosofia, Cinema e Música.' },
+  { ano: 'Hoje', texto: 'Mais de 100 alunos e duas unidades no Rio Grande do Sul.' },
+];
+---
+<section class="sobre" id="sobre" aria-labelledby="sobre-titulo">
+  <div class="wrap sobre__grade">
+    <figure class="sobre__foto">
+      <Image src={aula} alt="Professor conduz uma aula da CICLOS+ para uma sala cheia de alunos atentos" widths={[480, 720, 960]} sizes="(max-width: 56rem) 100vw, 40vw" />
+    </figure>
+
+    <div class="sobre__texto">
+      <h2 id="sobre-titulo" class="sobre__titulo">Uma escola sem provas.<br /><span>Com assunto de sobra.</span></h2>
+      <p class="sobre__lead">
+        Somos uma escola cultural onde a longevidade é sinônimo de aprendizado, conexão e bem-estar.
+        Aqui, cada voz e cada história ajudam a pintar a tela da nossa comunidade.
+      </p>
+      <ul class="sobre__jeito">
+        {jeito.map((j) => (
+          <li><Marca tipo="simbolo" label={null} class="sobre__bullet" /><span>{j}</span></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <h3 class="historia__titulo">Nossa história</h3>
+    <ol class="historia">
+      <svg class="historia__linha" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path d="M0 50 C 160 10, 260 70, 400 40 S 640 10, 800 45 S 1060 70, 1200 30" />
+      </svg>
+      {historia.map((h) => (
+        <li>
+          <span class="historia__ano">{h.ano}</span>
+          <span class="historia__texto">{h.texto}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .sobre { padding-block: clamp(4.5rem, 9vw, 8.5rem) clamp(4rem, 7vw, 6.5rem); }
+
+  .sobre__grade {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(2.5rem, 6vw, 6rem);
+    align-items: center;
+  }
+
+  .sobre__foto { margin: 0; position: relative; }
+  .sobre__foto :global(img) {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 999px 999px 1.5rem 1.5rem;
+    box-shadow: 0 30px 60px -40px rgba(0, 61, 89, 0.6);
+  }
+  .sobre__foto::after {
+    content: ''; position: absolute; inset: auto -1.25rem -1.25rem auto;
+    width: 38%; aspect-ratio: 1; border-radius: 50%;
+    border: 3px solid var(--yellow); z-index: -1;
+  }
+
+  .sobre__titulo { color: var(--petrol); font-size: clamp(3rem, 1.6rem + 4.2vw, 6rem); }
+  .sobre__titulo span { color: var(--teal); }
+
+  .sobre__lead {
+    margin-top: 1.75rem; max-width: 46ch;
+    font-size: clamp(1.2rem, 1.05rem + 0.45vw, 1.45rem); line-height: 1.55;
+  }
+
+  .sobre__jeito { list-style: none; margin: 2.25rem 0 0; padding: 0; display: grid; gap: 1.1rem; max-width: 48ch; }
+  .sobre__jeito li { display: grid; grid-template-columns: 2rem 1fr; gap: 1rem; align-items: start; }
+  .sobre__jeito :global(.sobre__bullet) { width: 2rem; color: var(--mint); margin-top: 0.2rem; }
+
+  .historia__titulo {
+    margin-top: clamp(4.5rem, 8vw, 7rem);
+    font-size: clamp(2.25rem, 1.6rem + 2vw, 3.5rem); color: var(--petrol);
+  }
+  .historia {
+    position: relative;
+    list-style: none; margin: 2rem 0 0; padding: 3.25rem 0 0;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2rem;
+  }
+  .historia__linha {
+    position: absolute; top: 0; left: 0; width: 100%; height: 3.5rem;
+    fill: none; stroke: var(--yellow); stroke-width: 3; stroke-linecap: round;
+  }
+  .historia li { display: grid; gap: 0.5rem; align-content: start; }
+  .historia__ano { font-family: var(--font-display); font-size: clamp(2.75rem, 2rem + 2.4vw, 4.5rem); line-height: 1; color: var(--teal); }
+  .historia__texto { max-width: 26ch; }
+
+  @media (max-width: 56rem) {
+    .sobre__grade { grid-template-columns: 1fr; }
+    .sobre__foto { max-width: 30rem; }
+    .historia { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 2.5rem; }
+  }
+  @media (max-width: 30rem) { .historia { grid-template-columns: 1fr; } }
+</style>

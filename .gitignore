@@ -1,0 +1,13 @@
+# Dependências e build
+node_modules/
+site/dist/
+site/.astro/
+.vercel/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log
+
+# Capturas temporárias de revisão
+.impeccable/review/

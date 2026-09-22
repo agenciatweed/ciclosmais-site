@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import juliana from '../assets/img/equipe/juliana-enderle-site.png';
+import cristiano from '../assets/img/equipe/cristiano-cunha-site.png';
+
+const pessoas = [
+  { nome: 'Juliana Enderle', papel: 'Cofundadora', img: juliana },
+  { nome: 'Cristiano Cunha', papel: 'Cofundador', img: cristiano },
+];
+---
+<section class="equipe" aria-labelledby="equipe-titulo">
+  <div class="wrap equipe__grade">
+    <div>
+      <h2 id="equipe-titulo" class="equipe__titulo">Quem está por trás da CICLOS+</h2>
+      <p class="equipe__voz">Somos facilitadores do aprendizado e da vida social na longevidade.</p>
+    </div>
+    <ul class="equipe__pessoas">
+      {pessoas.map((p) => (
+        <li>
+          <span class="equipe__foto"><Image src={p.img} alt={`Retrato de ${p.nome}`} widths={[200, 320]} sizes="10rem" /></span>
+          <span class="equipe__nome">{p.nome}</span>
+          <span class="equipe__papel">{p.papel}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .equipe { padding-block: 0 clamp(4.5rem, 9vw, 8rem); }
+  .equipe__grade {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: 3rem; align-items: center;
+    padding-top: clamp(3.5rem, 6vw, 5rem);
+    position: relative;
+  }
+  .equipe__grade::before { content: ''; position: absolute; top: 0; left: var(--gutter); right: var(--gutter); height: 2px; background: var(--petrol); }
+  .equipe__titulo { font-size: clamp(2.5rem, 1.6rem + 2.8vw, 4.5rem); color: var(--petrol); max-width: 16ch; }
+  .equipe__voz { margin-top: 1rem; font-style: italic; color: var(--teal-ink); font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.6rem); max-width: 30ch; line-height: 1.35; }
+
+  .equipe__pessoas { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: clamp(2.5rem, 5vw, 4.5rem); justify-content: flex-start; }
+  .equipe__pessoas li { display: grid; justify-items: center; text-align: center; gap: 0.25rem; }
+  .equipe__foto {
+    display: block; width: clamp(9rem, 14vw, 13rem); aspect-ratio: 1; border-radius: 50%; overflow: hidden;
+    border: 6px solid var(--mint); margin-bottom: 0.75rem;
+  }
+  /* A foto original traz um anel em degradê; ampliamos para cortá-lo */
+  .equipe__foto :global(img) { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); }
+  .equipe__nome { font-family: var(--font-display); text-transform: uppercase; font-size: 1.9rem; line-height: 1; color: var(--petrol); }
+  .equipe__papel { font-style: italic; color: var(--ink-soft); }
+
+  @media (max-width: 52rem) { .equipe__grade { grid-template-columns: 1fr; } .equipe__pessoas { justify-content: flex-start; } }
+</style>

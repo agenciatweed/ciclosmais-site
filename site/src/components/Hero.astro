@@ -1,0 +1,227 @@
+---
+import { Image } from 'astro:assets';
+import Marca from './Marca.astro';
+import { site, whatsappLink } from '../data/site';
+import aula from '../assets/img/Disciplinas Semestrais - Historia-Geral_02.jpg';
+import festa from '../assets/img/Confraternizacoes - 3ed0acf4fd23.jpg';
+import galeria from '../assets/img/Viagens Culturais - IMG_65551-min-scaled.jpg';
+
+const bracos = [
+  { id: 'aprender', palavra: 'Aprender', href: '#disciplinas', img: aula, alt: 'Turma da CICLOS+ em aula de História Geral, ouvindo o professor', pos: '50% 40%' },
+  { id: 'conectar', palavra: 'Conectar', href: '#encontros', img: festa, alt: 'Alunas da CICLOS+ comemorando com os braços para o alto numa confraternização', pos: '55% 45%' },
+  { id: 'viver', palavra: 'Viver', href: '#viagens', img: galeria, alt: 'Alunas da CICLOS+ diante de uma obra colorida durante viagem cultural', pos: '45% 50%' },
+];
+---
+<section class="hero" aria-labelledby="hero-titulo">
+  <div class="hero__grade wrap">
+    <div class="hero__texto">
+      <h1 id="hero-titulo" class="hero__titulo">
+        <span>Aprender,</span>
+        <span>conectar,</span>
+        <span>viver.</span>
+      </h1>
+      <p class="hero__voz">Para quem acredita que sempre é tempo de descobrir algo novo.</p>
+      <p class="hero__resumo">
+        Escola cultural 60+ em Porto Alegre e Pelotas. Arte, filosofia, cinema,
+        história e música, sem provas e sem pressão.
+      </p>
+      <div class="hero__acoes">
+        <a class="btn" href="#quero-conhecer">Quero conhecer</a>
+        <a class="link-arrow" href={whatsappLink('Olá! Quero conhecer a CICLOS+.')} target="_blank" rel="noopener">
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__ciclo">
+      <svg class="hero__linha" viewBox="0 0 2600 920" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <path d="M -40 862 C 500 872, 880 850, 1050 740 S 1180 330, 1340 300 S 1480 560, 1600 470 S 1780 360, 1900 372 S 2150 390, 2300 250 S 2500 100, 2680 110" vector-effect="non-scaling-stroke" />
+      </svg>
+      <div class="hero__simbolo">
+        <Marca tipo="simbolo" label={null} />
+      </div>
+      {bracos.map((b) => (
+        <a class={`hero__braco hero__braco--${b.id}`} href={b.href}>
+          <span class="hero__foto">
+            <Image src={b.img} alt={b.alt} widths={[240, 360, 480]} sizes="(max-width: 48rem) 34vw, 17rem" style={`object-position:${b.pos}`} loading="eager" />
+          </span>
+          <span class="hero__palavra">{b.palavra}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <nav class="faixa on-petrol" aria-label="O que a CICLOS+ oferece">
+    <ul class="wrap">
+      <li><a href="#disciplinas">Disciplinas</a></li>
+      <li><a href="#cursos-livres">Cursos livres</a></li>
+      <li><a href="#viagens">Viagens</a></li>
+      <li><a href="#encontros">Confraternizações</a></li>
+    </ul>
+  </nav>
+</section>
+
+<style>
+  .hero { position: relative; overflow: clip; }
+  .hero__grade { position: relative; }
+
+  .hero__grade {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    align-items: center;
+    gap: clamp(1rem, 3vw, 3rem);
+    min-height: min(calc(100svh - 5.5rem - 5.25rem), 58rem);
+    padding-block: clamp(1.25rem, 2.4vw, 2rem);
+  }
+
+  .hero__texto { position: relative; z-index: 2; }
+
+  .hero__titulo {
+    display: grid;
+    color: var(--petrol);
+    font-size: clamp(4rem, 1.2rem + 5vw, 7.25rem);
+    line-height: 0.86;
+    letter-spacing: 0;
+  }
+
+  .hero__voz {
+    margin-top: clamp(1rem, 1.8vw, 1.6rem);
+    max-width: 24ch;
+    font-style: italic;
+    font-size: clamp(1.35rem, 1rem + 0.9vw, 1.85rem);
+    line-height: 1.25;
+    color: var(--teal-ink);
+  }
+
+  .hero__resumo {
+    margin-top: 1rem;
+    max-width: 40ch;
+    color: var(--ink);
+  }
+
+  .hero__acoes {
+    display: flex; flex-wrap: wrap; align-items: center;
+    gap: 1rem 2rem;
+    margin-top: clamp(1.5rem, 2.4vw, 2rem);
+  }
+
+  /* O ciclo: símbolo real + três fotos nos braços */
+  .hero__ciclo {
+    position: relative;
+    aspect-ratio: 1.25 / 1;
+    width: min(100%, calc((100svh - 13rem) * 1.25));
+    min-width: min(100%, 30rem);
+    max-width: 54rem;
+    justify-self: end;
+    container-type: inline-size;
+  }
+
+  .hero__linha {
+    position: absolute; left: -110%; top: 0; width: 260%; max-width: none; height: 115%;
+    fill: none; stroke: var(--yellow); stroke-width: 2.5; stroke-linecap: round;
+    pointer-events: none; z-index: 0;
+  }
+
+  .hero__simbolo {
+    position: absolute; z-index: 1;
+    left: 23%; top: 22%;
+    width: 44%;
+    color: var(--mint);
+  }
+  .hero__simbolo :global(.marca) { width: 100%; height: auto; }
+
+  .hero__braco {
+    position: absolute; z-index: 2;
+    width: 30%;
+    display: block;
+    color: var(--petrol);
+    text-decoration: none;
+  }
+  .hero__braco--aprender { left: 36%; top: 0; }
+  .hero__braco--conectar { left: 9%; top: 59%; }
+  .hero__braco--viver { left: 55%; top: 57%; }
+
+  .hero__foto {
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    border: clamp(5px, 1.4cqi, 11px) solid var(--mint);
+    background: var(--paper-2);
+    box-shadow: 0 18px 40px -26px rgba(0, 61, 89, 0.55);
+    transition: transform 0.6s var(--ease-out), border-color 0.3s;
+  }
+  .hero__foto :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 0.9s var(--ease-out); }
+  .hero__braco:hover .hero__foto { transform: scale(1.03); border-color: var(--yellow); }
+  .hero__braco:hover .hero__foto :global(img) { transform: scale(1.06); }
+  .hero__braco:focus-visible { outline: none; }
+  .hero__braco:focus-visible .hero__foto { outline: 3px solid var(--petrol); outline-offset: 4px; }
+
+  .hero__palavra {
+    position: absolute;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: clamp(1.9rem, 6.4cqi, 4rem);
+    line-height: 1;
+    white-space: nowrap;
+  }
+  .hero__braco--aprender .hero__palavra { left: 104%; top: 42%; }
+  .hero__braco--conectar .hero__palavra { right: 104%; top: 52%; }
+  .hero__braco--viver .hero__palavra { left: 104%; top: 52%; }
+
+  /* Faixa */
+  .faixa {
+    background: var(--petrol) var(--tex-petrol) center / cover;
+    color: var(--on-petrol);
+  }
+  .faixa ul {
+    display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+    gap: 0.5rem clamp(1.5rem, 4vw, 3.5rem);
+    list-style: none; margin: 0;
+    padding-block: clamp(1.5rem, 2.6vw, 2.25rem);
+  }
+  .faixa li { display: flex; align-items: center; gap: clamp(1.5rem, 4vw, 3.5rem); }
+  .faixa li + li::before {
+    content: ''; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--mint);
+    margin-left: calc(-1 * clamp(1.5rem, 4vw, 3.5rem) / 2 - 0.2rem);
+    margin-right: calc(-1 * clamp(1.5rem, 4vw, 3.5rem) / 2 + 0.2rem);
+  }
+  .faixa a {
+    font-weight: 600; font-size: clamp(0.95rem, 0.8rem + 0.5vw, 1.35rem);
+    letter-spacing: 0.24em; text-transform: uppercase; text-decoration: none;
+    padding-block: 0.4rem;
+    background: linear-gradient(var(--yellow), var(--yellow)) left 100% / 0 2px no-repeat;
+    transition: background-size 0.35s var(--ease-out);
+  }
+  .faixa a:hover { background-size: 100% 2px; }
+
+  /* Movimento: o símbolo completa um terço de volta e as fotos assentam */
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__simbolo { animation: girar 1.8s var(--ease-out) both; }
+    .hero__braco { animation: assentar 1.4s var(--ease-out) both; }
+    .hero__braco--aprender { animation-delay: 0.15s; }
+    .hero__braco--conectar { animation-delay: 0.3s; }
+    .hero__braco--viver { animation-delay: 0.45s; }
+    .hero__linha path { stroke-dasharray: 4200; animation: tracar 2.8s var(--ease-out) 0.2s both; }
+  }
+  @keyframes girar { from { transform: rotate(-120deg) scale(0.92); } to { transform: none; } }
+  @keyframes assentar { from { transform: scale(0.82); } to { transform: none; } }
+  @keyframes tracar { from { stroke-dashoffset: 4200; } to { stroke-dashoffset: 0; } }
+
+  @media (max-width: 40rem) {
+    .faixa ul { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem 1rem; justify-items: center; }
+    .faixa li + li::before { display: none; }
+    .faixa a { letter-spacing: 0.14em; }
+  }
+
+  @media (max-width: 60rem) {
+    .hero__linha { display: none; }
+    .hero__ciclo { width: 100%; min-width: 0; }
+    .hero__grade { grid-template-columns: 1fr; min-height: 0; padding-block: 2rem 3rem; }
+    .hero__ciclo { justify-self: center; max-width: 36rem; margin-top: 1rem; }
+    .hero__braco--conectar .hero__palavra { right: auto; left: 0; top: 104%; }
+    .hero__braco--viver .hero__palavra { left: auto; right: 0; top: 104%; }
+    .hero__braco--aprender .hero__palavra { left: 104%; }
+    .hero__ciclo { margin-bottom: 3rem; }
+  }
+</style>
