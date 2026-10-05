@@ -1,0 +1,165 @@
+---
+import Base from '../../layouts/Base.astro';
+import Abertura from '../../components/Abertura.astro';
+import Semana from '../../components/Semana.astro';
+import Galeria from '../../components/Galeria.astro';
+import QueroConhecer from '../../components/QueroConhecer.astro';
+import { unidades, type Unidade } from '../../data/unidades';
+import { disciplinas, type Foto } from '../../data/disciplinas';
+import { site, whatsappLink } from '../../data/site';
+import escada from '../../assets/img/Viagens Culturais - 11-min.jpg';
+import jantar from '../../assets/img/Confraternizacoes - IMG_2716-scaled.jpg';
+import grupo from '../../assets/img/Cursos Livres - 11.jpg';
+import aula from '../../assets/img/Disciplinas Semestrais - IMG_9955-scaled.jpg';
+import aquarela from '../../assets/img/Disciplinas Semestrais - Aula-de-aquarela-CICLOS.jpeg';
+
+export function getStaticPaths() {
+  return unidades.map((u) => ({ params: { slug: u.slug }, props: { u } }));
+}
+interface Props { u: Unidade }
+const { u } = Astro.props;
+
+// Fotos reais por unidade. Pelotas ainda não tem fotos próprias (PENDENTE), então abre com o símbolo.
+const abertura: Record<string, Foto> = {
+  'porto-alegre': { src: escada, alt: 'Alunas e alunos da CICLOS+ Porto Alegre reunidos numa escadaria, sorrindo' },
+};
+const galerias: Record<string, { src: typeof escada; alt: string }[]> = {
+  'porto-alegre': [
+    { src: aula, alt: 'Professor conduz uma aula para uma sala cheia de alunos atentos' },
+    { src: grupo, alt: 'Grande grupo de alunas e alunos posa junto numa sala com parede amarela' },
+    { src: jantar, alt: 'Alunas sorrindo à mesa num jantar de confraternização' },
+    { src: aquarela, alt: 'Alunas pintam aquarelas numa mesa ao ar livre' },
+  ],
+};
+
+const wa = whatsappLink(`Olá! Quero conhecer a CICLOS+ ${u.cidade}.`, u.whatsapp?.e164);
+const fone = u.whatsapp?.display ?? site.whatsapp.display;
+const enderecoCompleto = `${u.local ? `${u.local} · ` : ''}${u.endereco} · ${u.cidade}/${u.uf}`;
+const mapaEmbed = `https://www.google.com/maps?q=${encodeURIComponent(u.mapaBusca)}&output=embed`;
+const outras = unidades.filter((o) => o.slug !== u.slug);
+const fotos = galerias[u.slug];
+---
+<Base
+  title={`CICLOS+ ${u.cidade} · Escola Cultural 60+`}
+  description={`${u.voz} Unidade ${u.cidade} da CICLOS+: ${enderecoCompleto}. Disciplinas, cursos livres e encontros para pessoas 60+.`}
+  imagem={abertura[u.slug]?.src}
+>
+  <Abertura
+    sobretitulo="CICLOS+ · Unidade"
+    titulo={u.cidade}
+    voz={u.voz}
+    trilha={[{ href: '/unidades', label: 'Unidades' }, { href: `/unidades/${u.slug}`, label: u.cidade }]}
+    foto={abertura[u.slug]}
+    anel="amarelo"
+  >
+    <p class="end">{u.local && <>{u.local}<br /></>}{u.endereco} · {u.cidade}/{u.uf}</p>
+    <Fragment slot="acoes">
+      <a class="btn" href="#quero-conhecer">Quero conhecer</a>
+      <a class="link-arrow" href={wa} target="_blank" rel="noopener">WhatsApp {fone}</a>
+    </Fragment>
+  </Abertura>
+
+  <section class="secao secao--petroleo chegar" aria-labelledby="chegar-titulo">
+    <div class="wrap chegar__grade">
+      <div>
+        <h2 id="chegar-titulo" class="secao__titulo">Como chegar</h2>
+        <dl class="chegar__dados">
+          {u.local && <><dt>Local</dt><dd>{u.local}</dd></>}
+          <dt>Endereço</dt><dd>{u.endereco}<br />{u.cidade}/{u.uf}</dd>
+          <dt>WhatsApp</dt><dd><a href={wa} target="_blank" rel="noopener">{fone}</a></dd>
+          {u.responsavel && <><dt>Responsável</dt><dd>{u.responsavel}</dd></>}
+        </dl>
+        <a class="btn chegar__mapa" href={u.mapa} target="_blank" rel="noopener">Abrir no Google Maps</a>
+      </div>
+      <div class="chegar__mapa-moldura">
+        <iframe src={mapaEmbed} title={`Mapa da CICLOS+ ${u.cidade}`} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao sobre-un" aria-labelledby="sobre-un-titulo">
+    <div class="wrap sobre-un__grade">
+      <div>
+        <h2 id="sobre-un-titulo" class="secao__titulo">A CICLOS+ em {u.cidade}</h2>
+        {u.desde && <p class="secao__voz">{u.desde}.</p>}
+      </div>
+      <div class="sobre-un__texto">
+        {u.texto.map((p) => <p>{p}</p>)}
+        {!u.mostraGrade && (
+          <p class="sobre-un__prog">
+            A grade de {u.cidade} é montada para a cidade. Fale com a equipe para saber das turmas abertas,
+            dos cursos livres e dos próximos encontros.
+          </p>
+        )}
+        <div class="sobre-un__acoes">
+          {!u.mostraGrade && <a class="btn" href={wa} target="_blank" rel="noopener">Pedir a programação</a>}
+          <a class="link-arrow" href="/disciplinas">Conhecer as disciplinas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {u.mostraGrade && (
+    <section class="secao secao--petroleo" aria-label={`A semana na CICLOS+ ${u.cidade}`}>
+      <div class="wrap">
+        <Semana titulo={`A semana em ${u.cidade}`} nivel="h2">
+          <ul class="semana-links" aria-label="Disciplinas">
+            {disciplinas.map((d) => <li><a href={`/disciplinas/${d.slug}`}>{d.nome}</a></li>)}
+          </ul>
+        </Semana>
+      </div>
+    </section>
+  )}
+
+  {fotos && <Galeria id="fotos-unidade" titulo={`Na CICLOS+ ${u.cidade}`} fotos={fotos} />}
+
+  {outras.length > 0 && (
+    <nav class="outras-un" aria-label="Outras unidades">
+      <div class="wrap">
+        <p>Também estamos em {outras.map((o, i) => <>{i > 0 && ' e '}<a href={`/unidades/${o.slug}`}>{o.cidade}</a></>)}.</p>
+      </div>
+    </nav>
+  )}
+
+  <QueroConhecer unidade={u.cidade} />
+</Base>
+
+<style>
+  .end { font-weight: 600; }
+
+  .chegar__grade { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+  .chegar__dados { margin: 2rem 0 0; display: grid; grid-template-columns: auto 1fr; gap: 0.9rem 1.5rem; }
+  .chegar__dados dt { font-weight: 700; font-size: 0.9rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-petrol-soft); padding-top: 0.2rem; }
+  .chegar__dados dd { margin: 0; color: var(--on-petrol); }
+  .chegar__dados a { color: var(--on-petrol); }
+  .chegar__dados a:hover { color: var(--lemon); }
+  .chegar__mapa { margin-top: 2rem; }
+  .chegar__mapa-moldura {
+    border-radius: 1.5rem; overflow: hidden; border: 6px solid var(--mint);
+    aspect-ratio: 4 / 3; background: var(--petrol-deep);
+  }
+  .chegar__mapa-moldura iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+  .sobre-un__grade { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+  .sobre-un__texto { display: grid; gap: 1.1rem; max-width: 50ch; }
+  .sobre-un__texto p:first-child { font-size: clamp(1.2rem, 1.05rem + 0.45vw, 1.45rem); line-height: 1.55; }
+  .sobre-un__prog { font-style: italic; color: var(--teal-ink); }
+  .sobre-un__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 1rem; }
+
+  .semana-links { list-style: none; margin: 2rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .semana-links a {
+    display: inline-flex; align-items: center; min-height: 3rem; padding: 0.5rem 1.2rem;
+    border: 2px solid rgba(199, 227, 234, 0.45); border-radius: var(--radius-pill);
+    color: var(--on-petrol); text-decoration: none; font-weight: 600;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .semana-links a:hover { border-color: var(--lemon); color: var(--lemon); }
+
+  .outras-un { padding-block: 0 clamp(3.5rem, 6vw, 5rem); }
+  .outras-un p { font-style: italic; font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.6rem); color: var(--teal-ink); }
+  .outras-un a { color: var(--petrol); font-weight: 700; font-style: normal; }
+
+  @media (max-width: 56rem) {
+    .chegar__grade, .sobre-un__grade { grid-template-columns: 1fr; }
+  }
+</style>

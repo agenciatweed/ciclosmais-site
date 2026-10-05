@@ -1,0 +1,95 @@
+---
+// Grade semanal. Pensada para campos petróleo.
+import { grade } from '../data/disciplinas';
+interface Props { titulo?: string; nota?: string; nivel?: 'h2' | 'h3' }
+const {
+  titulo = 'A semana na CICLOS+',
+  nota = `Grade de horários ${grade.periodo} da unidade Porto Alegre. Os horários podem variar entre unidades.`,
+  nivel = 'h3',
+} = Astro.props;
+const Titulo = nivel;
+const uid = `semana-${Math.random().toString(36).slice(2, 7)}`;
+---
+<div class="semana">
+  <Titulo class="semana__titulo">{titulo}</Titulo>
+  <div class="semana__rolagem" role="region" aria-labelledby={`${uid}-cap`} tabindex="0">
+    <table class="semana__tabela">
+      <caption id={`${uid}-cap`}>{nota}</caption>
+      <thead>
+        <tr>
+          <th scope="col"><span class="visually-hidden">Horário</span></th>
+          {grade.dias.map((d) => <th scope="col">{d.dia}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {grade.horarios.map((h, i) => (
+          <tr>
+            <th scope="row">{h}</th>
+            {grade.dias.map((d) =>
+              d.aulas.length === 1
+                ? (i === 0 ? <td rowspan="2" class="semana__sexta">{d.aulas[0]}</td> : null)
+                : <td>{d.aulas[i]}</td>
+            )}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <ol class="semana__lista" aria-label={`Grade de horários ${grade.periodo}`}>
+    {grade.dias.map((d) => (
+      <li>
+        <span class="semana__dia">{d.dia}</span>
+        {d.aulas.length === 1
+          ? <p class="semana__item semana__item--sexta">{d.aulas[0]}</p>
+          : d.aulas.map((a, i) => <p class="semana__item"><span>{grade.horarios[i]}</span>{a}</p>)}
+      </li>
+    ))}
+  </ol>
+  <p class="semana__nota">{nota}</p>
+  <slot />
+</div>
+
+<style>
+  .semana__titulo { font-size: clamp(2.25rem, 1.6rem + 2vw, 3.75rem); color: var(--on-petrol); }
+  .semana__rolagem { margin-top: 1.75rem; overflow-x: auto; border-radius: 1.25rem; }
+  .semana__rolagem:focus-visible { outline-offset: 4px; }
+  .semana__tabela {
+    width: 100%; min-width: 46rem; table-layout: fixed;
+    border-collapse: separate; border-spacing: 6px;
+    font-size: 1.05rem; line-height: 1.35;
+  }
+  .semana__tabela caption {
+    caption-side: bottom; text-align: left; padding: 1rem 0 0 0.35rem;
+    font-style: italic; color: var(--on-petrol-soft); font-size: 1rem;
+  }
+  .semana__tabela thead th {
+    font-family: var(--font-display); font-weight: 400; text-transform: uppercase;
+    font-size: 1.9rem; text-align: left; padding: 0.25rem 1rem 0.5rem; color: var(--mint);
+  }
+  .semana__tabela thead th:first-child { width: 9.5rem; }
+  .semana__tabela tbody th {
+    font-weight: 600; text-align: left; white-space: nowrap;
+    padding: 1rem; color: var(--on-petrol); font-size: 1rem; vertical-align: top;
+  }
+  .semana__tabela td {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 0.9rem;
+    padding: 1rem 1.1rem; vertical-align: top;
+    font-weight: 600;
+  }
+  .semana__tabela td.semana__sexta {
+    background: var(--yellow); color: var(--petrol-ink); font-style: italic; font-weight: 400;
+  }
+
+  .semana__lista, .semana__nota { display: none; }
+  @media (max-width: 40rem) {
+    .semana__rolagem { display: none; }
+    .semana__lista { display: grid; gap: 1.25rem; list-style: none; margin: 1.5rem 0 0; padding: 0; }
+    .semana__lista li { display: grid; gap: 0.4rem; }
+    .semana__dia { font-family: var(--font-display); text-transform: uppercase; font-size: 1.9rem; line-height: 1; color: var(--mint); }
+    .semana__item { background: rgba(255, 255, 255, 0.08); border-radius: 0.9rem; padding: 0.8rem 1rem; font-weight: 600; }
+    .semana__item span { display: block; font-weight: 400; font-size: 0.95rem; color: var(--on-petrol-soft); }
+    .semana__item--sexta { background: var(--yellow); color: var(--petrol-ink); font-style: italic; font-weight: 400; }
+    .semana__nota { display: block; margin-top: 1rem; font-style: italic; color: var(--on-petrol-soft); font-size: 1rem; }
+  }
+</style>

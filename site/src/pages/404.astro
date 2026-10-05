@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import Marca from '../components/Marca.astro';
+import { whatsappLink } from '../data/site';
+
+const caminhos = [
+  { href: '/disciplinas', label: 'Disciplinas semestrais' },
+  { href: '/cursos-livres', label: 'Cursos livres' },
+  { href: '/viagens-culturais', label: 'Viagens culturais' },
+  { href: '/confraternizacoes', label: 'Confraternizações' },
+  { href: '/unidades', label: 'Unidades' },
+];
+---
+<Base title="Página não encontrada · CICLOS+" description="Esta página não existe ou mudou de endereço." formNaPagina={false}>
+  <section class="nf">
+    <div class="wrap nf__grade">
+      <div>
+        <h1 class="nf__titulo">Esta página mudou de lugar.</h1>
+        <p class="nf__voz">Mas a curiosidade continua. Escolha por onde seguir:</p>
+        <ul class="nf__lista">
+          {caminhos.map((c) => <li><a href={c.href}>{c.label}</a></li>)}
+        </ul>
+        <div class="nf__acoes">
+          <a class="btn" href="/">Ir para o início</a>
+          <a class="link-arrow" href={whatsappLink('Olá! Quero conhecer a CICLOS+.')} target="_blank" rel="noopener">Falar no WhatsApp</a>
+        </div>
+      </div>
+      <div class="nf__simbolo" aria-hidden="true"><Marca tipo="simbolo" label={null} /></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .nf { padding-block: clamp(3rem, 7vw, 6rem) clamp(4.5rem, 9vw, 8rem); }
+  .nf__grade { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); gap: 3rem; align-items: center; }
+  .nf__titulo { font-size: clamp(3.5rem, 1.6rem + 5.4vw, 7rem); line-height: 0.88; color: var(--petrol); max-width: 12ch; }
+  .nf__voz { margin-top: 1.25rem; font-style: italic; color: var(--teal-ink); font-size: clamp(1.35rem, 1rem + 0.9vw, 1.85rem); }
+  .nf__lista { list-style: none; margin: 1.75rem 0 0; padding: 0; border-top: 1px solid #d9d4c7; max-width: 32rem; }
+  .nf__lista a {
+    display: block; padding-block: 0.8rem; border-bottom: 1px solid #d9d4c7;
+    font-family: var(--font-display); text-transform: uppercase; font-size: 2rem; line-height: 1;
+    color: var(--petrol); text-decoration: none;
+  }
+  .nf__lista a:hover { color: var(--teal-ink); }
+  .nf__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 2.25rem; }
+  .nf__simbolo { color: var(--mint); width: min(100%, 22rem); justify-self: center; }
+  .nf__simbolo :global(.marca) { width: 100%; height: auto; }
+  @media (max-width: 52rem) { .nf__grade { grid-template-columns: 1fr; } .nf__simbolo { display: none; } }
+</style>

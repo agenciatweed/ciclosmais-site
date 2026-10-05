@@ -1,0 +1,114 @@
+---
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Galeria from '../components/Galeria.astro';
+import QueroConhecer from '../components/QueroConhecer.astro';
+import { whatsappLink } from '../data/site';
+import escada from '../assets/img/Viagens Culturais - 11-min.jpg';
+import expo from '../assets/img/Viagens Culturais - IMG-20250608-WA00271.jpg';
+import monet from '../assets/img/Viagens Culturais - IMG-20250608-WA0031.jpg';
+import jardim from '../assets/img/Viagens Culturais - IMG_6521-min-scaled.jpg';
+import colorida from '../assets/img/Viagens Culturais - IMG_65551-min-scaled.jpg';
+import museu from '../assets/img/Viagens Culturais - IMG_6558-min-scaled.jpg';
+import vida from '../assets/img/Viagens Culturais - IMG_6591-min-scaled.jpg';
+import mural from '../assets/img/Viagens Culturais - IMG_6631-min-scaled.jpg';
+import espelho from '../assets/img/Viagens Culturais - IMG_6644-min-scaled.jpg';
+
+const roteiros = [
+  { ano: '2023', nome: 'Rio de Janeiro com Burle Marx', texto: 'O Rio visto pelo olhar do paisagismo de Roberto Burle Marx.' },
+  { ano: '2024', nome: 'São Paulo Arte & Design', texto: 'Museus, exposições e design numa imersão pela capital paulista.' },
+  { ano: '2025', nome: 'São Paulo Arte & Design', texto: 'A volta a São Paulo, com a exposição A ecologia de Monet no roteiro.' },
+];
+
+const jeito = [
+  { termo: 'Curadoria', texto: 'Cada roteiro é pensado para render descobertas culturais e boas conversas.' },
+  { termo: 'Segurança e conforto', texto: 'Planejamento cuidadoso para todo mundo viajar tranquilo.' },
+  { termo: 'No ritmo do grupo', texto: 'Uma programação atenta ao bem-estar e ao ritmo de cada participante.' },
+  { termo: 'Boa companhia', texto: 'Colegas de turma, novos amigos e muita história para contar na volta.' },
+];
+---
+<Base
+  title="Viagens culturais · CICLOS+ Escola Cultural 60+"
+  description="Viagens culturais da CICLOS+ para pessoas 60+: roteiros com curadoria, segurança e conforto, como Rio de Janeiro com Burle Marx e São Paulo Arte & Design."
+  imagem={monet}
+>
+  <Abertura
+    titulo="Viagens culturais"
+    voz="Aprender também é chegar num lugar novo com os amigos."
+    trilha={[{ href: '/viagens-culturais', label: 'Viagens culturais' }]}
+    foto={{ src: mural, alt: 'Grupo da CICLOS+ posa diante de um grande mural de arte urbana' }}
+    posicao="50% 60%"
+    anel="amarelo"
+  >
+    <p>
+      As viagens culturais da CICLOS+ unem aprendizado, lazer e convivência. Cada roteiro é pensado
+      para proporcionar descobertas culturais, conexões humanas e momentos inesquecíveis, sempre com
+      um olhar atento ao bem-estar e ao ritmo dos participantes.
+    </p>
+    <Fragment slot="acoes">
+      <a class="btn" href="#quero-conhecer">Quero saber do próximo roteiro</a>
+      <a class="link-arrow" href={whatsappLink('Olá! Quero saber das próximas viagens culturais da CICLOS+.')} target="_blank" rel="noopener">Falar no WhatsApp</a>
+    </Fragment>
+  </Abertura>
+
+  <section class="secao roteiros-sec" aria-labelledby="roteiros-titulo">
+    <div class="wrap">
+      <h2 id="roteiros-titulo" class="secao__titulo">Roteiros já realizados</h2>
+      <ol class="roteiros-lista">
+        {roteiros.map((r) => (
+          <li>
+            <span class="roteiros-lista__ano">{r.ano}</span>
+            <span class="roteiros-lista__nome">{r.nome}</span>
+            <span class="roteiros-lista__texto">{r.texto}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="secao secao--petroleo" aria-labelledby="jeito-titulo">
+    <div class="wrap">
+      <h2 id="jeito-titulo" class="secao__titulo">O jeito CICLOS+ de viajar</h2>
+      <p class="secao__voz">Cada viagem é planejada para dar segurança, conforto e uma programação que valoriza a troca de experiências.</p>
+      <ul class="fatos jeito__fatos">
+        {jeito.map((f) => <li><span class="fatos__termo">{f.termo}</span><span class="fatos__texto">{f.texto}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <Galeria
+    id="caminho"
+    titulo="Pelo caminho"
+    voz="Fotos das viagens culturais da CICLOS+."
+    fotos={[
+      { src: monet, alt: 'Alunas observam de perto uma pintura impressionista num museu' },
+      { src: expo, alt: 'Grupo reunido na entrada da exposição A ecologia de Monet' },
+      { src: escada, alt: 'Grupo da CICLOS+ posa numa escadaria, sorrindo' },
+      { src: colorida, alt: 'Alunas diante de uma obra colorida durante a viagem' },
+      { src: jardim, alt: 'Grupo sentado num jardim, em frente a um prédio envidraçado' },
+      { src: vida, alt: 'Duas alunas leem a frase A vida que se revela na parede de uma exposição' },
+      { src: museu, alt: 'Grupo caminha por um salão de museu com pinturas emolduradas' },
+      { src: espelho, alt: 'Grupo se diverte refletido numa grande escultura espelhada' },
+    ]}
+  />
+
+  <QueroConhecer assunto="Viagens culturais" />
+</Base>
+
+<style>
+  .roteiros-sec { padding-top: clamp(1rem, 3vw, 2rem); }
+  .roteiros-lista { list-style: none; margin: clamp(2rem, 4vw, 3rem) 0 0; padding: 0; border-top: 2px solid var(--petrol); }
+  .roteiros-lista li {
+    display: grid; grid-template-columns: minmax(6rem, 2fr) minmax(0, 5fr) minmax(0, 5fr);
+    gap: 0.5rem clamp(1.5rem, 3vw, 3rem); align-items: baseline;
+    padding-block: clamp(1.25rem, 2.4vw, 2rem); border-bottom: 1px solid #d9d4c7;
+  }
+  .roteiros-lista__ano { font-family: var(--font-display); font-size: clamp(3rem, 2.2rem + 2.6vw, 5rem); line-height: 0.9; color: var(--teal); }
+  .roteiros-lista__nome { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2rem, 1.6rem + 1.4vw, 3rem); line-height: 0.95; color: var(--petrol); }
+  .roteiros-lista__texto { font-style: italic; color: var(--ink); max-width: 36ch; }
+  .jeito__fatos { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+
+  @media (max-width: 52rem) {
+    .roteiros-lista li { grid-template-columns: 1fr; }
+  }
+</style>

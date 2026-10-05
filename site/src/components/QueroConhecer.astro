@@ -4,7 +4,11 @@ import { site, whatsappLink } from '../data/site';
 import { unidades } from '../data/unidades';
 import { disciplinas } from '../data/disciplinas';
 
-const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens culturais'];
+// assunto e unidade chegam pré-selecionados conforme a página onde o formulário aparece.
+interface Props { assunto?: string; unidade?: string }
+const { assunto, unidade } = Astro.props;
+
+const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens culturais', 'Confraternizações'];
 ---
 <section class="qc" id="quero-conhecer" aria-labelledby="qc-titulo">
   <Marca tipo="simbolo" label={null} class="qc__marca" />
@@ -36,7 +40,7 @@ const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens c
         <legend>Qual unidade?</legend>
         <div class="opcoes">
           {unidades.map((u, i) => (
-            <label class="opcao"><input type="radio" name="unidade" value={u.cidade} checked={i === 0} /><span>{u.cidade}</span></label>
+            <label class="opcao"><input type="radio" name="unidade" value={u.cidade} checked={unidade ? u.cidade === unidade : i === 0} /><span>{u.cidade}</span></label>
           ))}
         </div>
       </fieldset>
@@ -45,7 +49,7 @@ const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens c
         <legend>Que assuntos interessam você? <span class="opcional">(opcional)</span></legend>
         <div class="opcoes opcoes--chips">
           {assuntos.map((a) => (
-            <label class="opcao opcao--chip"><input type="checkbox" name="assuntos" value={a} /><span>{a}</span></label>
+            <label class="opcao opcao--chip"><input type="checkbox" name="assuntos" value={a} checked={a === assunto} /><span>{a}</span></label>
           ))}
         </div>
       </fieldset>
@@ -105,6 +109,7 @@ const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens c
         para: String(dados.get('para')),
         aceiteWhatsapp: dados.get('aceite') === 'on',
         origem: new URLSearchParams(location.search).get('utm_source') || 'site',
+        pagina: location.pathname,
       };
       const endpoint = form.dataset.endpoint;
       botao.disabled = true; botao.textContent = 'Enviando…';

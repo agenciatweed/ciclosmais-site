@@ -1,0 +1,133 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Abertura from '../../components/Abertura.astro';
+import Semana from '../../components/Semana.astro';
+import Galeria from '../../components/Galeria.astro';
+import QueroConhecer from '../../components/QueroConhecer.astro';
+import { disciplinas, comoFunciona } from '../../data/disciplinas';
+import { whatsappLink } from '../../data/site';
+import turma from '../../assets/img/Disciplinas Semestrais - Psicologia_06.jpg';
+import aulaA from '../../assets/img/Disciplinas Semestrais - IMG_9955-scaled.jpg';
+import aulaB from '../../assets/img/Disciplinas Semestrais - Historia-Geral_02.jpg';
+import aulaC from '../../assets/img/Disciplinas Semestrais - Psicologia_03.jpg';
+import aulaD from '../../assets/img/Disciplinas Semestrais - Aula-de-aquarela-CICLOS.jpeg';
+import aulaE from '../../assets/img/Disciplinas Semestrais - Historia-Geral_05.jpg';
+
+const horarioCurto = (d: (typeof disciplinas)[number]) =>
+  [...new Set(d.horarios.map((h) => h.dia))].join(', ') + ' · ' + d.horarios.map((h) => h.hora.split(' ')[0]).join(' e ');
+---
+<Base
+  title="Disciplinas semestrais · CICLOS+ Escola Cultural 60+"
+  description="Filosofia, História da Arte, Literatura, Aquarela, Arte Musical, Histórias Nacionais, História Geral e Vida Digital: disciplinas semestrais para pessoas 60+, com encontros semanais e sem provas."
+  imagem={turma}
+>
+  <Abertura
+    titulo="Disciplinas semestrais"
+    voz="Seu próximo assunto favorito começa aqui."
+    trilha={[{ href: '/disciplinas', label: 'Disciplinas' }]}
+    foto={{ src: turma, alt: 'Turma da CICLOS+ em sala de aula, acompanhando a apresentação do professor' }}
+    posicao="40% 50%"
+    forma="eliptico"
+  >
+    <p>
+      Na CICLOS+, as disciplinas presenciais são planejadas para levar conhecimento pela cultura e
+      incentivar o aprendizado contínuo e o convívio. História, arte, música, pensamento e o mundo digital,
+      com encontros semanais e professores qualificados em cada área.
+    </p>
+    <Fragment slot="acoes">
+      <a class="btn" href="#quero-conhecer">Quero conhecer as turmas</a>
+      <a class="link-arrow" href={whatsappLink('Olá! Quero saber das disciplinas semestrais da CICLOS+.')} target="_blank" rel="noopener">Falar no WhatsApp</a>
+    </Fragment>
+  </Abertura>
+
+  <section class="secao lista" aria-labelledby="lista-titulo">
+    <div class="wrap">
+      <h2 id="lista-titulo" class="secao__titulo">Escolha por onde começar</h2>
+      <p class="secao__voz">Oito disciplinas, oito portas de entrada para a CICLOS+.</p>
+      <ul class="lista__grade">
+        {disciplinas.map((d) => (
+          <li>
+            <a class="item" href={`/disciplinas/${d.slug}`}>
+              <span class="item__foto">
+                <Image src={d.foto.src} alt="" widths={[320, 480, 640]} sizes="(max-width: 36rem) 90vw, (max-width: 64rem) 45vw, 22vw" />
+              </span>
+              <span class="item__nome">{d.nome}</span>
+              {d.subtitulo && <span class="item__sub">{d.subtitulo}</span>}
+              <span class="item__frase">{d.frase}</span>
+              <span class="item__hora">{horarioCurto(d)}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="lista__nota">Horários da unidade Porto Alegre. Algumas imagens são ilustrativas.</p>
+    </div>
+  </section>
+
+  <section class="secao secao--petroleo" aria-labelledby="como-titulo">
+    <div class="wrap">
+      <h2 id="como-titulo" class="secao__titulo">Como funcionam</h2>
+      <p class="secao__voz">Uma escola de verdade, sem o peso de uma escola.</p>
+      <ul class="fatos como__fatos">
+        {comoFunciona.map((f) => (
+          <li><span class="fatos__termo">{f.termo}</span><span class="fatos__texto">{f.texto}</span></li>
+        ))}
+      </ul>
+      <div class="como__semana">
+        <Semana>
+          <a class="btn como__cta" href="#quero-conhecer">Quero conhecer as turmas</a>
+        </Semana>
+      </div>
+    </div>
+  </section>
+
+  <Galeria
+    id="sala"
+    titulo="Na sala de aula"
+    voz="Fotos de aulas da CICLOS+ em Porto Alegre."
+    fotos={[
+      { src: aulaD, alt: 'Alunas pintam aquarelas numa mesa ao ar livre, no Atelier de Criação' },
+      { src: aulaA, alt: 'Professor conduz uma aula para uma sala cheia de alunos atentos' },
+      { src: aulaB, alt: 'Turma em aula de História Geral, ouvindo o professor' },
+      { src: aulaC, alt: 'Sala de aula cheia, com alunas e alunos sentados em carteiras' },
+      { src: aulaE, alt: 'Alunos acompanham uma projeção durante a aula' },
+    ]}
+  />
+
+  <QueroConhecer />
+</Base>
+
+<style>
+  .lista { padding-top: clamp(1rem, 3vw, 2rem); }
+  .lista__grade {
+    list-style: none; margin: clamp(2.5rem, 5vw, 3.5rem) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(2.5rem, 4vw, 3.5rem) clamp(1.25rem, 2.4vw, 2.25rem);
+  }
+  .item { display: grid; gap: 0.4rem; align-content: start; color: inherit; text-decoration: none; }
+  .item__foto {
+    display: block; overflow: hidden; margin-bottom: 0.75rem;
+    border-radius: 50% 50% 1.25rem 1.25rem / 36% 36% 1.25rem 1.25rem;
+    border: 6px solid var(--mint); background: var(--paper-2);
+    transition: border-color 0.3s;
+  }
+  .item__foto :global(img) { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; transition: transform 0.9s var(--ease-out); }
+  .item__sub { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-ink); }
+  .item__nome { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2.1rem, 1.7rem + 1.2vw, 2.9rem); line-height: 0.95; color: var(--petrol); }
+  .item__frase { font-style: italic; color: var(--ink); line-height: 1.4; }
+  .item__hora {
+    margin-top: 0.5rem; justify-self: start;
+    font-weight: 700; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .item:hover .item__foto { border-color: var(--yellow); }
+  .item:hover .item__foto :global(img) { transform: scale(1.05); }
+  .item:hover .item__nome { color: var(--teal-ink); }
+  .item:focus-visible { outline-offset: 6px; }
+  .lista__nota { margin-top: 2.5rem; font-style: italic; color: var(--ink-soft); font-size: 1rem; }
+
+  .como__fatos { margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+  .como__semana { margin-top: clamp(4rem, 7vw, 6rem); }
+  .como__cta { margin-top: 2.25rem; }
+
+  @media (max-width: 64rem) { .lista__grade { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 36rem) { .lista__grade { grid-template-columns: 1fr; } .item__foto { max-width: 24rem; } }
+</style>

@@ -1,15 +1,20 @@
 ---
 import Marca from './Marca.astro';
 import { site, whatsappLink } from '../data/site';
+interface Props { formNaPagina?: boolean }
+const { formNaPagina = true } = Astro.props;
 const wa = whatsappLink('Olá! Quero conhecer a CICLOS+.');
+const cta = formNaPagina ? '#quero-conhecer' : '/#quero-conhecer';
 
 const links = [
-  { href: '/#sobre', label: 'Sobre' },
-  { href: '/#disciplinas', label: 'Disciplinas' },
-  { href: '/#cursos-livres', label: 'Cursos livres' },
-  { href: '/#viagens', label: 'Viagens' },
-  { href: '/#unidades', label: 'Unidades' },
+  { href: '/disciplinas', label: 'Disciplinas' },
+  { href: '/cursos-livres', label: 'Cursos livres' },
+  { href: '/viagens-culturais', label: 'Viagens' },
+  { href: '/confraternizacoes', label: 'Confraternizações' },
+  { href: '/unidades', label: 'Unidades' },
 ];
+const caminho = Astro.url.pathname.replace(/\/$/, '');
+const atual = (href: string) => (caminho === href || caminho.startsWith(`${href}/`) ? 'page' : undefined);
 ---
 <header class="topo">
   <div class="topo__barra wrap">
@@ -19,12 +24,12 @@ const links = [
 
     <nav class="topo__nav" aria-label="Principal">
       <ul>
-        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        {links.map((l) => <li><a href={l.href} aria-current={atual(l.href)}>{l.label}</a></li>)}
       </ul>
     </nav>
 
     <a class="topo__wa" href={wa} target="_blank" rel="noopener" aria-label="Falar no WhatsApp" title="Falar no WhatsApp"><svg class="topo__wa-icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z" /><path d="M9.2 8.6c.2 2.6 2.2 4.9 4.9 5.6l1.2-1.3 1.9.9-.4 1.6c-3.8.3-7.9-3.6-8.3-7.4l1.6-.5.9 1.9z" class="topo__wa-fone" /></svg></a>
-    <a class="btn topo__cta" href="/#quero-conhecer">Quero conhecer</a>
+    <a class="btn topo__cta" href={cta}>Quero conhecer</a>
 
     <a class="topo__wa topo__wa--movel" href={wa} target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg class="topo__wa-icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z" /><path d="M9.2 8.6c.2 2.6 2.2 4.9 4.9 5.6l1.2-1.3 1.9.9-.4 1.6c-3.8.3-7.9-3.6-8.3-7.4l1.6-.5.9 1.9z" class="topo__wa-fone" /></svg></a>
     <button class="topo__menu" type="button" aria-expanded="false" aria-controls="menu-movel">
@@ -35,9 +40,10 @@ const links = [
 
   <div class="topo__movel" id="menu-movel" hidden>
     <ul class="wrap">
-      {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      <li><a href="/#sobre">Sobre a CICLOS+</a></li>
+      {links.map((l) => <li><a href={l.href} aria-current={atual(l.href)}>{l.label}</a></li>)}
       <li><a href={wa} target="_blank" rel="noopener">WhatsApp {site.whatsapp.display}</a></li>
-      <li><a class="btn" href="/#quero-conhecer">Quero conhecer</a></li>
+      <li><a class="btn" href={cta}>Quero conhecer</a></li>
     </ul>
   </div>
 </header>
@@ -87,7 +93,8 @@ const links = [
     background: linear-gradient(var(--yellow), var(--yellow)) left 100% / 0 2px no-repeat;
     transition: background-size 0.35s var(--ease-out);
   }
-  .topo__nav a:hover { background-size: 100% 2px; }
+  .topo__nav a:hover, .topo__nav a[aria-current] { background-size: 100% 2px; }
+  .topo__nav a[aria-current] { color: var(--petrol); font-weight: 700; }
 
   .topo__wa {
     display: inline-flex; align-items: center; justify-content: center; width: 3rem; height: 3rem;
@@ -130,12 +137,31 @@ const links = [
     color: var(--petrol); text-decoration: none;
     border-bottom: 1px solid #e4e0d6;
   }
+  .topo__movel a[aria-current] { color: var(--teal-ink); }
   .topo__movel .btn { margin-top: 1rem; width: 100%; }
 
-  @media (max-width: 76rem) {
+  /* Telas médias: o menu completo cabe com espaçamentos mais justos */
+  @media (max-width: 92rem) {
+    .topo__barra { gap: 1.1rem; }
+    .topo__nav ul { gap: 1.1rem; }
+    .topo__nav a { font-size: 0.9rem; letter-spacing: 0.08em; }
+    .topo__cta { padding-inline: 1.25rem; }
+  }
+
+  @media (max-width: 79rem) {
     .topo__nav, .topo__cta, .topo__wa:not(.topo__wa--movel) { display: none; }
     .topo__menu { display: inline-flex; margin-left: 0; }
     .topo__wa--movel { display: inline-flex; margin-left: auto; }
     .topo__barra { min-height: 4.5rem; }
+  }
+
+  /* Celulares estreitos (360px): marca, botão e espaços mais compactos */
+  @media (max-width: 24rem) {
+    .topo__barra { gap: 0.6rem; }
+    .topo__marca :global(.marca) { height: 1.3rem; }
+    .topo__menu { padding-inline: 0.8rem; letter-spacing: 0.08em; }
+  }
+  @media (max-width: 21rem) {
+    .topo__marca :global(.marca) { height: 1.1rem; }
   }
 </style>

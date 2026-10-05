@@ -1,0 +1,110 @@
+---
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Galeria from '../components/Galeria.astro';
+import Marca from '../components/Marca.astro';
+import QueroConhecer from '../components/QueroConhecer.astro';
+import { whatsappLink } from '../data/site';
+import f1 from '../assets/img/Confraternizacoes - 06a.jpg';
+import f2 from '../assets/img/Confraternizacoes - 20241025_1609472-scaled.jpg';
+import f3 from '../assets/img/Confraternizacoes - 32.jpg';
+import f4 from '../assets/img/Confraternizacoes - 3ed0acf4fd23.jpg';
+import f5 from '../assets/img/Confraternizacoes - IMG_2716-scaled.jpg';
+import f6 from '../assets/img/Confraternizacoes - IMG_27441-scaled.jpg';
+import f7 from '../assets/img/Confraternizacoes - IMG_58841-scaled.jpg';
+
+const ocasioes = [
+  { termo: 'À mesa', texto: 'Jantares, almoços e cafés que viram extensão da aula.' },
+  { termo: 'Datas especiais', texto: 'O fim de ano e outras datas que pedem comemoração.' },
+  { termo: 'Entre turmas', texto: 'Um bom jeito de conhecer gente de outras disciplinas.' },
+];
+---
+<Base
+  title="Confraternizações · CICLOS+ Escola Cultural 60+"
+  description="Na CICLOS+, as confraternizações vão além do encontro social: são parte do jeito de viver a maturidade com alegria, amizade e novas histórias para contar."
+  imagem={f4}
+>
+  <Abertura
+    campo="menta"
+    titulo="Confraternizações"
+    voz="Aqui é um lugar de pertencimento."
+    trilha={[{ href: '/confraternizacoes', label: 'Confraternizações' }]}
+    foto={{ src: f1, alt: 'Duas alunas sorriem juntas, de copo na mão, durante uma confraternização' }}
+    posicao="50% 35%"
+    forma="circulo"
+    anel="papel"
+  >
+    <p>
+      A CICLOS+ não oferece apenas cursos. As confraternizações vão muito além do encontro social:
+      são parte do jeito CICLOS+ de viver a maturidade com alegria, amizade e novas histórias para contar.
+    </p>
+    <Fragment slot="acoes">
+      <a class="btn" href="#quero-conhecer">Quero fazer parte</a>
+      <a class="link-arrow" href={whatsappLink('Olá! Quero conhecer a CICLOS+.')} target="_blank" rel="noopener">Falar no WhatsApp</a>
+    </Fragment>
+  </Abertura>
+
+  <section class="secao" aria-labelledby="ocasioes-titulo">
+    <div class="wrap ocasioes__grade">
+      <div>
+        <h2 id="ocasioes-titulo" class="secao__titulo">A aula continua à mesa</h2>
+        <p class="secao__voz">O que começa numa disciplina vira amizade num jantar, num café ou numa festa de fim de ano.</p>
+      </div>
+      <ul class="fatos">
+        {ocasioes.map((f) => <li><span class="fatos__termo">{f.termo}</span><span class="fatos__texto">{f.texto}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao secao--petroleo palco" aria-labelledby="palco-titulo">
+    <Marca tipo="simbolo" label={null} class="palco__marca" />
+    <div class="wrap palco__grade">
+      <div>
+        <p class="palco__quando">Porto Alegre · novembro de 2025</p>
+        <h2 id="palco-titulo" class="palco__titulo">No Palco 60+<span>A vida em cartaz</span></h2>
+      </div>
+      <div class="palco__texto">
+        <p>
+          Um encontro que reuniu alunos, professores e convidados da CICLOS+ em torno de conversas sobre
+          arte, filosofia e economia na maturidade, com apresentação do grupo de Aquarela e o lançamento
+          da programação do ano seguinte.
+        </p>
+        <p>No encerramento, os professores subiram ao palco para tocar em banda.</p>
+      </div>
+    </div>
+  </section>
+
+  <Galeria
+    id="momentos"
+    titulo="Momentos juntos"
+    voz="Fotos de confraternizações da CICLOS+ em Porto Alegre."
+    fotos={[
+      { src: f4, alt: 'Alunas comemoram com os braços para o alto num salão cheio' },
+      { src: f5, alt: 'Alunas sorrindo à mesa num jantar de confraternização' },
+      { src: f2, alt: 'Três amigas sorriem à mesa, com lanches e bebidas' },
+      { src: f3, alt: 'Grupo reunido numa sala decorada para o Natal' },
+      { src: f6, alt: 'Alunas sorriem para a foto num jantar com taças sobre a mesa' },
+      { src: f7, alt: 'Três alunos posam juntos durante um encontro', pos: '50% 0%' },
+      { src: f1, alt: 'Duas alunas brindam durante uma confraternização' },
+    ]}
+  />
+
+  <QueroConhecer assunto="Confraternizações" />
+</Base>
+
+<style>
+  .ocasioes__grade { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+
+  .palco { position: relative; overflow: clip; }
+  .palco :global(.palco__marca) { position: absolute; right: -6rem; bottom: -8rem; width: min(30rem, 55vw); color: var(--mint); opacity: 0.16; pointer-events: none; }
+  .palco__grade { position: relative; display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: end; }
+  .palco__quando { font-weight: 700; font-size: 0.95rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--on-petrol-soft); }
+  .palco__titulo { margin-top: 0.75rem; font-size: clamp(3.5rem, 2rem + 5vw, 7.5rem); line-height: 0.88; color: var(--on-petrol); }
+  .palco__titulo span { display: block; color: var(--mint); font-size: 0.55em; margin-top: 0.4rem; }
+  .palco__texto { display: grid; gap: 1rem; color: var(--on-petrol-soft); max-width: 44ch; }
+  .palco__texto p:first-child { color: var(--on-petrol); }
+
+  @media (max-width: 56rem) {
+    .ocasioes__grade, .palco__grade { grid-template-columns: 1fr; }
+  }
+</style>

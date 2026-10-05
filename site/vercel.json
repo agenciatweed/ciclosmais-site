@@ -1,4 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "astro"
+  "framework": "astro",
+  "redirects": [
+    { "source": "/disciplinas-semestrais", "destination": "/disciplinas", "permanent": true },
+    { "source": "/disciplinas-semestrais/", "destination": "/disciplinas", "permanent": true },
+    { "source": "/cursos-livres-2", "destination": "/cursos-livres", "permanent": true },
+    { "source": "/cursos-livres-2/", "destination": "/cursos-livres", "permanent": true }
+  ]
 }

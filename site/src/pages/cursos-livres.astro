@@ -1,0 +1,140 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Galeria from '../components/Galeria.astro';
+import QueroConhecer from '../components/QueroConhecer.astro';
+import { whatsappLink } from '../data/site';
+import xadrez from '../assets/img/Cursos Livres - 02.jpg';
+import computadores from '../assets/img/Cursos Livres - 06.jpg';
+import palestra from '../assets/img/Cursos Livres - 09.jpg';
+import grupo from '../assets/img/Cursos Livres - 11.jpg';
+import verao from '../assets/img/Cursos Livres - IMG_77551-scaled.jpg';
+import clube from '../assets/img/geradas/clube-do-livro.jpg';
+import roteiros from '../assets/img/geradas/roteiros-culturais.jpg';
+
+const formatos = [
+  {
+    nome: 'Cursos de curta duração',
+    texto: 'Poucos encontros sobre um tema, do xadrez a ciclos temáticos como o Ciclo Verão. Para experimentar um assunto novo sem compromisso de semestre.',
+    foto: { src: verao, alt: 'Turma assiste a uma apresentação do Ciclo Verão num espaço com sofás' },
+  },
+  {
+    nome: 'Clube do livro',
+    texto: 'Um livro lido por todos e uma roda de conversa para dividir impressões, dúvidas e trechos favoritos.',
+    foto: { src: clube, alt: 'Roda de leitura com pessoas 60+ em poltronas, cada uma com o mesmo livro nas mãos', ilustrativa: true },
+  },
+  {
+    nome: 'Roteiros culturais',
+    texto: 'Museus, exposições, teatros e o patrimônio da cidade, visitados em grupo e com o olhar de quem estuda.',
+    foto: { src: roteiros, alt: 'Grupo de pessoas 60+ observa o teto pintado de um teatro histórico, com uma guia explicando', ilustrativa: true },
+  },
+];
+
+const fatos = [
+  { termo: 'Curta duração', texto: 'Formatos curtos, pensados para cada tema.' },
+  { termo: 'Às sextas', texto: 'O dia dos cursos livres, do clube do livro e dos roteiros.' },
+  { termo: 'Sem pré-requisito', texto: 'Basta a curiosidade. Ninguém precisa saber nada antes.' },
+  { termo: 'Temas que mudam', texto: 'A programação se renova ao longo do ano.' },
+];
+---
+<Base
+  title="Cursos livres · CICLOS+ Escola Cultural 60+"
+  description="Cursos de curta duração, clube do livro e roteiros culturais para pessoas 60+. Uma forma leve de experimentar a CICLOS+, no seu ritmo."
+  imagem={xadrez}
+>
+  <Abertura
+    titulo="Cursos livres"
+    voz="O aprendizado nunca tem idade para começar ou recomeçar."
+    trilha={[{ href: '/cursos-livres', label: 'Cursos livres' }]}
+    foto={{ src: xadrez, alt: 'Alunos jogando xadrez durante um curso livre, com a professora ao fundo' }}
+  >
+    <p>
+      Cursos de curta duração para pessoas 60+, que estimulam a criatividade, o desenvolvimento pessoal
+      e a qualidade de vida. A abordagem é integrativa e acolhedora, no ritmo e nos interesses de cada aluno.
+    </p>
+    <Fragment slot="acoes">
+      <a class="btn" href="#quero-conhecer">Quero saber dos próximos cursos</a>
+      <a class="link-arrow" href={whatsappLink('Olá! Quero saber dos próximos cursos livres da CICLOS+.')} target="_blank" rel="noopener">Falar no WhatsApp</a>
+    </Fragment>
+  </Abertura>
+
+  <section class="secao secao--petroleo" aria-labelledby="sextas-titulo">
+    <div class="wrap">
+      <h2 id="sextas-titulo" class="secao__titulo">As sextas-feiras na CICLOS+</h2>
+      <p class="secao__voz">Três formatos para quem quer mais do que a aula da semana.</p>
+      <ul class="formatos">
+        {formatos.map((f) => (
+          <li>
+            <figure class="formato__foto">
+              <Image src={f.foto.src} alt={f.foto.alt} widths={[360, 520, 720]} sizes="(max-width: 56rem) 90vw, 28vw" />
+              <figcaption>{f.foto.ilustrativa ? 'Imagem ilustrativa.' : 'Foto da CICLOS+ Porto Alegre.'}</figcaption>
+            </figure>
+            <h3 class="formato__nome">{f.nome}</h3>
+            <p class="formato__texto">{f.texto}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao comecar" aria-labelledby="comecar-titulo">
+    <div class="wrap comecar__grade">
+      <div>
+        <h2 id="comecar-titulo" class="secao__titulo">Um jeito leve de começar</h2>
+        <p class="secao__voz">Para conhecer a escola, a turma e os professores antes de escolher uma disciplina.</p>
+        <div class="comecar__acoes">
+          <a class="btn" href="#quero-conhecer">Quero receber a programação</a>
+          <a class="link-arrow" href="/disciplinas">Conhecer as disciplinas</a>
+        </div>
+      </div>
+      <ul class="fatos">
+        {fatos.map((f) => <li><span class="fatos__termo">{f.termo}</span><span class="fatos__texto">{f.texto}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <Galeria
+    id="ja-aconteceu"
+    titulo="Cursos livres que já aconteceram"
+    voz="Fotos de encontros da CICLOS+ em Porto Alegre."
+    fotos={[
+      { src: grupo, alt: 'Grande grupo de alunas e alunos posa junto numa sala com parede amarela' },
+      { src: palestra, alt: 'Professor apresenta conteúdo projetado para alunos atentos' },
+      { src: computadores, alt: 'Alunos acompanham uma aula numa sala com computadores' },
+      { src: xadrez, alt: 'Alunos jogando xadrez durante um curso livre' },
+      { src: verao, alt: 'Turma assiste a uma apresentação do Ciclo Verão' },
+    ]}
+  />
+
+  <QueroConhecer assunto="Cursos livres" />
+</Base>
+
+<style>
+  .formatos {
+    list-style: none; margin: clamp(2.5rem, 5vw, 3.5rem) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(2.5rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 3rem);
+  }
+  .formatos li { display: grid; gap: 0.6rem; align-content: start; }
+  .formato__foto { margin: 0 0 0.75rem; }
+  .formato__foto :global(img) {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 999px 999px 1.25rem 1.25rem; border: 6px solid var(--mint);
+  }
+  .formatos li:nth-child(2) .formato__foto :global(img) { border-color: var(--yellow); }
+  .formato__foto figcaption { margin-top: 0.6rem; font-style: italic; font-size: 0.95rem; color: var(--on-petrol-soft); }
+  .formato__nome { font-size: clamp(2.1rem, 1.7rem + 1.2vw, 2.9rem); color: var(--mint); }
+  .formato__texto { color: var(--on-petrol-soft); max-width: 36ch; }
+
+  .comecar { padding-bottom: 0; }
+  .comecar__grade { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+  .comecar__grade .fatos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .comecar__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 2rem; }
+
+  @media (max-width: 56rem) {
+    .formatos { grid-template-columns: 1fr; }
+    .formato__foto { max-width: 26rem; }
+    .comecar__grade { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 30rem) { .comecar__grade .fatos { grid-template-columns: 1fr; } }
+</style>

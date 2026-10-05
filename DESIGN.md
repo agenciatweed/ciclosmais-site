@@ -213,7 +213,7 @@ Container único `.wrap`: largura máxima 88rem, margem lateral `clamp(1.25rem, 
 
 As composições são grades assimétricas de duas colunas em frações (5/7, 5/6, 6/5, 7/4, 8/4) com gap `clamp(2.5rem, 6vw, 6rem)`, alternando o lado da foto de uma seção para a outra. Colagens de fotos usam grades explícitas (12 colunas × 10 linhas em Cursos livres; 5fr/3fr/3fr em Confraternizações). Listas editoriais (disciplinas, roteiros, mídia) são linhas com fio fino e colunas internas, não cartões.
 
-Responsivo: as grades de duas colunas colapsam em uma entre 52rem e 60rem; a navegação vira menu "Menu" + WhatsApp abaixo de 76rem; a grade semanal vira lista abaixo de 40rem; a faixa de atuações vira 2×2 abaixo de 40rem. No hero, abaixo de 60rem o símbolo desce para baixo do texto, a curva amarela some e as palavras dos braços reposicionam sob as fotos. `scroll-padding-top: 6rem` compensa o cabeçalho fixo.
+Responsivo: as grades de duas colunas colapsam em uma entre 52rem e 60rem; a navegação vira menu "Menu" + WhatsApp abaixo de 79rem; a grade semanal vira lista abaixo de 40rem; a faixa de atuações vira 2×2 abaixo de 40rem. No hero, abaixo de 60rem o símbolo desce para baixo do texto, a curva amarela some e as palavras dos braços reposicionam sob as fotos. `scroll-padding-top: 6rem` compensa o cabeçalho fixo.
 
 ## Elevation & Depth
 
@@ -266,11 +266,20 @@ Pílulas amarelas, cheias e confiantes, com texto em caixa-alta espaçada.
 
 ### Navigation
 - **Cabeçalho fixo:** papel a 92% com desfoque de 10px, altura 5.5rem (4.5rem no móvel); wordmark CICLOS+ em petróleo à esquerda; links em Playfair 600 caixa-alta espaçada 0.16em, `petrol-ink`; hover desenha um sublinhado amarelo de 2px da esquerda para a direita. Ao rolar, ganha fio `line-paper` e sombra suave.
-- **Móvel (< 76rem):** botão pílula "Menu" contornado em petróleo com ícone de três linhas que vira X; o painel abre com links em League Gothic 2.2rem e o botão amarelo em largura total. Esc fecha.
+- **Links:** Disciplinas, Cursos livres, Viagens, Confraternizações, Unidades (páginas). A página atual fica com o sublinhado amarelo fixo e `aria-current="page"`. Entre 79rem e 92rem o menu fica mais compacto (0.9rem, espaçamento 0.08em).
+- **Móvel (< 79rem):** botão pílula "Menu" contornado em petróleo com ícone de três linhas que vira X; o painel abre com links em League Gothic 2.2rem (incluindo "Sobre a CICLOS+") e o botão amarelo em largura total. Esc fecha. Abaixo de 24rem a marca e o botão encolhem para caber em 360px.
 - **Faixa de atuações:** faixa de feltro petróleo sob o hero, quatro links em caixa-alta espaçada 0.24em separados por pontos menta, mesmo sublinhado amarelo no hover.
 
 ### O Ciclo (componente assinatura)
 O símbolo de três espirais em menta (`ciclos-simbolo.svg`, colorido por `currentColor`) ocupa ~44% da largura de uma caixa 1.25:1; três fotos circulares com anel menta ficam nos braços, cada uma com sua palavra (Aprender, Conectar, Viver) em League Gothic petróleo, e cada uma é um link para sua seção. Atrás, uma curva amarela atravessa o hero. No hover, a foto cresce 3% e o anel vira amarelo. Ao carregar: o símbolo gira de -120° a 0 (1.8s), as fotos assentam de 82% a 100% em cascata de 0.15s, e a curva se desenha (2.8s), tudo em `cubic-bezier(0.16, 1, 0.3, 1)`. Com `prefers-reduced-motion: reduce`, nada se move.
+
+### Páginas internas
+- **Abertura:** grade 6/5 sobre papel (ou campo menta inteiro em Confraternizações): trilha, sobretítulo em caixa-alta espaçada `teal-ink`, h1 League Gothic até 7.5rem, voz itálica, texto e ações (botão amarelo + link com seta WhatsApp). À direita, uma foto em arco, arco elíptico ou círculo com anel de 8px (menta, amarelo ou papel). Sem foto (Pelotas, Unidades), o símbolo menta ocupa o lugar e gira um terço de volta ao carregar.
+- **Trilha (breadcrumb):** links `teal-ink` separados por pontos menta; a página atual em itálico `ink-soft`. Variante `menta` com petróleo.
+- **Fatos:** termo em League Gothic (teal sobre papel, menta sobre petróleo) + uma linha de texto, cada item com fio de 2px no topo. Para "como funcionam", ocasiões, jeito de viajar.
+- **Galeria:** fotos reais em colunas (3 / 2 / 1), proporção original, raio 1.25rem, a primeira com topo em arco.
+- **Imagens ilustrativas:** imagens geradas por IA só ilustram disciplinas e formatos de curso livre, sempre com a legenda "Imagem ilustrativa." e o `.json` de origem ao lado. Nunca representam alunos, unidades ou eventos reais.
+- Toda página interna termina no campo amarelo "Quero conhecer", com o assunto ou a unidade da página já marcados.
 
 ### Listas editoriais
 Disciplinas, roteiros e mídia são linhas separadas por fios, com um termo em League Gothic à esquerda e texto Playfair à direita. Sobre petróleo, os nomes alternam ciano e branco, e a linha inteira acende em limão no hover. Na mídia, a seta diagonal desliza 3px no hover e a linha ganha véu menta a 12%.

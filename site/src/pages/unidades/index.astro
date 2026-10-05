@@ -1,0 +1,33 @@
+---
+import Base from '../../layouts/Base.astro';
+import Abertura from '../../components/Abertura.astro';
+import Unidades from '../../components/Unidades.astro';
+import QueroConhecer from '../../components/QueroConhecer.astro';
+import { whatsappLink } from '../../data/site';
+import { unidades } from '../../data/unidades';
+
+const cidades = unidades.map((u) => u.cidade).join(' e ');
+---
+<Base
+  title="Unidades · CICLOS+ Escola Cultural 60+"
+  description={`A CICLOS+ está em ${cidades}. Endereços, como chegar e como conhecer a escola cultural 60+ na sua cidade.`}
+>
+  <Abertura
+    titulo="Unidades"
+    voz="Onde a CICLOS+ acontece."
+    trilha={[{ href: '/unidades', label: 'Unidades' }]}
+  >
+    <p>
+      A CICLOS+ está em {cidades} e cresce por franquias. Em cada cidade, a mesma escola: aulas sem provas,
+      professores de cada área e uma turma para chamar de sua.
+    </p>
+    <Fragment slot="acoes">
+      <a class="btn" href="#quero-conhecer">Quero conhecer</a>
+      <a class="link-arrow" href={whatsappLink('Olá! Quero conhecer a CICLOS+.')} target="_blank" rel="noopener">Falar no WhatsApp</a>
+    </Fragment>
+  </Abertura>
+
+  <Unidades titulo="Nossas unidades" tituloVisivel={false} />
+
+  <QueroConhecer />
+</Base>

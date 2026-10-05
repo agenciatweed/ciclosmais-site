@@ -12,12 +12,23 @@ const ano = new Date().getFullYear();
       <p class="rodape__desc">Escola Cultural 60+</p>
     </div>
 
+    <nav aria-labelledby="rodape-escola">
+      <h2 class="rodape__titulo" id="rodape-escola">A escola</h2>
+      <ul class="rodape__lista">
+        <li><a href="/#sobre">Sobre a CICLOS+</a></li>
+        <li><a href="/disciplinas">Disciplinas semestrais</a></li>
+        <li><a href="/cursos-livres">Cursos livres</a></li>
+        <li><a href="/viagens-culturais">Viagens culturais</a></li>
+        <li><a href="/confraternizacoes">Confraternizações</a></li>
+      </ul>
+    </nav>
+
     <div>
-      <h2 class="rodape__titulo">Unidades</h2>
+      <h2 class="rodape__titulo"><a href="/unidades">Unidades</a></h2>
       <ul class="rodape__lista">
         {unidades.map((u) => (
           <li>
-            <strong>{u.cidade}</strong>
+            <a href={`/unidades/${u.slug}`}><strong>{u.cidade}</strong></a>
             <span>{u.local ? `${u.local} · ` : ''}{u.endereco}</span>
           </li>
         ))}
@@ -46,9 +57,13 @@ const ano = new Date().getFullYear();
   }
   .rodape__grade {
     display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
+    grid-template-columns: 1.2fr 1fr 1fr 1fr;
     gap: 3rem;
   }
+  .rodape__titulo a { color: inherit; text-decoration: none; }
+  .rodape__titulo a:hover { color: var(--yellow); }
+  .rodape__lista a strong { display: inline; }
+  .rodape__lista a:has(strong) { color: var(--on-petrol); }
   .rodape__marca { color: var(--on-petrol); }
   .rodape__marca :global(.rodape__simbolo) { width: 5.5rem; color: var(--mint); margin-bottom: 1.5rem; }
   .rodape__marca :global(.rodape__wordmark) { width: 13rem; height: auto; }
@@ -64,5 +79,6 @@ const ano = new Date().getFullYear();
     font-size: 0.95rem;
   }
   .rodape__base::before { content: ''; position: absolute; top: 0; left: var(--gutter); right: var(--gutter); height: 1px; background: rgba(199, 227, 234, 0.25); }
-  @media (max-width: 52rem) { .rodape__grade { grid-template-columns: 1fr; } }
+  @media (max-width: 64rem) { .rodape__grade { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 40rem) { .rodape__grade { grid-template-columns: 1fr; } }
 </style>

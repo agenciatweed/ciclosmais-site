@@ -1,0 +1,38 @@
+---
+// Trilha de navegação (breadcrumb). O último item é a página atual.
+interface Props { itens: { href: string; label: string }[]; tom?: 'papel' | 'menta' }
+const { itens, tom = 'papel' } = Astro.props;
+const todos = [{ href: '/', label: 'Início' }, ...itens];
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: todos.map((i, n) => ({ '@type': 'ListItem', position: n + 1, name: i.label, item: new URL(i.href, Astro.site).href })),
+};
+---
+<nav class:list={['trilha', `trilha--${tom}`]} aria-label="Você está em">
+  <ol>
+    {todos.map((i, n) => (
+      <li>
+        {n < todos.length - 1
+          ? <a href={i.href}>{i.label}</a>
+          : <span aria-current="page">{i.label}</span>}
+      </li>
+    ))}
+  </ol>
+</nav>
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />
+
+<style>
+  .trilha ol { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.25rem 0; font-size: 1rem; }
+  .trilha li { display: inline-flex; align-items: center; }
+  .trilha li + li::before {
+    content: ''; width: 0.4rem; height: 0.4rem; border-radius: 50%; background: var(--mint);
+    margin-inline: 0.75rem;
+  }
+  .trilha a { color: var(--teal-ink); font-weight: 600; padding-block: 0.6rem; }
+  .trilha a:hover { color: var(--petrol); }
+  .trilha [aria-current] { color: var(--ink-soft); font-style: italic; }
+  .trilha--menta a, .trilha--menta [aria-current] { color: var(--petrol-ink); }
+  .trilha--menta a:hover { color: var(--petrol); }
+  .trilha--menta li + li::before { background: var(--petrol); }
+</style>
