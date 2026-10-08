@@ -1,0 +1,16 @@
+# Configuracao para hospedagem Apache/LiteSpeed (Hostinger).
+# Equivale aos redirecionamentos de site/vercel.json, que a Hostinger ignora.
+
+RewriteEngine On
+
+# Sempre https e sem www
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://ciclosmais.com%{REQUEST_URI} [L,R=301]
+
+# URLs antigas do WordPress
+RewriteRule ^disciplinas-semestrais/?$ /disciplinas/ [R=301,L]
+RewriteRule ^cursos-livres-2/?$ /cursos-livres/ [R=301,L]
+
+# Pagina de erro da CICLOS+
+ErrorDocument 404 /404.html

@@ -64,6 +64,7 @@ No Claude Code Desktop, o arquivo [.claude/launch.json](.claude/launch.json) já
   3. `8234746` — solução final: o projeto na Vercel usa **Root Directory = `site/`** com detecção automática do Astro. O `vercel.json` da raiz foi removido; ficou só `site/vercel.json` com `"framework": "astro"`.
   4. Depois: ajuste da foto do mosaico de Confraternizações e as páginas internas (out/2026). Veja `git log`.
 - `site/vercel.json` também guarda os **redirecionamentos 301** das URLs antigas do WordPress (`/disciplinas-semestrais` → `/disciplinas`, `/cursos-livres-2` → `/cursos-livres`). `/viagens-culturais`, `/confraternizacoes` e `/unidades` mantêm o mesmo endereço do site antigo.
+- **Hostinger:** o site vai ao ar em `ciclosmais.com` na Hostinger, enviando por FTP o **conteúdo** de `site/dist/` para `public_html`. Lá o `vercel.json` é ignorado: os mesmos redirecionamentos, o https sem www e a página 404 estão em `site/public/.htaccess`, que entra no `dist` a cada build. Se mudar um redirecionamento, mude nos dois arquivos. A cada atualização: build e reenvio do `dist` (de vez em quando, apague a pasta `_astro` do servidor antes de enviar).
 - **Não** recrie um `vercel.json` na raiz com comandos customizados: isso quebra o caminho, já que a Vercel roda tudo a partir de `site/`.
 - Deploy é automático a cada push em `main` (integração Git da Vercel).
 - `.gitattributes` força `eol=lf` e marca imagens/PDFs como binários (o projeto é editado no Windows).
@@ -95,7 +96,7 @@ Mundo visual:
 site/
   astro.config.mjs        site: https://ciclosmais.com
   vercel.json             framework: astro + redirecionamentos das URLs antigas
-  public/                 favicon.svg, robots.txt, textures/
+  public/                 favicon.svg, robots.txt, .htaccess (Hostinger), textures/
   src/
     pages/
       index.astro         Home: monta as seções na ordem abaixo
@@ -166,12 +167,12 @@ Pendências que dependem da cliente (marcadas `PENDENTE` no código):
 - Revisar com a CICLOS+ os **textos das páginas de disciplina** (resumo, "Sobre a disciplina" e "Perguntas que movem a turma"), todos redigidos para o site, e os textos curtos de cursos livres, viagens (descrição de cada roteiro) e confraternizações.
 - **Programação de Pelotas**: a página da unidade não mostra grade (campo `mostraGrade: false`) e convida a pedir a programação no WhatsApp. Quando houver grade de Pelotas, criar os dados e exibir.
 - **Fotos reais** das aulas para substituir as imagens ilustrativas geradas.
-- As tags `og:image` usam o domínio `ciclosmais.com` (de `astro.config.mjs`), então as prévias de compartilhamento só funcionam depois que o domínio apontar para a Vercel.
+- As tags `og:image` usam o domínio `ciclosmais.com` (de `astro.config.mjs`), então as prévias de compartilhamento só funcionam depois que o site estiver no ar nesse domínio.
 - Conteúdo atualizado da seção **Na mídia** (links e números do site antigo estão datados).
 - Masterclass de outubro (tema, data, preço, local), as 4 aulas de novembro / "Passaporte Novembro", grade 2027 de Pelotas, newsletter (manter ou não).
 
 Próximas etapas prováveis:
-1. Conectar o domínio `ciclosmais.com` na Vercel e colocar o site no ar (campanhas "Always On" apontando para a Home).
+1. Publicar na Hostinger em `ciclosmais.com` (backup do WordPress antigo, envio do `dist` por FTP, SSL, testes) e enviar o sitemap ao Google Search Console. Campanhas "Always On" apontando para a Home.
 2. Integrar o backend do formulário.
 3. Landing pages da campanha de Pelotas (Masterclass → cursos livres de novembro → lista prioritária / inscrição 2027), reaproveitando `Abertura`, `QueroConhecer` (com `unidade="Pelotas"`) e registrando a origem do lead (UTM/QR).
 
