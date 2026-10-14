@@ -134,6 +134,7 @@ site/
       img/                fotos reais (nome do arquivo = categoria - original)
       img/equipe/         Juliana Enderle e Cristiano Cunha
       img/geradas/        imagens ilustrativas geradas no Magnific (+ .json de origem)
+      img/obras/          obras barrocas em domínio público usadas na LP da masterclass
 scripts/publicar_ftp.py   publica site/dist/ na Hostinger por FTPS (credenciais em .ftp.env; --config envia o SMTP)
 servidor/                 configuração do envio de formulários (o arquivo real com a senha fica fora do Git)
 marca-fontes/             SVGs/PNGs de trabalho da vetorização do logo
@@ -171,7 +172,7 @@ Em [site/src/components/QueroConhecer.astro](site/src/components/QueroConhecer.a
 - ✅ Testado em 1480, 1280, 800, 375, 360 e 320 px sem rolagem horizontal.
 - ✅ **No ar em https://ciclosmais.com (Hostinger)** desde 14/10/2026. Conferido: os 382 arquivos do `dist` estão no servidor. Publicação por `scripts/publicar_ftp.py`.
 - ✅ Fotos novas da Juliana e do Cristiano (`assets/img/equipe/juliana-enderle.png` e `cristiano-cunha.png`).
-- ✅ **Landing page da Masterclass de Pelotas** em `https://ciclosmais.com/masterclass` ("Arte, Sabores e Sentidos": aula de ~40 min sobre o Barroco + degustação de vinhos com sommelier, 18h, Rampa Innovation Hub). Dados em `data/eventos.ts`; formulário curto `components/InscricaoEvento.astro` (nome + WhatsApp obrigatórios; origem e assuntos opcionais; envia `utm_source`/`utm_campaign`); cabeçalho reduzido sem menu (`landing` em `Base`/`Header`); barra fixa "Reservar meu lugar" no celular; seção do funil (outubro → aulas livres de novembro → disciplinas 2027). A página da unidade Pelotas mostra o evento em destaque. Imagens ilustrativas `geradas/masterclass-*.jpg`.
+- ✅ **Landing page da Masterclass de Pelotas** em `https://ciclosmais.com/masterclass` ("Arte, Sabores e Sentidos": aula de ~40 min sobre o Barroco + degustação de vinhos com sommelier, 18h, Rampa Innovation Hub). Dados em `data/eventos.ts`; formulário curto `components/InscricaoEvento.astro` (nome + WhatsApp obrigatórios; origem e assuntos opcionais; envia `utm_source`/`utm_campaign`); cabeçalho reduzido sem menu (`landing` em `Base`/`Header`); barra fixa "Reservar meu lugar" no celular; seção do funil (outubro → aulas livres de novembro → disciplinas 2027). A página da unidade Pelotas mostra o evento em destaque. Conteúdo e imagens vêm do PDF da cliente (`Arte, Sabores e Sentidos_CARAVAGGIO_23.09.pdf`): conceito "Caravaggio: entre luz, sombra e vinho", seção "Caravaggio em quatro atos" (A Luz, O Desejo, A Sombra, A Redenção, com as frases e obras do PDF) e **só obras barrocas reais, em domínio público**, em `assets/img/obras/` (Caravaggio, Ottavio Leoni, Velázquez, Andrea Pozzo; origem no `.json` ao lado). Por decisão da cliente, a LP não usa imagens geradas.
 
 ## 9. Pendências e próximos passos
 
@@ -179,7 +180,8 @@ Segurança (urgente):
 - **WordPress antigo exposto:** `public_html/oldxxx/` tem o WordPress inteiro (13.701 arquivos, com `wp-config.php` e plugins desatualizados), e `ciclosmais.com/oldxxx/wp-login.php` responde 200. Confirmar que há backup baixado e então apagar a pasta ou movê-la para fora do `public_html`.
 
 Pendências que dependem da cliente (marcadas `PENDENTE` no código):
-- **Masterclass:** data confirmada (quarta, 28/10/2026, das 19h às 21h30). Faltam investimento (gratuita ou valor), nome da sommelier e da professora, número de vagas. Tudo em `data/eventos.ts`. Confirmar também o **WhatsApp de Pelotas** (sem ele, o link de WhatsApp da página vai para o número geral).
+- **Masterclass:** data confirmada (quarta, 28/10/2026, das 19h às 21h30). Faltam investimento (gratuita ou valor), nome da sommelier e da professora, número de vagas. Tudo em `data/eventos.ts`. Confirmar se a degustação segue de fato os quatro atos da aula (a página afirma isso com base nos slides finais do PDF).
+- **WhatsApp de Pelotas:** (53) 9953-7070, informado pela cliente e já em `unidades.ts`. Tem só 8 dígitos depois do DDD (formato antigo de celular): confirmar se é isso mesmo ou (53) 9**9**953-7070.
 - **WhatsApp oficial**: o site antigo usa dois números, (51) 99343-3639 (usado hoje) e (51) 98153-0001. Confirmar e decidir se cada unidade tem o seu (campo `whatsapp` opcional em `unidades.ts`).
 - **Fotos de Pelotas** (hoje todas são de Porto Alegre).
 - Revisar com a CICLOS+ as frases de **Literatura** e **Vida Digital**, que foram redigidas para o site.

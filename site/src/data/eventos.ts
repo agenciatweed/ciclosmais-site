@@ -5,6 +5,7 @@ export type Evento = {
   slug: string;
   tipo: string;
   titulo: string;
+  subtitulo?: string;
   voz: string;
   resumo: string;
   unidade: string; // slug de data/unidades.ts
@@ -20,9 +21,10 @@ export const masterclassPelotas: Evento = {
   slug: 'masterclass',
   tipo: 'Masterclass CICLOS+ Pelotas',
   titulo: 'Arte, Sabores e Sentidos',
-  voz: 'Uma aula sobre o Barroco e uma degustação de vinhos com sommelier.',
+  subtitulo: 'Caravaggio: entre luz, sombra e vinho',
+  voz: 'Uma aula sobre Caravaggio e o Barroco e uma degustação de vinhos com sommelier.',
   resumo:
-    'Uma noite para olhar a arte com outros olhos e provar o que ela tem de sabor: cerca de 40 minutos de História da Arte sobre o Barroco e, depois, uma degustação de vinhos conduzida por uma sommelier.',
+    'Uma noite para olhar a arte com outros olhos e provar o que ela tem de sabor: cerca de 40 minutos de História da Arte sobre Caravaggio e o Barroco e, depois, uma degustação de vinhos conduzida por uma sommelier.',
   unidade: 'pelotas',
   quando: 'Quarta-feira, 28 de outubro',
   hora: '19h',

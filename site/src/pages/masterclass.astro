@@ -9,10 +9,15 @@ import { masterclassPelotas as ev } from '../data/eventos';
 import { unidadePorSlug } from '../data/unidades';
 import { disciplinas } from '../data/disciplinas';
 import { site, whatsappLink } from '../data/site';
-import abertura from '../assets/img/geradas/masterclass-abertura.jpg';
-import aula from '../assets/img/geradas/masterclass-aula.jpg';
-import degustacao from '../assets/img/geradas/masterclass-degustacao.jpg';
-import naturezaMorta from '../assets/img/geradas/masterclass-natureza-morta.jpg';
+// Obras barrocas (domínio público) extraídas da apresentação da masterclass.
+import abertura from '../assets/img/obras/caravaggio-baco-detalhe.jpg';
+import retrato from '../assets/img/obras/leoni-retrato-de-caravaggio.jpg';
+import triunfo from '../assets/img/obras/velazquez-o-triunfo-de-baco.jpg';
+import pozzo from '../assets/img/obras/pozzo-apoteose-de-santo-inacio.jpg';
+import vocacao from '../assets/img/obras/caravaggio-vocacao-de-sao-mateus.jpg';
+import baco from '../assets/img/obras/caravaggio-baco.jpg';
+import captura from '../assets/img/obras/caravaggio-captura-de-cristo.jpg';
+import davi from '../assets/img/obras/caravaggio-davi-com-a-cabeca-de-golias.jpg';
 import fotoAula from '../assets/img/Disciplinas Semestrais - IMG_9955-scaled.jpg';
 import fotoFesta from '../assets/img/Confraternizacoes - 3ed0acf4fd23.jpg';
 import fotoViagem from '../assets/img/Viagens Culturais - IMG-20250608-WA0031.jpg';
@@ -26,6 +31,14 @@ const fatos = [
   { termo: 'Onde', texto: `${u.local}, ${u.cidade}` },
   { termo: 'O que', texto: 'Aula de cerca de 40 minutos + degustação de vinhos' },
   { termo: 'Para quem', texto: 'Pessoas 60+ com curiosidade. Ninguém precisa entender de arte nem de vinho.' },
+];
+
+// Os quatro atos da aula, com frases e obras da apresentação da masterclass.
+const atos = [
+  { n: 1, nome: 'A Luz', tema: 'O instante em que algo se revela', frase: 'Começamos pela luz. Antes da sombra, existe o contraste.', obra: vocacao, legenda: 'A vocação de São Mateus, 1599–1600', alt: 'Pintura de Caravaggio: um feixe de luz atravessa uma sala escura e ilumina homens sentados à mesa enquanto Cristo aponta para Mateus', pos: '50% 40%' },
+  { n: 2, nome: 'O Desejo', tema: 'Prazer, matéria e proximidade', frase: 'Caravaggio pinta o sagrado e o profano com a mesma carne.', obra: baco, legenda: 'Baco, 1596', alt: 'Pintura de Caravaggio: o deus Baco, coroado de folhas de uva, oferece uma taça de vinho tinto', pos: '50% 30%' },
+  { n: 3, nome: 'A Sombra', tema: 'Violência, silêncio e dúvida', frase: 'Na sombra, Caravaggio guarda aquilo que não revela completamente.', obra: captura, legenda: 'A captura de Cristo, 1602', alt: 'Pintura de Caravaggio: soldados de armadura agarram Cristo na escuridão, iluminados por uma luz lateral', pos: '40% 40%' },
+  { n: 4, nome: 'A Redenção', tema: 'Culpa, compaixão e humanidade', frase: 'Depois da luz e da sombra, resta a humanidade.', obra: davi, legenda: 'Davi com a cabeça de Golias, 1610', alt: 'Pintura de Caravaggio: o jovem Davi, de expressão melancólica, segura a cabeça de Golias', pos: '50% 30%' },
 ];
 
 const paraQuem = [
@@ -42,6 +55,7 @@ const caminho = [
 ];
 
 const perguntas = [
+  { p: 'Sobre o que é a aula?', r: 'Sobre Caravaggio e o Barroco: a vida do pintor e as suas obras em quatro atos (a luz, o desejo, a sombra e a redenção), com um olhar também para Rubens, Velázquez e Ribera.' },
   { p: 'Preciso entender de arte ou de vinho?', r: 'Não. A aula parte do zero e foi pensada para quem tem curiosidade. A sommelier conduz a degustação passo a passo.' },
   { p: 'Quanto tempo dura?', r: `O encontro vai ${ev.horario}. Primeiro, a aula de História da Arte, de cerca de 40 minutos; em seguida, a degustação de vinhos com a sommelier.` },
   { p: 'Onde é?', r: `No ${u.local}: ${u.endereco}, ${u.cidade}/${u.uf}.` },
@@ -83,6 +97,7 @@ const ld = {
       <div class="mc-hero__texto">
         <p class="mc-hero__tipo">{ev.tipo}</p>
         <h1 id="mc-titulo" class="mc-hero__titulo">{ev.titulo}</h1>
+        {ev.subtitulo && <p class="mc-hero__sub">{ev.subtitulo}</p>}
         <p class="mc-hero__voz">{ev.voz}</p>
         <dl class="mc-fatos">
           {fatos.map((f) => <div><dt>{f.termo}</dt><dd>{f.texto}</dd></div>)}
@@ -94,8 +109,8 @@ const ld = {
       </div>
 
       <figure class="mc-hero__foto">
-        <Image src={abertura} alt="Grupo de pessoas 60+ com taças de vinho tinto observa uma pintura barroca projetada na parede" widths={[480, 720, 1000, 1400]} sizes="(max-width: 60rem) 92vw, 52vw" loading="eager" fetchpriority="high" />
-        <figcaption>Imagem ilustrativa.</figcaption>
+        <Image src={abertura} alt="Detalhe da pintura Baco, de Caravaggio: o jovem deus coroado de folhas de uva segura uma taça de vinho tinto" widths={[480, 720, 1000, 1400, 2000]} sizes="(max-width: 60rem) 92vw, 52vw" loading="eager" fetchpriority="high" />
+        <figcaption>Caravaggio, <em>Baco</em> (detalhe), 1596.</figcaption>
       </figure>
 
       <div class="mc-hero__form" id="inscricao">
@@ -111,32 +126,36 @@ const ld = {
 
       <div class="tempo">
         <figure class="tempo__foto tempo__foto--arco">
-          <Image src={aula} alt="Professora aponta o feixe de luz de uma pintura barroca projetada, diante de alunos 60+ encantados" widths={[400, 640, 880]} sizes="(max-width: 56rem) 90vw, 36vw" />
-          <figcaption>Imagem ilustrativa.</figcaption>
+          <Image src={retrato} alt="Retrato de Caravaggio desenhado a giz por Ottavio Leoni: homem de cabelos escuros, barba e olhar intenso" widths={[400, 640, 800]} sizes="(max-width: 56rem) 90vw, 36vw" />
+          <figcaption>Ottavio Leoni, retrato de Caravaggio.</figcaption>
         </figure>
         <div class="tempo__texto">
           <p class="tempo__num">1 · cerca de 40 minutos</p>
-          <h3 class="tempo__titulo">A aula: o Barroco de perto</h3>
+          <h3 class="tempo__titulo">A aula: Caravaggio de perto</h3>
           <p>
-            Luz e sombra, drama e movimento: o Barroco transformou a arte num espetáculo para os sentidos.
-            Numa aula de História da Arte da CICLOS+, você aprende a olhar essas obras com calma, a reconhecer
-            seus truques e a entender por que elas emocionam até hoje.
+            Michelangelo Merisi, o Caravaggio, revolucionou a pintura com luz e sombra. Em 1600, as telas da
+            Capela Contarelli, em Roma, fizeram dele o pintor mais comentado da cidade. Em 1606, depois de um duelo,
+            passou a viver em fuga, entre Nápoles, Malta e a Sicília. Morreu aos 38 anos, e o perdão do Papa
+            só chegou dez dias depois.
           </p>
-          <p>Sem decoreba e sem prova. Só a vontade de enxergar cada detalhe de um jeito novo.</p>
+          <p>
+            Numa aula de História da Arte da CICLOS+, a vida e a obra dele são contadas em quatro atos, com um olhar
+            também para o Barroco de Rubens, Velázquez e Ribera. Sem decoreba e sem prova.
+          </p>
         </div>
       </div>
 
       <div class="tempo tempo--inverso">
         <figure class="tempo__foto tempo__foto--circulo">
-          <Image src={degustacao} alt="Sommelier serve vinho tinto a convidados 60+ que riem e brindam numa mesa à luz de velas" widths={[400, 640, 880]} sizes="(max-width: 56rem) 90vw, 36vw" />
-          <figcaption>Imagem ilustrativa.</figcaption>
+          <Image src={triunfo} alt="Pintura de Velázquez: Baco, coroado de folhas, brinda com um grupo de homens que bebem e sorriem ao ar livre" widths={[400, 640, 880, 1200]} sizes="(max-width: 56rem) 90vw, 36vw" />
+          <figcaption>Diego Velázquez, <em>O triunfo de Baco</em>, 1626.</figcaption>
         </figure>
         <div class="tempo__texto">
           <p class="tempo__num">2 · degustação com sommelier</p>
           <h3 class="tempo__titulo">A degustação: a arte também se prova</h3>
           <p>
-            Depois da aula, a conversa continua à mesa. Uma sommelier conduz a degustação de vinhos e mostra
-            como aromas, cores e sabores também contam histórias, assim como uma pintura.
+            Depois da aula, a conversa continua à mesa. Uma sommelier conduz a degustação de vinhos, que percorre
+            os mesmos quatro atos da aula, agora na taça: aromas, cores e sabores também contam histórias.
           </p>
           <p>É o momento de brindar, comparar impressões e conhecer quem também estava ali pela curiosidade.</p>
         </div>
@@ -146,10 +165,33 @@ const ld = {
     </div>
   </section>
 
-  <section class="faixa-nm" aria-label="Natureza-morta barroca">
-    <Image src={naturezaMorta} alt="" widths={[800, 1400, 2000, 2400]} sizes="100vw" class="faixa-nm__img" />
+  <section class="secao secao--petroleo atos-sec" aria-labelledby="atos-titulo">
+    <div class="wrap">
+      <h2 id="atos-titulo" class="secao__titulo">Caravaggio em quatro atos</h2>
+      <p class="secao__voz">Da luz à redenção: a aula e a degustação seguem o mesmo roteiro.</p>
+      <ol class="atos">
+        {atos.map((a) => (
+          <li class="ato">
+            <figure class="ato__obra">
+              <Image src={a.obra} alt={a.alt} widths={[320, 480, 640]} sizes="(max-width: 40rem) 90vw, (max-width: 64rem) 45vw, 22vw" style={`object-position:${a.pos}`} />
+              <figcaption>Caravaggio, <em>{a.legenda}</em>.</figcaption>
+            </figure>
+            <span class="ato__num">Ato {a.n}</span>
+            <h3 class="ato__nome">{a.nome}</h3>
+            <p class="ato__tema">{a.tema}</p>
+            <blockquote class="ato__frase">“{a.frase}”</blockquote>
+          </li>
+        ))}
+      </ol>
+      <a class="btn atos__cta" href="#inscricao">Quero reservar meu lugar</a>
+    </div>
+  </section>
+
+  <section class="faixa-nm" aria-labelledby="faixa-frase">
+    <Image src={pozzo} alt="Teto pintado da Igreja de Santo Inácio, em Roma: céus abertos, nuvens e dezenas de figuras em perspectiva vertiginosa" widths={[800, 1200, 1650]} sizes="100vw" class="faixa-nm__img" />
     <div class="wrap faixa-nm__texto">
-      <p class="faixa-nm__frase">Arte, sabores e sentidos.<span>Tudo o que uma noite pode ter.</span></p>
+      <p class="faixa-nm__frase" id="faixa-frase">O Barroco quis emocionar todos os sentidos.<span>É isso que esta noite propõe.</span></p>
+      <p class="faixa-nm__legenda">Andrea Pozzo, <em>Apoteose de Santo Inácio</em>. Igreja de Santo Inácio de Loyola, Roma.</p>
     </div>
   </section>
 
@@ -283,6 +325,11 @@ const ld = {
 
   .mc-hero__tipo { font-weight: 700; font-size: 0.95rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--yellow); }
   .mc-hero__titulo { margin-top: 0.75rem; font-size: clamp(3.75rem, 1.6rem + 6vw, 8rem); line-height: 0.86; color: var(--on-petrol); }
+  .mc-hero__sub {
+    margin-top: 0.9rem;
+    font-style: italic; font-weight: 700; font-size: clamp(1.45rem, 1.1rem + 1.1vw, 2.15rem); line-height: 1.2;
+    color: var(--yellow);
+  }
   .mc-hero__voz {
     margin-top: 1.1rem; max-width: 30ch;
     font-style: italic; font-size: clamp(1.4rem, 1.05rem + 1vw, 2rem); line-height: 1.25; color: var(--on-petrol-soft);
@@ -298,8 +345,8 @@ const ld = {
   .mc-hero__texto :focus-visible { outline-color: var(--yellow); }
 
   .mc-hero__foto :global(img) {
-    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
-    border-radius: 1.5rem 999px 999px 1.5rem; border: 6px solid var(--yellow);
+    width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+    border-radius: 999px 1.5rem 1.5rem 999px; border: 6px solid var(--yellow);
   }
   .mc-hero__foto figcaption { margin-top: 0.6rem; font-style: italic; font-size: 0.95rem; color: var(--on-petrol-soft); }
 
@@ -313,22 +360,47 @@ const ld = {
   .tempo__foto { margin: 0; max-width: 30rem; }
   .tempo__foto :global(img) { width: 100%; object-fit: cover; box-shadow: 0 30px 60px -40px rgba(0, 61, 89, 0.6); }
   .tempo__foto--arco :global(img) { aspect-ratio: 3 / 4; border-radius: 50% 50% 1.25rem 1.25rem / 36% 36% 1.25rem 1.25rem; border: 8px solid var(--mint); }
-  .tempo__foto--circulo :global(img) { aspect-ratio: 1; border-radius: 50%; border: 8px solid var(--yellow); object-position: 50% 30%; }
+  .tempo__foto--circulo :global(img) { aspect-ratio: 1; border-radius: 50%; border: 8px solid var(--yellow); object-position: 34% 45%; }
   .tempo__foto figcaption { margin-top: 0.7rem; font-style: italic; font-size: 0.95rem; color: var(--ink-soft); }
   .tempo__num { font-weight: 700; font-size: 0.95rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-ink); }
   .tempo__titulo { margin-top: 0.5rem; font-size: clamp(2.4rem, 1.8rem + 2vw, 3.75rem); color: var(--petrol); }
   .tempo__texto p:not(.tempo__num) { margin-top: 1rem; max-width: 46ch; }
   .mc-noite__cta { margin-top: clamp(3rem, 5vw, 4rem); }
 
-  /* Faixa natureza-morta */
+  /* Quatro atos */
+  .atos {
+    list-style: none; margin: clamp(2.5rem, 5vw, 3.5rem) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(2rem, 3vw, 2.5rem) clamp(1.25rem, 2.4vw, 2rem);
+  }
+  .ato { display: grid; gap: 0.4rem; align-content: start; }
+  .ato__obra { margin: 0 0 0.75rem; }
+  .ato__obra :global(img) {
+    width: 100%; aspect-ratio: 3 / 4; object-fit: cover;
+    border-radius: 50% 50% 1.25rem 1.25rem / 36% 36% 1.25rem 1.25rem; border: 6px solid var(--mint);
+  }
+  .ato:nth-child(even) .ato__obra :global(img) { border-color: var(--yellow); }
+  .ato__obra figcaption { margin-top: 0.6rem; font-size: 0.95rem; font-style: italic; color: var(--on-petrol-soft); }
+  .ato__obra figcaption em { font-style: normal; }
+  .ato__num { font-weight: 700; font-size: 0.9rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--yellow); }
+  .ato__nome { font-size: clamp(2.3rem, 1.8rem + 1.4vw, 3.1rem); color: var(--on-petrol); }
+  .ato__tema { font-weight: 600; color: var(--on-petrol); font-size: 1.05rem; }
+  .ato__frase {
+    margin: 0.5rem 0 0; padding-left: 1rem; border-left: 3px solid var(--yellow);
+    font-style: italic; font-size: clamp(1.1rem, 1rem + 0.3vw, 1.25rem); line-height: 1.4; color: var(--on-petrol-soft);
+  }
+  .atos__cta { margin-top: clamp(3rem, 5vw, 4rem); }
+
+  /* Faixa com o teto de Pozzo */
   .faixa-nm { position: relative; background: #0a1c26; color: var(--on-petrol); }
-  .faixa-nm :global(.faixa-nm__img) { width: 100%; height: auto; max-height: 38rem; object-fit: cover; object-position: 30% 50%; }
-  .faixa-nm__texto { position: absolute; inset: 0; display: flex; align-items: center; justify-content: flex-end; }
+  .faixa-nm :global(.faixa-nm__img) { width: 100%; height: clamp(16rem, 34vw, 32rem); object-fit: cover; object-position: 50% 45%; }
+  .faixa-nm__texto { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 1rem 3rem; padding-block: clamp(2rem, 4vw, 3rem) clamp(2.5rem, 5vw, 3.5rem); }
   .faixa-nm__frase {
-    max-width: 22ch; text-align: right;
-    font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2.5rem, 1.4rem + 3.6vw, 5.5rem); line-height: 0.9;
+    max-width: 24ch;
+    font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2.3rem, 1.4rem + 3vw, 4.5rem); line-height: 0.92;
     color: var(--on-petrol);
   }
+  .faixa-nm__legenda { font-style: italic; font-size: 0.95rem; color: var(--on-petrol-soft); max-width: 36ch; }
+  .faixa-nm__legenda em { font-style: normal; }
   .faixa-nm__frase span {
     display: block; margin-top: 0.9rem;
     font-family: var(--font-text); text-transform: none; font-style: italic; font-size: clamp(1.2rem, 1rem + 0.6vw, 1.6rem); line-height: 1.3;
@@ -442,9 +514,9 @@ const ld = {
     .tempo--inverso .tempo__foto { order: 0; }
     .caminho { grid-template-columns: 1fr; }
   }
+  @media (max-width: 64rem) { .atos { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 40rem) { .atos { grid-template-columns: 1fr; } .ato__obra { max-width: 22rem; } }
   @media (max-width: 48rem) {
-    .faixa-nm__texto { position: static; justify-content: flex-start; padding-block: 2rem 2.5rem; }
-    .faixa-nm__frase { text-align: left; }
     .mc-ciclos__fotos { grid-template-columns: 1fr; }
     .mc-ciclos__fotos li :global(img) { border-radius: 1.25rem !important; }
   }

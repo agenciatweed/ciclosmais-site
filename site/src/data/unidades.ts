@@ -41,6 +41,8 @@ export const unidades: Unidade[] = [
     endereco: 'Rua Boulevard Quartier, 500',
     mapa: 'https://www.google.com/maps/search/?api=1&query=Rampa+Innovation+Hub+Rua+Boulevard+Quartier+500+Pelotas+RS',
     mapaBusca: 'Rampa Innovation Hub, Rua Boulevard Quartier, 500, Pelotas, RS',
+    // Número informado pela cliente em 14/10/2026 (8 dígitos após o DDD, formato antigo de celular).
+    whatsapp: { display: '(53) 9953-7070', e164: '555399537070' },
     voz: 'A CICLOS+ já faz parte de Pelotas.',
     texto: [
       'A CICLOS+ Pelotas funciona no Rampa Innovation Hub e é conduzida pela franqueada Bibiana Urdaniz, com a mesma proposta de Porto Alegre: aprender sem provas e sem pressão, em boa companhia.',
