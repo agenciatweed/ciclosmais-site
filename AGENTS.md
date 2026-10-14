@@ -181,7 +181,7 @@ Segurança (urgente):
 
 Pendências que dependem da cliente (marcadas `PENDENTE` no código):
 - **Masterclass:** data confirmada (quarta, 28/10/2026, das 19h às 21h30). Faltam investimento (gratuita ou valor), nome da sommelier e da professora, número de vagas. Tudo em `data/eventos.ts`. Confirmar se a degustação segue de fato os quatro atos da aula (a página afirma isso com base nos slides finais do PDF).
-- **WhatsApp de Pelotas:** (53) 9953-7070, informado pela cliente e já em `unidades.ts`. Tem só 8 dígitos depois do DDD (formato antigo de celular): confirmar se é isso mesmo ou (53) 9**9**953-7070.
+- ✅ **WhatsApp de Pelotas:** (53) 99996-3630, confirmado pela cliente e em `unidades.ts` (usado na página de Pelotas e na LP da masterclass).
 - **WhatsApp oficial**: o site antigo usa dois números, (51) 99343-3639 (usado hoje) e (51) 98153-0001. Confirmar e decidir se cada unidade tem o seu (campo `whatsapp` opcional em `unidades.ts`).
 - **Fotos de Pelotas** (hoje todas são de Porto Alegre).
 - Revisar com a CICLOS+ as frases de **Literatura** e **Vida Digital**, que foram redigidas para o site.
