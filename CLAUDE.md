@@ -172,7 +172,7 @@ Em [site/src/components/QueroConhecer.astro](site/src/components/QueroConhecer.a
 - ✅ Testado em 1480, 1280, 800, 375, 360 e 320 px sem rolagem horizontal.
 - ✅ **No ar em https://ciclosmais.com (Hostinger)** desde 14/10/2026. Conferido: os 382 arquivos do `dist` estão no servidor. Publicação por `scripts/publicar_ftp.py`.
 - ✅ Fotos novas da Juliana e do Cristiano (`assets/img/equipe/juliana-enderle.png` e `cristiano-cunha.png`).
-- ✅ **Landing page da Masterclass de Pelotas** em `https://ciclosmais.com/masterclass` ("Arte, Sabores e Sentidos": aula de ~40 min sobre o Barroco + degustação de vinhos com sommelier, 18h, Rampa Innovation Hub). Dados em `data/eventos.ts`; formulário curto `components/InscricaoEvento.astro` (nome + WhatsApp obrigatórios; origem e assuntos opcionais; envia `utm_source`/`utm_campaign`); cabeçalho reduzido sem menu (`landing` em `Base`/`Header`); barra fixa "Reservar meu lugar" no celular; seção do funil (outubro → aulas livres de novembro → disciplinas 2027). A página da unidade Pelotas mostra o evento em destaque. Conteúdo e imagens vêm do PDF da cliente (`Arte, Sabores e Sentidos_CARAVAGGIO_23.09.pdf`): conceito "Caravaggio: entre luz, sombra e vinho", seção "Caravaggio em quatro atos" (A Luz, O Desejo, A Sombra, A Redenção, com as frases e obras do PDF) e **só obras barrocas reais, em domínio público**, em `assets/img/obras/` (Caravaggio, Ottavio Leoni, Velázquez, Andrea Pozzo; origem no `.json` ao lado). Por decisão da cliente, a LP não usa imagens geradas.
+- ✅ **Landing page da Masterclass de Pelotas** em `https://ciclosmais.com/masterclass` ("Arte, Sabores e Sentidos": aula de ~40 min sobre o Barroco + degustação de vinhos com sommelier, 18h, Rampa Innovation Hub). Dados em `data/eventos.ts`; formulário curto `components/InscricaoEvento.astro` (nome + WhatsApp obrigatórios; origem e assuntos opcionais; envia `utm_source`/`utm_campaign`); cabeçalho reduzido sem menu (`landing` em `Base`/`Header`); barra fixa "Reservar meu lugar" no celular; seção do funil (outubro → cursos livres de novembro → disciplinas 2027). A página da unidade Pelotas mostra o evento em destaque. Conteúdo e imagens vêm do PDF da cliente (`Arte, Sabores e Sentidos_CARAVAGGIO_23.09.pdf`): conceito "Caravaggio: entre luz, sombra e vinho", seção "Caravaggio em quatro atos" (A Luz, O Desejo, A Sombra, A Redenção, com as frases e obras do PDF) e **só obras barrocas reais, em domínio público**, em `assets/img/obras/` (Caravaggio, Ottavio Leoni, Velázquez, Andrea Pozzo; origem no `.json` ao lado). Por decisão da cliente, a LP não usa imagens geradas.
 
 ## 9. Pendências e próximos passos
 
@@ -195,7 +195,7 @@ Pendências que dependem da cliente (marcadas `PENDENTE` no código):
 Próximas etapas prováveis:
 1. Enviar `https://ciclosmais.com/sitemap.xml` ao Google Search Console. Campanhas "Always On" apontando para a Home.
 2. Se o volume de contatos crescer, ligar o formulário a um CRM ou planilha (hoje: e-mail + cópia em `contatos.jsonl`).
-3. Próximas landing pages da campanha de Pelotas (aulas livres de novembro → lista prioritária / inscrição 2027), seguindo o modelo de `pages/masterclass.astro`: novo registro em `data/eventos.ts` + página com `landing` no `Base` e `InscricaoEvento`.
+3. Próximas landing pages da campanha de Pelotas (cursos livres de novembro → lista prioritária / inscrição 2027), seguindo o modelo de `pages/masterclass.astro`: novo registro em `data/eventos.ts` + página com `landing` no `Base` e `InscricaoEvento`.
 
 ## 10. Dicas para o Claude na nova máquina
 

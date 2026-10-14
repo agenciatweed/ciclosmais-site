@@ -1,6 +1,6 @@
 ---
 // Landing page da Masterclass de Pelotas: primeira etapa do funil
-// (Masterclass → aulas livres de novembro → disciplinas semestrais 2027).
+// (Masterclass → cursos livres de novembro → disciplinas semestrais 2027).
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Marca from '../components/Marca.astro';
@@ -50,7 +50,7 @@ const paraQuem = [
 
 const caminho = [
   { quando: 'Outubro', titulo: 'Masterclass', texto: 'Arte, Sabores e Sentidos: o primeiro encontro com a CICLOS+.', atual: true },
-  { quando: 'Novembro', titulo: 'Aulas livres', texto: 'Encontros avulsos para experimentar outros assuntos da escola, um de cada vez.' },
+  { quando: 'Novembro', titulo: 'Cursos livres', texto: 'Cursos curtos para experimentar outros assuntos da escola, um de cada vez.' },
   { quando: 'Março de 2027', titulo: 'Disciplinas semestrais', texto: 'As turmas de Pelotas começam um novo ciclo, com aulas semanais ao longo do semestre.' },
 ];
 
@@ -60,7 +60,7 @@ const perguntas = [
   { p: 'Quanto tempo dura?', r: `O encontro vai ${ev.horario}. Primeiro, a aula de História da Arte, de cerca de 40 minutos; em seguida, a degustação de vinhos com a sommelier.` },
   { p: 'Onde é?', r: `No ${u.local}: ${u.endereco}, ${u.cidade}/${u.uf}.` },
   { p: 'Como confirmo minha inscrição?', r: 'Preencha o formulário desta página. A equipe da CICLOS+ Pelotas confirma seu lugar pelo WhatsApp.' },
-  { p: 'O que acontece depois da masterclass?', r: 'Quem participa recebe em primeira mão a programação das aulas livres de novembro, uma forma leve de conhecer outros assuntos antes das disciplinas de 2027.' },
+  { p: 'O que acontece depois da masterclass?', r: 'Quem participa recebe em primeira mão a programação dos cursos livres de novembro, uma forma leve de conhecer outros assuntos antes das disciplinas de 2027.' },
 ];
 
 // Dados estruturados do evento (Google: resultados de evento).
