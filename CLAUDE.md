@@ -111,6 +111,7 @@ site/
       confraternizacoes.astro    abertura menta + No Palco 60+ + galeria
       unidades/index.astro       todas as unidades
       unidades/[slug].astro      uma página por unidade (gerada de data/unidades.ts), com mapa
+      masterclass.astro          landing page da Masterclass de Pelotas (dados em data/eventos.ts)
       404.astro, sitemap.xml.ts
     layouts/Base.astro    <head>, SEO/OG (og:image por página), skip link, Header, Footer
     styles/global.css     tokens (:root), fontes, reset, utilitários (.wrap, .btn, .secao, .fatos), reduced-motion
@@ -119,12 +120,14 @@ site/
       unidades.ts         uma entrada por unidade (nova franquia = novo registro = nova página)
       disciplinas.ts      disciplinas (slug, frase, resumo, textos, perguntas, horários, fotos),
                           a grade de horários 2026/2 e "como funcionam"
+      eventos.ts          eventos de campanha (masterclass etc.); cada um vira landing page
     components/
       Header, Hero, Sobre, Disciplinas, CursosLivres, Encontros (confraternizações),
       Viagens, Equipe, Unidades, Midia, QueroConhecer (formulário), Footer,
       Marca (renderiza wordmark/símbolo/logo SVG em currentColor),
       Abertura (topo das páginas internas), Trilha (breadcrumb + JSON-LD),
-      Semana (grade semanal), Galeria (fotos em colunas)
+      Semana (grade semanal), Galeria (fotos em colunas),
+      InscricaoEvento (formulário curto das landing pages)
     assets/
       brand/              SVGs do logo vetorizados do MIV
       img/                fotos reais (nome do arquivo = categoria - original)
@@ -163,6 +166,7 @@ Em [site/src/components/QueroConhecer.astro](site/src/components/QueroConhecer.a
 - ✅ Testado em 1480, 1280, 800, 375, 360 e 320 px sem rolagem horizontal.
 - ✅ **No ar em https://ciclosmais.com (Hostinger)** desde 14/10/2026. Conferido: os 382 arquivos do `dist` estão no servidor. Publicação por `scripts/publicar_ftp.py`.
 - ✅ Fotos novas da Juliana e do Cristiano (`assets/img/equipe/juliana-enderle.png` e `cristiano-cunha.png`).
+- ✅ **Landing page da Masterclass de Pelotas** em `https://ciclosmais.com/masterclass` ("Arte, Sabores e Sentidos": aula de ~40 min sobre o Barroco + degustação de vinhos com sommelier, 18h, Rampa Innovation Hub). Dados em `data/eventos.ts`; formulário curto `components/InscricaoEvento.astro` (nome + WhatsApp obrigatórios; origem e assuntos opcionais; envia `utm_source`/`utm_campaign`); cabeçalho reduzido sem menu (`landing` em `Base`/`Header`); barra fixa "Reservar meu lugar" no celular; seção do funil (outubro → aulas livres de novembro → disciplinas 2027). A página da unidade Pelotas mostra o evento em destaque. Imagens ilustrativas `geradas/masterclass-*.jpg`.
 
 ## 9. Pendências e próximos passos
 
@@ -170,6 +174,7 @@ Segurança (urgente):
 - **WordPress antigo exposto:** `public_html/oldxxx/` tem o WordPress inteiro (13.701 arquivos, com `wp-config.php` e plugins desatualizados), e `ciclosmais.com/oldxxx/wp-login.php` responde 200. Confirmar que há backup baixado e então apagar a pasta ou movê-la para fora do `public_html`.
 
 Pendências que dependem da cliente (marcadas `PENDENTE` no código):
+- **Masterclass:** data exata (hoje a página diz "Outubro de 2026, às 18h"), investimento (gratuita ou valor), nome da sommelier e da professora, número de vagas. Tudo em `data/eventos.ts`. Confirmar também o **WhatsApp de Pelotas** (sem ele, as inscrições vão para o número geral).
 - **WhatsApp oficial**: o site antigo usa dois números, (51) 99343-3639 (usado hoje) e (51) 98153-0001. Confirmar e decidir se cada unidade tem o seu (campo `whatsapp` opcional em `unidades.ts`).
 - **Destino do formulário** (CRM, planilha ou e-mail) → preencher `formEndpoint`.
 - **Fotos de Pelotas** (hoje todas são de Porto Alegre).
@@ -184,7 +189,7 @@ Pendências que dependem da cliente (marcadas `PENDENTE` no código):
 Próximas etapas prováveis:
 1. Enviar `https://ciclosmais.com/sitemap.xml` ao Google Search Console. Campanhas "Always On" apontando para a Home.
 2. Integrar o backend do formulário.
-3. Landing pages da campanha de Pelotas (Masterclass → cursos livres de novembro → lista prioritária / inscrição 2027), reaproveitando `Abertura`, `QueroConhecer` (com `unidade="Pelotas"`) e registrando a origem do lead (UTM/QR).
+3. Próximas landing pages da campanha de Pelotas (aulas livres de novembro → lista prioritária / inscrição 2027), seguindo o modelo de `pages/masterclass.astro`: novo registro em `data/eventos.ts` + página com `landing` no `Base` e `InscricaoEvento`.
 
 ## 10. Dicas para o Claude na nova máquina
 

@@ -1,9 +1,10 @@
 ---
 import Marca from './Marca.astro';
 import { site, whatsappLink } from '../data/site';
-interface Props { formNaPagina?: boolean }
-const { formNaPagina = true } = Astro.props;
-const wa = whatsappLink('Olá! Quero conhecer a CICLOS+.');
+// `landing`: cabeçalho reduzido das landing pages (marca, WhatsApp e um único botão, sem menu).
+interface Props { formNaPagina?: boolean; landing?: { href: string; texto: string; whatsappTexto: string } }
+const { formNaPagina = true, landing } = Astro.props;
+const wa = whatsappLink(landing?.whatsappTexto ?? 'Olá! Quero conhecer a CICLOS+.');
 const cta = formNaPagina ? '#quero-conhecer' : '/#quero-conhecer';
 
 const links = [
@@ -16,6 +17,17 @@ const links = [
 const caminho = Astro.url.pathname.replace(/\/$/, '');
 const atual = (href: string) => (caminho === href || caminho.startsWith(`${href}/`) ? 'page' : undefined);
 ---
+{landing ? (
+<header class="topo topo--landing">
+  <div class="topo__barra wrap">
+    <a class="topo__marca" href="/" aria-label="CICLOS+, página inicial">
+      <Marca tipo="wordmark" label={null} />
+    </a>
+    <a class="topo__wa topo__wa--landing" href={wa} target="_blank" rel="noopener" aria-label="Falar no WhatsApp" title="Falar no WhatsApp"><svg class="topo__wa-icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z" /><path d="M9.2 8.6c.2 2.6 2.2 4.9 4.9 5.6l1.2-1.3 1.9.9-.4 1.6c-3.8.3-7.9-3.6-8.3-7.4l1.6-.5.9 1.9z" class="topo__wa-fone" /></svg></a>
+    <a class="btn topo__cta topo__cta--landing" href={landing.href}>{landing.texto}</a>
+  </div>
+</header>
+) : (
 <header class="topo">
   <div class="topo__barra wrap">
     <a class="topo__marca" href="/" aria-label="CICLOS+, página inicial">
@@ -47,6 +59,7 @@ const atual = (href: string) => (caminho === href || caminho.startsWith(`${href}
     </ul>
   </div>
 </header>
+)}
 
 <script>
   const btn = document.querySelector<HTMLButtonElement>('.topo__menu');
@@ -154,6 +167,11 @@ const atual = (href: string) => (caminho === href || caminho.startsWith(`${href}
     .topo__wa--movel { display: inline-flex; margin-left: auto; }
     .topo__barra { min-height: 4.5rem; }
   }
+
+  /* Landing pages: sem menu, o botão de inscrição sempre à vista (no celular, a barra fixa assume) */
+  .topo--landing .topo__wa--landing { display: inline-flex; margin-left: auto; }
+  .topo--landing .topo__cta--landing { display: inline-flex; }
+  @media (max-width: 40rem) { .topo--landing .topo__cta--landing { display: none; } }
 
   /* Celulares estreitos (360px): marca, botão e espaços mais compactos */
   @media (max-width: 24rem) {

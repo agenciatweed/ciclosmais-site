@@ -6,8 +6,14 @@ import { getImage } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import ogPadrao from '../assets/img/Confraternizacoes - 3ed0acf4fd23.jpg';
 
-interface Props { title: string; description: string; imagem?: ImageMetadata; formNaPagina?: boolean }
-const { title, description, imagem = ogPadrao, formNaPagina = true } = Astro.props;
+interface Props {
+  title: string;
+  description: string;
+  imagem?: ImageMetadata;
+  formNaPagina?: boolean;
+  landing?: { href: string; texto: string; whatsappTexto: string };
+}
+const { title, description, imagem = ogPadrao, formNaPagina = true, landing } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const og = await getImage({ src: imagem, width: 1200, height: 630, fit: 'cover', format: 'jpg' });
 const ogUrl = new URL(og.src, Astro.site);
@@ -44,7 +50,7 @@ FORM: estrutura 4 de 7 (O ciclo), escolhida pela cliente; seed 77569fe4.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
     -->
     <a class="skip" href="#conteudo">Ir para o conteúdo</a>
-    <Header formNaPagina={formNaPagina} />
+    <Header formNaPagina={formNaPagina} landing={landing} />
     <main id="conteudo">
       <slot />
     </main>

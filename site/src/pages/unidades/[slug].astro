@@ -7,6 +7,7 @@ import QueroConhecer from '../../components/QueroConhecer.astro';
 import { unidades, type Unidade } from '../../data/unidades';
 import { disciplinas, type Foto } from '../../data/disciplinas';
 import { site, whatsappLink } from '../../data/site';
+import { eventosDaUnidade } from '../../data/eventos';
 import escada from '../../assets/img/Viagens Culturais - 11-min.jpg';
 import jantar from '../../assets/img/Confraternizacoes - IMG_2716-scaled.jpg';
 import grupo from '../../assets/img/Cursos Livres - 11.jpg';
@@ -38,6 +39,7 @@ const enderecoCompleto = `${u.local ? `${u.local} · ` : ''}${u.endereco} · ${u
 const mapaEmbed = `https://www.google.com/maps?q=${encodeURIComponent(u.mapaBusca)}&output=embed`;
 const outras = unidades.filter((o) => o.slug !== u.slug);
 const fotos = galerias[u.slug];
+const proximos = eventosDaUnidade(u.slug);
 ---
 <Base
   title={`CICLOS+ ${u.cidade} · Escola Cultural 60+`}
@@ -58,6 +60,21 @@ const fotos = galerias[u.slug];
       <a class="link-arrow" href={wa} target="_blank" rel="noopener">WhatsApp {fone}</a>
     </Fragment>
   </Abertura>
+
+  {proximos.length > 0 && (
+    <aside class="eventos" aria-label={`Próximos eventos da CICLOS+ ${u.cidade}`}>
+      <div class="wrap">
+        {proximos.map((e) => (
+          <a class="evento" href={`/${e.slug}`}>
+            <span class="evento__rotulo">Próximo evento · {e.quando}, às {e.hora}</span>
+            <span class="evento__titulo">{e.titulo}</span>
+            <span class="evento__voz">{e.voz}</span>
+            <span class="evento__cta">Ver a masterclass e reservar lugar</span>
+          </a>
+        ))}
+      </div>
+    </aside>
+  )}
 
   <section class="secao secao--petroleo chegar" aria-labelledby="chegar-titulo">
     <div class="wrap chegar__grade">
@@ -126,6 +143,19 @@ const fotos = galerias[u.slug];
 
 <style>
   .end { font-weight: 600; }
+
+  .eventos { padding-bottom: clamp(3rem, 6vw, 5rem); margin-top: calc(-1 * clamp(1.5rem, 4vw, 3.5rem)); }
+  .evento {
+    display: grid; gap: 0.4rem; padding: clamp(1.5rem, 3vw, 2.5rem);
+    border-radius: 1.5rem; background: var(--yellow); color: var(--petrol-ink); text-decoration: none;
+    box-shadow: 0 30px 60px -40px rgba(80, 60, 0, 0.55);
+    transition: transform 0.35s var(--ease-out), box-shadow 0.35s var(--ease-out);
+  }
+  .evento:hover { transform: translateY(-2px); box-shadow: 0 34px 60px -36px rgba(80, 60, 0, 0.6); }
+  .evento__rotulo { font-weight: 700; font-size: 0.9rem; letter-spacing: 0.16em; text-transform: uppercase; }
+  .evento__titulo { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2.4rem, 1.8rem + 2vw, 3.75rem); line-height: 0.95; color: var(--petrol); }
+  .evento__voz { font-style: italic; font-size: clamp(1.15rem, 1rem + 0.4vw, 1.35rem); }
+  .evento__cta { margin-top: 0.5rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; font-size: 0.95rem; text-decoration: underline; color: var(--petrol); }
 
   .chegar__grade { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
   .chegar__dados { margin: 2rem 0 0; display: grid; grid-template-columns: auto 1fr; gap: 0.9rem 1.5rem; }

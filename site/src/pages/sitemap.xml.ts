@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
 import { disciplinas } from '../data/disciplinas';
 import { unidades } from '../data/unidades';
+import { eventos } from '../data/eventos';
 
 export const GET: APIRoute = ({ site }) => {
   const caminhos = [
@@ -12,6 +13,7 @@ export const GET: APIRoute = ({ site }) => {
     '/confraternizacoes',
     '/unidades',
     ...unidades.map((u) => `/unidades/${u.slug}`),
+    ...eventos.map((e) => `/${e.slug}`),
   ];
   const urls = caminhos.map((c) => `  <url><loc>${new URL(c, site).href}</loc></url>`).join('\n');
   const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>\n`;

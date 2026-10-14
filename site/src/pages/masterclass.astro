@@ -1,0 +1,433 @@
+---
+// Landing page da Masterclass de Pelotas: primeira etapa do funil
+// (Masterclass → aulas livres de novembro → disciplinas semestrais 2027).
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Marca from '../components/Marca.astro';
+import InscricaoEvento from '../components/InscricaoEvento.astro';
+import { masterclassPelotas as ev } from '../data/eventos';
+import { unidadePorSlug } from '../data/unidades';
+import { disciplinas } from '../data/disciplinas';
+import { site, whatsappLink } from '../data/site';
+import abertura from '../assets/img/geradas/masterclass-abertura.jpg';
+import aula from '../assets/img/geradas/masterclass-aula.jpg';
+import degustacao from '../assets/img/geradas/masterclass-degustacao.jpg';
+import naturezaMorta from '../assets/img/geradas/masterclass-natureza-morta.jpg';
+import fotoAula from '../assets/img/Disciplinas Semestrais - IMG_9955-scaled.jpg';
+import fotoFesta from '../assets/img/Confraternizacoes - 3ed0acf4fd23.jpg';
+import fotoViagem from '../assets/img/Viagens Culturais - IMG-20250608-WA0031.jpg';
+
+const u = unidadePorSlug(ev.unidade)!;
+const wa = whatsappLink(`Olá! Quero saber da masterclass "${ev.titulo}" na CICLOS+ ${u.cidade}.`, u.whatsapp?.e164);
+const fone = u.whatsapp?.display ?? site.whatsapp.display;
+
+const fatos = [
+  { termo: 'Quando', texto: `${ev.quando}, às ${ev.hora}` },
+  { termo: 'Onde', texto: `${u.local}, ${u.cidade}` },
+  { termo: 'O que', texto: 'Aula de cerca de 40 minutos + degustação de vinhos' },
+  { termo: 'Para quem', texto: 'Pessoas 60+ com curiosidade. Ninguém precisa entender de arte nem de vinho.' },
+];
+
+const paraQuem = [
+  { termo: 'Sem pré-requisito', texto: 'A aula foi pensada para quem tem curiosidade, não para especialistas.' },
+  { termo: 'Conversa de verdade', texto: 'Perguntar, comentar e trocar impressões faz parte da aula.' },
+  { termo: 'Boa companhia', texto: 'Gente da cidade que também gosta de cultura, de vinho e de um bom papo.' },
+  { termo: 'No fim da tarde', texto: `Às ${ev.hora}, no ${u.local}, em ${u.cidade}.` },
+];
+
+const caminho = [
+  { quando: 'Outubro', titulo: 'Masterclass', texto: 'Arte, Sabores e Sentidos: o primeiro encontro com a CICLOS+.', atual: true },
+  { quando: 'Novembro', titulo: 'Aulas livres', texto: 'Encontros avulsos para experimentar outros assuntos da escola, um de cada vez.' },
+  { quando: 'Março de 2027', titulo: 'Disciplinas semestrais', texto: 'As turmas de Pelotas começam um novo ciclo, com aulas semanais ao longo do semestre.' },
+];
+
+const perguntas = [
+  { p: 'Preciso entender de arte ou de vinho?', r: 'Não. A aula parte do zero e foi pensada para quem tem curiosidade. A sommelier conduz a degustação passo a passo.' },
+  { p: 'Quanto tempo dura a aula?', r: 'A aula de História da Arte tem cerca de 40 minutos. Em seguida, começa a degustação de vinhos com a sommelier.' },
+  { p: 'Onde é?', r: `No ${u.local}: ${u.endereco}, ${u.cidade}/${u.uf}.` },
+  { p: 'Como confirmo minha inscrição?', r: 'Preencha o formulário desta página. A equipe da CICLOS+ Pelotas confirma seu lugar pelo WhatsApp.' },
+  { p: 'O que acontece depois da masterclass?', r: 'Quem participa recebe em primeira mão a programação das aulas livres de novembro, uma forma leve de conhecer outros assuntos antes das disciplinas de 2027.' },
+];
+---
+<Base
+  title={`Masterclass ${ev.titulo} · CICLOS+ ${u.cidade}`}
+  description={`${ev.voz} ${ev.quando}, às ${ev.hora}, no ${u.local}, em ${u.cidade}. Reserve seu lugar.`}
+  imagem={abertura}
+  formNaPagina={false}
+  landing={{ href: '#inscricao', texto: 'Reservar meu lugar', whatsappTexto: `Olá! Quero saber da masterclass "${ev.titulo}" na CICLOS+ ${u.cidade}.` }}
+>
+  <section class="mc-hero" aria-labelledby="mc-titulo">
+    <Marca tipo="simbolo" label={null} class="mc-hero__marca" />
+    <div class="wrap mc-hero__grade">
+      <div class="mc-hero__texto">
+        <p class="mc-hero__tipo">{ev.tipo}</p>
+        <h1 id="mc-titulo" class="mc-hero__titulo">{ev.titulo}</h1>
+        <p class="mc-hero__voz">{ev.voz}</p>
+        <dl class="mc-fatos">
+          {fatos.map((f) => <div><dt>{f.termo}</dt><dd>{f.texto}</dd></div>)}
+        </dl>
+        <div class="mc-hero__acoes">
+          <a class="link-arrow" href="#a-noite">Como vai ser a noite</a>
+          <a class="link-arrow" href={wa} target="_blank" rel="noopener">Dúvidas? WhatsApp {fone}</a>
+        </div>
+      </div>
+
+      <figure class="mc-hero__foto">
+        <Image src={abertura} alt="Grupo de pessoas 60+ com taças de vinho tinto observa uma pintura barroca projetada na parede" widths={[480, 720, 1000, 1400]} sizes="(max-width: 60rem) 92vw, 52vw" loading="eager" fetchpriority="high" />
+        <figcaption>Imagem ilustrativa.</figcaption>
+      </figure>
+
+      <div class="mc-hero__form" id="inscricao">
+        <InscricaoEvento evento={ev} />
+      </div>
+    </div>
+  </section>
+
+  <section class="secao mc-noite" id="a-noite" aria-labelledby="noite-titulo">
+    <div class="wrap">
+      <h2 id="noite-titulo" class="secao__titulo">A noite em dois tempos</h2>
+      <p class="secao__voz">Primeiro, os olhos. Depois, o paladar. No meio, muita conversa.</p>
+
+      <div class="tempo">
+        <figure class="tempo__foto tempo__foto--arco">
+          <Image src={aula} alt="Professora aponta o feixe de luz de uma pintura barroca projetada, diante de alunos 60+ encantados" widths={[400, 640, 880]} sizes="(max-width: 56rem) 90vw, 36vw" />
+          <figcaption>Imagem ilustrativa.</figcaption>
+        </figure>
+        <div class="tempo__texto">
+          <p class="tempo__num">1 · cerca de 40 minutos</p>
+          <h3 class="tempo__titulo">A aula: o Barroco de perto</h3>
+          <p>
+            Luz e sombra, drama e movimento: o Barroco transformou a arte num espetáculo para os sentidos.
+            Numa aula de História da Arte da CICLOS+, você aprende a olhar essas obras com calma, a reconhecer
+            seus truques e a entender por que elas emocionam até hoje.
+          </p>
+          <p>Sem decoreba e sem prova. Só a vontade de enxergar cada detalhe de um jeito novo.</p>
+        </div>
+      </div>
+
+      <div class="tempo tempo--inverso">
+        <figure class="tempo__foto tempo__foto--circulo">
+          <Image src={degustacao} alt="Sommelier serve vinho tinto a convidados 60+ que riem e brindam numa mesa à luz de velas" widths={[400, 640, 880]} sizes="(max-width: 56rem) 90vw, 36vw" />
+          <figcaption>Imagem ilustrativa.</figcaption>
+        </figure>
+        <div class="tempo__texto">
+          <p class="tempo__num">2 · degustação com sommelier</p>
+          <h3 class="tempo__titulo">A degustação: a arte também se prova</h3>
+          <p>
+            Depois da aula, a conversa continua à mesa. Uma sommelier conduz a degustação de vinhos e mostra
+            como aromas, cores e sabores também contam histórias, assim como uma pintura.
+          </p>
+          <p>É o momento de brindar, comparar impressões e conhecer quem também estava ali pela curiosidade.</p>
+        </div>
+      </div>
+
+      <a class="btn mc-noite__cta" href="#inscricao">Quero reservar meu lugar</a>
+    </div>
+  </section>
+
+  <section class="faixa-nm" aria-label="Natureza-morta barroca">
+    <Image src={naturezaMorta} alt="" widths={[800, 1400, 2000, 2400]} sizes="100vw" class="faixa-nm__img" />
+    <div class="wrap faixa-nm__texto">
+      <p class="faixa-nm__frase">Arte, sabores e sentidos.<span>Tudo o que um fim de tarde pode ter.</span></p>
+    </div>
+  </section>
+
+  <section class="secao" aria-labelledby="para-quem-titulo">
+    <div class="wrap mc-paraquem">
+      <div>
+        <h2 id="para-quem-titulo" class="secao__titulo">Para quem é</h2>
+        <p class="secao__voz">Para quem acredita que sempre é tempo de descobrir algo novo.</p>
+      </div>
+      <ul class="fatos">
+        {paraQuem.map((f) => <li><span class="fatos__termo">{f.termo}</span><span class="fatos__texto">{f.texto}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao secao--petroleo mc-ciclos" aria-labelledby="ciclos-titulo">
+    <div class="wrap">
+      <div class="mc-ciclos__grade">
+        <div>
+          <p class="mc-ciclos__rotulo">Quem organiza</p>
+          <h2 id="ciclos-titulo" class="secao__titulo">Conheça a CICLOS+</h2>
+          <p class="secao__voz">A CICLOS+ já faz parte de Pelotas.</p>
+        </div>
+        <div class="mc-ciclos__texto">
+          <p>
+            A CICLOS+ é uma escola cultural para pessoas 60+. Aqui se aprende arte, filosofia, história, música
+            e muito mais, sem provas e sem pressão, com professores de cada área e uma turma que vira companhia.
+          </p>
+          <p>
+            A escola nasceu em Porto Alegre, onde a primeira turma se formou em 2020 e hoje reúne mais de 100 alunos.
+            Em Pelotas, funciona no {u.local}{u.responsavel ? `, conduzida pela franqueada Bibiana Urdaniz` : ''}.
+          </p>
+          <ul class="mc-ciclos__assuntos" aria-label="Disciplinas da CICLOS+">
+            {disciplinas.map((d) => <li>{d.nome}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <ul class="mc-ciclos__fotos">
+        <li><Image src={fotoAula} alt="Professor conduz uma aula da CICLOS+ para uma sala cheia de alunos atentos" widths={[360, 560]} sizes="(max-width: 48rem) 90vw, 30vw" /></li>
+        <li><Image src={fotoFesta} alt="Alunas da CICLOS+ comemoram com os braços para o alto numa confraternização" widths={[360, 560]} sizes="(max-width: 48rem) 90vw, 30vw" /></li>
+        <li><Image src={fotoViagem} alt="Alunas da CICLOS+ observam de perto uma pintura impressionista num museu" widths={[360, 560]} sizes="(max-width: 48rem) 90vw, 30vw" /></li>
+      </ul>
+      <p class="mc-ciclos__nota">Aulas, confraternizações e viagens culturais: fotos da CICLOS+ em Porto Alegre.</p>
+    </div>
+  </section>
+
+  <section class="secao secao--menta mc-caminho" aria-labelledby="caminho-titulo">
+    <Marca tipo="simbolo" label={null} class="mc-caminho__marca" />
+    <div class="wrap">
+      <h2 id="caminho-titulo" class="secao__titulo">A masterclass é só o começo</h2>
+      <p class="secao__voz">Quem vem em outubro recebe em primeira mão o que vem depois.</p>
+      <ol class="caminho">
+        {caminho.map((c) => (
+          <li class:list={{ 'is-atual': c.atual }}>
+            <span class="caminho__quando">{c.quando}</span>
+            <span class="caminho__titulo">{c.titulo}</span>
+            <span class="caminho__texto">{c.texto}</span>
+            {c.atual && <span class="caminho__aqui">Você está aqui</span>}
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="secao mc-faq" aria-labelledby="faq-titulo">
+    <div class="wrap mc-faq__grade">
+      <h2 id="faq-titulo" class="secao__titulo">Perguntas frequentes</h2>
+      <div class="faq">
+        {perguntas.map((q) => (
+          <details>
+            <summary>{q.p}</summary>
+            <p>{q.r}</p>
+          </details>
+        ))}
+        <p class="faq__mais">Outra dúvida? <a href={wa} target="_blank" rel="noopener">Fale com a CICLOS+ Pelotas no WhatsApp</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="mc-final" aria-labelledby="final-titulo">
+    <Marca tipo="simbolo" label={null} class="mc-final__marca" />
+    <div class="wrap mc-final__grade">
+      <div>
+        <h2 id="final-titulo" class="mc-final__titulo">Reserve seu lugar</h2>
+        <p class="mc-final__voz">{ev.titulo}. {ev.quando}, às {ev.hora}, no {u.local}.</p>
+      </div>
+      <div class="mc-final__acoes">
+        <a class="btn mc-final__btn" href="#inscricao">Quero reservar meu lugar</a>
+        <a class="mc-final__wa" href={wa} target="_blank" rel="noopener">Ou chame no WhatsApp {fone}</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="barra-mc">
+    <a class="btn barra-mc__btn" href="#inscricao">Reservar meu lugar</a>
+    <a class="barra-mc__wa" href={wa} target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z" /><path d="M9.2 8.6c.2 2.6 2.2 4.9 4.9 5.6l1.2-1.3 1.9.9-.4 1.6c-3.8.3-7.9-3.6-8.3-7.4l1.6-.5.9 1.9z" class="barra-mc__fone" /></svg></a>
+  </div>
+</Base>
+
+<script>
+  // A barra fixa do celular some enquanto o formulário está à vista.
+  const barra = document.querySelector<HTMLElement>('.barra-mc');
+  const form = document.getElementById('inscricao');
+  if (barra && form && 'IntersectionObserver' in window) {
+    new IntersectionObserver(([e]) => barra.classList.toggle('is-oculta', e.isIntersecting), { threshold: 0.15 }).observe(form);
+  }
+</script>
+
+<style>
+  /* Abertura: campo petróleo com o formulário à vista */
+  .mc-hero {
+    position: relative; overflow: clip;
+    background: var(--petrol) var(--tex-petrol) center / 1200px auto repeat;
+    color: var(--on-petrol);
+    padding-block: clamp(2rem, 4vw, 3.5rem) clamp(3.5rem, 7vw, 6rem);
+  }
+  .mc-hero :global(.mc-hero__marca) {
+    position: absolute; left: -10rem; bottom: -12rem; width: min(40rem, 70vw);
+    color: var(--mint); opacity: 0.1; pointer-events: none;
+  }
+  .mc-hero__grade {
+    position: relative;
+    display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    grid-template-areas: 'texto form' 'foto form';
+    gap: clamp(2rem, 4vw, 3rem) clamp(2.5rem, 5vw, 5rem); align-items: start;
+  }
+  .mc-hero__texto { grid-area: texto; }
+  .mc-hero__foto { grid-area: foto; margin: 0; }
+  .mc-hero__form { grid-area: form; scroll-margin-top: 6.5rem; }
+
+  .mc-hero__tipo { font-weight: 700; font-size: 0.95rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--yellow); }
+  .mc-hero__titulo { margin-top: 0.75rem; font-size: clamp(3.75rem, 1.6rem + 6vw, 8rem); line-height: 0.86; color: var(--on-petrol); }
+  .mc-hero__voz {
+    margin-top: 1.1rem; max-width: 30ch;
+    font-style: italic; font-size: clamp(1.4rem, 1.05rem + 1vw, 2rem); line-height: 1.25; color: var(--on-petrol-soft);
+  }
+
+  .mc-fatos { margin: 1.75rem 0 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 2rem; max-width: 40rem; }
+  .mc-fatos div { padding-block: 0.9rem; border-top: 1px solid rgba(199, 227, 234, 0.3); }
+  .mc-fatos dt { font-family: var(--font-display); text-transform: uppercase; font-size: 1.7rem; line-height: 1; color: var(--mint); }
+  .mc-fatos dd { margin: 0.35rem 0 0; color: var(--on-petrol); font-size: 1.1rem; line-height: 1.4; }
+  .mc-hero__acoes { display: flex; flex-wrap: wrap; gap: 0.75rem 2rem; margin-top: 1.5rem; }
+  .mc-hero .link-arrow { color: var(--lemon); }
+  .mc-hero .link-arrow:hover { color: #fff; }
+  .mc-hero__texto :focus-visible { outline-color: var(--yellow); }
+
+  .mc-hero__foto :global(img) {
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
+    border-radius: 1.5rem 999px 999px 1.5rem; border: 6px solid var(--yellow);
+  }
+  .mc-hero__foto figcaption { margin-top: 0.6rem; font-style: italic; font-size: 0.95rem; color: var(--on-petrol-soft); }
+
+  /* A noite em dois tempos */
+  .tempo {
+    display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(2rem, 5vw, 5rem); align-items: center;
+    margin-top: clamp(3rem, 6vw, 5rem);
+  }
+  .tempo--inverso .tempo__foto { order: 2; }
+  .tempo__foto { margin: 0; max-width: 30rem; }
+  .tempo__foto :global(img) { width: 100%; object-fit: cover; box-shadow: 0 30px 60px -40px rgba(0, 61, 89, 0.6); }
+  .tempo__foto--arco :global(img) { aspect-ratio: 3 / 4; border-radius: 50% 50% 1.25rem 1.25rem / 36% 36% 1.25rem 1.25rem; border: 8px solid var(--mint); }
+  .tempo__foto--circulo :global(img) { aspect-ratio: 1; border-radius: 50%; border: 8px solid var(--yellow); object-position: 50% 30%; }
+  .tempo__foto figcaption { margin-top: 0.7rem; font-style: italic; font-size: 0.95rem; color: var(--ink-soft); }
+  .tempo__num { font-weight: 700; font-size: 0.95rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-ink); }
+  .tempo__titulo { margin-top: 0.5rem; font-size: clamp(2.4rem, 1.8rem + 2vw, 3.75rem); color: var(--petrol); }
+  .tempo__texto p:not(.tempo__num) { margin-top: 1rem; max-width: 46ch; }
+  .mc-noite__cta { margin-top: clamp(3rem, 5vw, 4rem); }
+
+  /* Faixa natureza-morta */
+  .faixa-nm { position: relative; background: #0a1c26; color: var(--on-petrol); }
+  .faixa-nm :global(.faixa-nm__img) { width: 100%; height: auto; max-height: 38rem; object-fit: cover; object-position: 30% 50%; }
+  .faixa-nm__texto { position: absolute; inset: 0; display: flex; align-items: center; justify-content: flex-end; }
+  .faixa-nm__frase {
+    max-width: 22ch; text-align: right;
+    font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2.5rem, 1.4rem + 3.6vw, 5.5rem); line-height: 0.9;
+    color: var(--on-petrol);
+  }
+  .faixa-nm__frase span {
+    display: block; margin-top: 0.9rem;
+    font-family: var(--font-text); text-transform: none; font-style: italic; font-size: clamp(1.2rem, 1rem + 0.6vw, 1.6rem); line-height: 1.3;
+    color: var(--yellow);
+  }
+
+  /* Para quem é */
+  .mc-paraquem { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+  .mc-paraquem .fatos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+  /* Conheça a CICLOS+ */
+  .mc-ciclos__grade { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+  .mc-ciclos__rotulo { font-weight: 700; font-size: 0.9rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--on-petrol-soft); margin-bottom: 0.75rem; }
+  .mc-ciclos__texto { display: grid; gap: 1.1rem; color: var(--on-petrol-soft); max-width: 50ch; }
+  .mc-ciclos__texto p:first-child { color: var(--on-petrol); font-size: clamp(1.2rem, 1.05rem + 0.45vw, 1.45rem); line-height: 1.55; }
+  .mc-ciclos__assuntos { list-style: none; margin: 0.5rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .mc-ciclos__assuntos li {
+    padding: 0.4rem 1rem; border-radius: var(--radius-pill);
+    border: 2px solid rgba(199, 227, 234, 0.4); color: var(--on-petrol); font-weight: 600; font-size: 1rem;
+  }
+  .mc-ciclos__fotos {
+    list-style: none; margin: clamp(3rem, 5vw, 4rem) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(0.75rem, 1.4vw, 1.25rem);
+  }
+  .mc-ciclos__fotos :global(img) { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 1.25rem; }
+  .mc-ciclos__fotos li:first-child :global(img) { border-radius: 999px 1.25rem 1.25rem 999px; }
+  .mc-ciclos__fotos li:last-child :global(img) { border-radius: 1.25rem 999px 999px 1.25rem; }
+  .mc-ciclos__nota { margin-top: 1rem; font-style: italic; color: var(--on-petrol-soft); font-size: 1rem; }
+
+  /* O caminho */
+  .mc-caminho { position: relative; overflow: clip; }
+  .mc-caminho :global(.mc-caminho__marca) { position: absolute; right: -8rem; top: -7rem; width: min(34rem, 60vw); color: #2fe0a2; pointer-events: none; }
+  .mc-caminho .wrap { position: relative; }
+  .caminho {
+    list-style: none; margin: clamp(2.5rem, 5vw, 3.5rem) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(1rem, 2vw, 1.75rem);
+  }
+  .caminho li {
+    position: relative; display: grid; gap: 0.5rem; align-content: start;
+    padding: clamp(1.5rem, 2.6vw, 2.25rem); border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.28);
+  }
+  .caminho li.is-atual { background: var(--petrol); color: var(--on-petrol); }
+  .caminho__quando { font-weight: 700; font-size: 0.95rem; letter-spacing: 0.16em; text-transform: uppercase; }
+  .caminho__titulo { font-family: var(--font-display); text-transform: uppercase; font-size: clamp(2.2rem, 1.7rem + 1.6vw, 3.25rem); line-height: 0.95; color: var(--petrol-ink); }
+  .is-atual .caminho__titulo { color: var(--mint); }
+  .caminho__texto { line-height: 1.45; }
+  .is-atual .caminho__texto { color: var(--on-petrol-soft); }
+  .caminho__aqui {
+    justify-self: start; margin-top: 0.5rem; padding: 0.35rem 0.9rem; border-radius: var(--radius-pill);
+    background: var(--yellow); color: var(--petrol-ink); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  /* Perguntas frequentes */
+  .mc-faq__grade { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+  .faq { border-top: 2px solid var(--petrol); }
+  .faq details { border-bottom: 1px solid #d9d4c7; }
+  .faq summary {
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    min-height: 3.5rem; padding-block: 1.1rem; cursor: pointer; list-style: none;
+    font-weight: 700; font-size: clamp(1.15rem, 1.05rem + 0.35vw, 1.35rem); color: var(--petrol-ink);
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+'; flex: none; display: grid; place-items: center; width: 2.25rem; height: 2.25rem; border-radius: 50%;
+    border: 2px solid var(--teal); color: var(--teal-ink); font-size: 1.4rem; line-height: 1;
+    transition: transform 0.3s var(--ease-out);
+  }
+  .faq details[open] summary::after { content: '–'; }
+  .faq summary:hover { color: var(--petrol); }
+  .faq details p { padding-bottom: 1.25rem; max-width: 52ch; }
+  .faq__mais { margin-top: 1.5rem; font-style: italic; color: var(--ink-soft); }
+  .faq__mais a { color: var(--teal-ink); font-weight: 700; font-style: normal; }
+
+  /* Chamada final */
+  .mc-final { position: relative; overflow: clip; background: var(--yellow); color: var(--petrol-ink); padding-block: clamp(4rem, 8vw, 7rem); }
+  .mc-final :global(.mc-final__marca) { position: absolute; left: -9rem; bottom: -10rem; width: min(34rem, 70vw); color: #f7cf55; pointer-events: none; }
+  .mc-final__grade { position: relative; display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 2rem 4rem; }
+  .mc-final__titulo { font-size: clamp(3.25rem, 1.8rem + 4.6vw, 7rem); color: var(--petrol); }
+  .mc-final__voz { margin-top: 1rem; font-style: italic; font-size: clamp(1.25rem, 1.05rem + 0.6vw, 1.6rem); max-width: 34ch; line-height: 1.3; }
+  .mc-final__acoes { display: grid; gap: 1rem; justify-items: start; }
+  .mc-final__btn { background: var(--petrol); color: #fff; font-size: 1.15rem; min-height: 3.75rem; padding-inline: 2.5rem; }
+  .mc-final__btn:hover { background: var(--petrol-deep); }
+  .mc-final__wa { font-weight: 700; color: var(--petrol); }
+
+  /* Barra fixa no celular */
+  .barra-mc { display: none; }
+  @media (max-width: 40rem) {
+    .barra-mc {
+      position: fixed; z-index: 60; left: 0; right: 0; bottom: 0;
+      display: flex; gap: 0.75rem; align-items: center;
+      padding: 0.75rem var(--gutter) calc(0.75rem + env(safe-area-inset-bottom));
+      background: color-mix(in srgb, var(--paper) 94%, transparent); backdrop-filter: blur(8px);
+      box-shadow: 0 -10px 24px -18px rgba(0, 61, 89, 0.6);
+      transition: transform 0.35s var(--ease-out);
+    }
+    .barra-mc.is-oculta { transform: translateY(110%); }
+    .barra-mc__btn { flex: 1; min-height: 3.25rem; }
+    .barra-mc__wa {
+      flex: none; display: grid; place-items: center; width: 3.25rem; height: 3.25rem;
+      border-radius: 50%; border: 2px solid var(--teal); color: var(--teal-ink);
+    }
+    .barra-mc__wa svg { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+    .barra-mc__wa .barra-mc__fone { fill: currentColor; stroke: none; }
+    :global(body) { padding-bottom: 5rem; }
+  }
+
+  @media (max-width: 60rem) {
+    .mc-hero__grade { grid-template-columns: 1fr; grid-template-areas: 'texto' 'form' 'foto'; }
+    .tempo, .mc-paraquem, .mc-ciclos__grade, .mc-faq__grade { grid-template-columns: 1fr; }
+    .tempo--inverso .tempo__foto { order: 0; }
+    .caminho { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 48rem) {
+    .faixa-nm__texto { position: static; justify-content: flex-start; padding-block: 2rem 2.5rem; }
+    .faixa-nm__frase { text-align: left; }
+    .mc-ciclos__fotos { grid-template-columns: 1fr; }
+    .mc-ciclos__fotos li :global(img) { border-radius: 1.25rem !important; }
+  }
+  @media (max-width: 30rem) {
+    .mc-fatos, .mc-paraquem .fatos { grid-template-columns: 1fr; }
+  }
+</style>

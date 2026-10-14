@@ -1,0 +1,204 @@
+---
+// Formulário curto de inscrição em evento de campanha (landing pages).
+// Sem formEndpoint, a inscrição segue pelo WhatsApp com a mensagem pronta.
+import { site } from '../data/site';
+import { disciplinas } from '../data/disciplinas';
+import { unidadePorSlug } from '../data/unidades';
+import type { Evento } from '../data/eventos';
+
+interface Props { evento: Evento }
+const { evento } = Astro.props;
+const unidade = unidadePorSlug(evento.unidade);
+const whatsapp = unidade?.whatsapp?.e164 ?? site.whatsapp.e164;
+const origens = ['Instagram ou Facebook', 'Google', 'Indicação de amigo ou familiar', 'Jornal, rádio ou TV', 'Já sou aluno(a) da CICLOS+', 'Outro'];
+const assuntos = disciplinas.map((d) => d.nome);
+---
+<form
+  class="insc"
+  id="form-evento"
+  novalidate
+  data-endpoint={site.formEndpoint}
+  data-whatsapp={whatsapp}
+  data-evento={evento.titulo}
+  data-tipo={evento.tipo}
+  data-unidade={unidade?.cidade ?? ''}
+>
+  <div class="insc__topo">
+    <p class="insc__rotulo">Inscrição</p>
+    <h2 class="insc__titulo" id="inscricao-titulo">Reserve seu lugar</h2>
+    <p class="insc__sub">Leva menos de um minuto. A equipe da CICLOS+ {unidade?.cidade} confirma pelo WhatsApp.</p>
+  </div>
+
+  <div class="campo">
+    <label for="ev-nome">Seu nome</label>
+    <input id="ev-nome" name="nome" type="text" autocomplete="name" required placeholder="Ex.: Maria" />
+    <p class="campo__erro" id="ev-nome-erro" hidden>Escreva seu nome para sabermos como chamar você.</p>
+  </div>
+
+  <div class="campo">
+    <label for="ev-tel">WhatsApp</label>
+    <input id="ev-tel" name="telefone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(53) 99999-9999" />
+    <p class="campo__erro" id="ev-tel-erro" hidden>Coloque um número com DDD, por exemplo (53) 99999-9999.</p>
+  </div>
+
+  <div class="campo">
+    <label for="ev-origem">Como conheceu a CICLOS+? <span class="opcional">(opcional)</span></label>
+    <select id="ev-origem" name="origemDeclarada">
+      <option value="">Escolha uma opção</option>
+      {origens.map((o) => <option value={o}>{o}</option>)}
+    </select>
+  </div>
+
+  <details class="mais">
+    <summary>Tem interesse em outros assuntos? <span class="opcional">(opcional)</span></summary>
+    <fieldset class="campo campo--opcoes">
+      <legend class="visually-hidden">Outros assuntos que você gostaria de experimentar</legend>
+      <div class="opcoes">
+        {assuntos.map((a) => (
+          <label class="opcao"><input type="checkbox" name="assuntos" value={a} /><span>{a}</span></label>
+        ))}
+      </div>
+    </fieldset>
+  </details>
+
+  <label class="aceite">
+    <input type="checkbox" name="aceite" />
+    <span>Aceito receber contato da CICLOS+ pelo WhatsApp, inclusive sobre as aulas de novembro.</span>
+  </label>
+
+  <button class="btn insc__enviar" type="submit">Quero reservar meu lugar</button>
+  <p class="insc__status" role="status" aria-live="polite"></p>
+</form>
+
+<script>
+  const form = document.getElementById('form-evento') as HTMLFormElement | null;
+  if (form) {
+    const status = form.querySelector<HTMLElement>('.insc__status')!;
+    const botao = form.querySelector<HTMLButtonElement>('.insc__enviar')!;
+    const nome = form.querySelector<HTMLInputElement>('#ev-nome')!;
+    const tel = form.querySelector<HTMLInputElement>('#ev-tel')!;
+    const textoBotao = botao.textContent;
+
+    const marcarErro = (input: HTMLInputElement, erro: boolean) => {
+      const msg = document.getElementById(`${input.id}-erro`);
+      input.setAttribute('aria-invalid', String(erro));
+      if (erro) input.setAttribute('aria-describedby', `${input.id}-erro`); else input.removeAttribute('aria-describedby');
+      if (msg) msg.hidden = !erro;
+    };
+    const valido = () => {
+      const okNome = nome.value.trim().length >= 2;
+      const okTel = tel.value.replace(/\D/g, '').length >= 10;
+      marcarErro(nome, !okNome);
+      marcarErro(tel, !okTel);
+      if (!okNome) nome.focus(); else if (!okTel) tel.focus();
+      return okNome && okTel;
+    };
+    [nome, tel].forEach((i) => i.addEventListener('input', () => { if (i.getAttribute('aria-invalid') === 'true') marcarErro(i, false); }));
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!valido()) { status.textContent = 'Confira os campos destacados.'; return; }
+      const dados = new FormData(form);
+      const params = new URLSearchParams(location.search);
+      const payload = {
+        evento: form.dataset.evento,
+        tipo: form.dataset.tipo,
+        unidade: form.dataset.unidade,
+        nome: String(dados.get('nome')).trim(),
+        telefone: String(dados.get('telefone')).trim(),
+        origemDeclarada: String(dados.get('origemDeclarada') || ''),
+        assuntos: dados.getAll('assuntos').map(String),
+        aceiteWhatsapp: dados.get('aceite') === 'on',
+        origem: params.get('utm_source') || 'site',
+        campanha: params.get('utm_campaign') || '',
+        pagina: location.pathname,
+      };
+      const endpoint = form.dataset.endpoint;
+      botao.disabled = true; botao.textContent = 'Enviando…';
+      try {
+        if (endpoint) {
+          const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          if (!r.ok) throw new Error(String(r.status));
+          form.classList.add('is-enviado');
+          status.textContent = `Obrigado, ${payload.nome.split(' ')[0]}! Recebemos sua inscrição e confirmamos pelo WhatsApp.`;
+        } else {
+          const texto = `Olá! Sou ${payload.nome} e quero reservar meu lugar na ${payload.tipo}: "${payload.evento}".` +
+            (payload.assuntos.length ? ` Também me interesso por: ${payload.assuntos.join(', ')}.` : '') +
+            (payload.origemDeclarada ? ` Conheci a CICLOS+ por: ${payload.origemDeclarada}.` : '') +
+            ` Meu telefone: ${payload.telefone}.`;
+          window.open(`https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener');
+          status.textContent = 'Abrimos o WhatsApp com sua inscrição pronta. É só enviar a mensagem.';
+        }
+      } catch {
+        status.textContent = 'Não conseguimos enviar agora. Tente de novo ou chame a gente no WhatsApp.';
+      } finally {
+        botao.disabled = false; botao.textContent = textoBotao;
+      }
+    });
+  }
+</script>
+
+<style>
+  .insc {
+    background: var(--paper) var(--tex-paper) 0 0 / 1800px auto;
+    border-radius: 1.75rem;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    box-shadow: 0 30px 60px -36px rgba(0, 20, 30, 0.75);
+    display: grid; gap: 1.25rem;
+    color: var(--ink);
+  }
+  .insc__rotulo { font-weight: 700; font-size: 0.9rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal-ink); }
+  .insc__titulo { margin-top: 0.35rem; font-size: clamp(2.4rem, 1.9rem + 1.6vw, 3.4rem); color: var(--petrol); }
+  .insc__sub { margin-top: 0.5rem; font-style: italic; color: var(--ink-soft); font-size: 1.05rem; line-height: 1.4; }
+
+  .campo { display: grid; gap: 0.45rem; border: 0; margin: 0; padding: 0; min-width: 0; }
+  .campo label, .campo legend { font-weight: 700; font-size: 1.1rem; color: var(--petrol-ink); padding: 0; }
+  .opcional { font-weight: 400; font-style: italic; color: var(--ink-soft); }
+  .campo input[type='text'], .campo input[type='tel'], .campo select {
+    width: 100%; min-height: 3.5rem;
+    padding: 0.75rem 1rem;
+    border: 2px solid #b9c7cc; border-radius: 0.9rem;
+    background: #fff; color: var(--ink);
+    font: inherit;
+    transition: border-color 0.2s;
+  }
+  .campo input::placeholder { color: #6a7f89; }
+  .campo input:hover, .campo select:hover { border-color: var(--teal); }
+  .campo input:focus-visible, .campo select:focus-visible { outline: 3px solid var(--petrol); outline-offset: 1px; border-color: var(--petrol); }
+  .campo input[aria-invalid='true'] { border-color: #b3261e; }
+  .campo__erro { color: #9b1c14; font-size: 1rem; }
+
+  .mais summary {
+    display: flex; align-items: center; gap: 0.6rem; min-height: 3rem; cursor: pointer;
+    font-weight: 700; font-size: 1.05rem; color: var(--teal-ink); list-style: none;
+  }
+  .mais summary::-webkit-details-marker { display: none; }
+  .mais summary::before {
+    content: '+'; display: grid; place-items: center; flex: none; width: 1.9rem; height: 1.9rem;
+    border-radius: 50%; border: 2px solid var(--teal); font-size: 1.2rem; line-height: 1;
+  }
+  .mais[open] summary::before { content: '–'; }
+  .mais summary:hover { color: var(--petrol); }
+  .mais summary:focus-visible { outline: 3px solid var(--petrol); outline-offset: 2px; }
+  .mais .campo { margin-top: 0.5rem; }
+  .opcoes { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .opcao { position: relative; cursor: pointer; }
+  .opcao input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .opcao span {
+    display: inline-flex; align-items: center; min-height: 2.75rem;
+    padding: 0.45rem 1rem;
+    border: 2px solid #b9c7cc; border-radius: var(--radius-pill);
+    background: #fff; font-size: 1rem;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  }
+  .opcao:hover span { border-color: var(--teal); }
+  .opcao input:checked + span { background: var(--petrol); border-color: var(--petrol); color: #fff; }
+  .opcao input:focus-visible + span { outline: 3px solid var(--petrol); outline-offset: 2px; }
+
+  .aceite { display: flex; gap: 0.75rem; align-items: start; font-size: 1.02rem; cursor: pointer; }
+  .aceite input { width: 1.4rem; height: 1.4rem; margin-top: 0.2rem; accent-color: var(--petrol); flex: none; }
+
+  .insc__enviar { width: 100%; font-size: 1.1rem; min-height: 3.75rem; }
+  .insc__enviar:disabled { opacity: 0.7; cursor: progress; transform: none; }
+  .insc__status { min-height: 1.5rem; font-weight: 600; color: var(--petrol-ink); }
+</style>
