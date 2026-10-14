@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
-import juliana from '../assets/img/equipe/juliana-enderle-site.png';
-import cristiano from '../assets/img/equipe/cristiano-cunha-site.png';
+import juliana from '../assets/img/equipe/juliana-enderle.png';
+import cristiano from '../assets/img/equipe/cristiano-cunha.png';
 
 const pessoas = [
   { nome: 'Juliana Enderle', papel: 'Cofundadora', img: juliana },
@@ -44,8 +44,8 @@ const pessoas = [
     display: block; width: clamp(9rem, 14vw, 13rem); aspect-ratio: 1; border-radius: 50%; overflow: hidden;
     border: 6px solid var(--mint); margin-bottom: 0.75rem;
   }
-  /* A foto original traz um anel em degradê; ampliamos para cortá-lo */
-  .equipe__foto :global(img) { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); }
+  /* As fotos já vêm recortadas em círculo; a leve ampliação esconde a borda suavizada do recorte */
+  .equipe__foto :global(img) { width: 100%; height: 100%; object-fit: cover; transform: scale(1.03); }
   .equipe__nome { font-family: var(--font-display); text-transform: uppercase; font-size: 1.9rem; line-height: 1; color: var(--petrol); }
   .equipe__papel { font-style: italic; color: var(--ink-soft); }
 

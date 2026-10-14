@@ -1,6 +1,6 @@
 # CICLOS+ · Site institucional — contexto para continuar o trabalho
 
-> Este arquivo é lido automaticamente pelo Claude Code ao abrir a pasta. Ele resume tudo o que foi feito até **05/10/2026** para que o trabalho continue em outra máquina sem perder contexto. Atualize a seção "Estado atual" e "Próximos passos" sempre que avançar. O [AGENTS.md](AGENTS.md) é a cópia deste arquivo para o Codex: mantenha os dois iguais.
+> Este arquivo é lido automaticamente pelo Claude Code ao abrir a pasta. Ele resume tudo o que foi feito até **14/10/2026** para que o trabalho continue em outra máquina sem perder contexto. Atualize a seção "Estado atual" e "Próximos passos" sempre que avançar. O [AGENTS.md](AGENTS.md) é a cópia deste arquivo para o Codex: mantenha os dois iguais.
 
 ## 1. O que é o projeto
 
@@ -24,7 +24,7 @@ Já estão prontas a **Home** e **todas as páginas institucionais**: disciplina
 Observações sobre o PRODUCT.md (partes desatualizadas):
 - Diz que as fotos estão em `site/assets/img/` → o caminho real é **`site/src/assets/img/`**.
 - Diz que o logo "não está na pasta" → já foi vetorizado a partir do MIV e está em `marca-fontes/` e `site/src/assets/brand/`.
-- Deploy target já foi decidido: **Vercel** (ver seção 4).
+- Deploy target já foi decidido: **Hostinger, por FTP** (ver seção 4). A Vercel ficou como cópia de testes.
 
 ## 3. Stack e como rodar
 
@@ -64,9 +64,13 @@ No Claude Code Desktop, o arquivo [.claude/launch.json](.claude/launch.json) já
   3. `8234746` — solução final: o projeto na Vercel usa **Root Directory = `site/`** com detecção automática do Astro. O `vercel.json` da raiz foi removido; ficou só `site/vercel.json` com `"framework": "astro"`.
   4. Depois: ajuste da foto do mosaico de Confraternizações e as páginas internas (out/2026). Veja `git log`.
 - `site/vercel.json` também guarda os **redirecionamentos 301** das URLs antigas do WordPress (`/disciplinas-semestrais` → `/disciplinas`, `/cursos-livres-2` → `/cursos-livres`). `/viagens-culturais`, `/confraternizacoes` e `/unidades` mantêm o mesmo endereço do site antigo.
-- **Hostinger:** o site vai ao ar em `ciclosmais.com` na Hostinger, enviando por FTP o **conteúdo** de `site/dist/` para `public_html`. Lá o `vercel.json` é ignorado: os mesmos redirecionamentos, o https sem www e a página 404 estão em `site/public/.htaccess`, que entra no `dist` a cada build. Se mudar um redirecionamento, mude nos dois arquivos. A cada atualização: build e reenvio do `dist` (de vez em quando, apague a pasta `_astro` do servidor antes de enviar).
+- **Produção = Hostinger (desde 14/10/2026).** O site está no ar em `https://ciclosmais.com`, servido da pasta `/domains/ciclosmais.com/public_html` da Hostinger. **Toda atualização vai por FTP**; a Vercel deixou de ser o ambiente oficial (ainda recebe os pushes, mas é só uma cópia de testes).
+- **Como publicar:** `npm --prefix site run build`, depois `python scripts/publicar_ftp.py --simular` para ver o que vai subir, depois `python scripts/publicar_ftp.py` para enviar. O script usa FTPS. Arquivos de `_astro/` (com hash no nome) só sobem se não existirem no servidor; HTML, XML, TXT e `.htaccess` sobem sempre; nada é apagado, a não ser com `--limpar` (só arquivos antigos de `_astro/`).
+- **Credenciais do FTP** ficam em `.ftp.env` na raiz (no `.gitignore`, nunca vão para o Git). Numa máquina nova, crie esse arquivo com `FTP_HOST`, `FTP_USER`, `FTP_PASS` e `FTP_DIR=/domains/ciclosmais.com/public_html`; os dados estão no hPanel da Hostinger → Arquivos → Contas FTP.
+- Na Hostinger o `vercel.json` é ignorado: os mesmos redirecionamentos, o https sem www e a página 404 estão em `site/public/.htaccess`, que entra no `dist` a cada build. Se mudar um redirecionamento, mude nos dois arquivos.
+- No servidor existe a pasta `public_html/oldxxx/` com o WordPress antigo (acessível pela internet). Ver pendências.
 - **Não** recrie um `vercel.json` na raiz com comandos customizados: isso quebra o caminho, já que a Vercel roda tudo a partir de `site/`.
-- Deploy é automático a cada push em `main` (integração Git da Vercel).
+- A Vercel ainda publica automaticamente a cada push em `main` (só como cópia de testes).
 - `.gitattributes` força `eol=lf` e marca imagens/PDFs como binários (o projeto é editado no Windows).
 
 ## 5. Processo de design (como chegamos na Home)
@@ -95,7 +99,7 @@ Mundo visual:
 ```
 site/
   astro.config.mjs        site: https://ciclosmais.com
-  vercel.json             framework: astro + redirecionamentos das URLs antigas
+  vercel.json             framework: astro + redirecionamentos (só para a cópia de testes na Vercel)
   public/                 favicon.svg, robots.txt, .htaccess (Hostinger), textures/
   src/
     pages/
@@ -126,6 +130,7 @@ site/
       img/                fotos reais (nome do arquivo = categoria - original)
       img/equipe/         Juliana Enderle e Cristiano Cunha
       img/geradas/        imagens ilustrativas geradas no Magnific (+ .json de origem)
+scripts/publicar_ftp.py   publica site/dist/ na Hostinger por FTPS (credenciais em .ftp.env)
 marca-fontes/             SVGs/PNGs de trabalho da vetorização do logo
 ```
 
@@ -149,15 +154,20 @@ Em [site/src/components/QueroConhecer.astro](site/src/components/QueroConhecer.a
 - Acessibilidade WCAG 2.2 AA no mínimo: texto grande, contraste alto, alvos de toque generosos, nada que dependa só de hover/animação, respeito a `prefers-reduced-motion`, WhatsApp sempre visível como alternativa humana.
 - Sempre usar os tokens de `global.css` / `DESIGN.md`; não introduzir cores ou fontes novas.
 
-## 8. Estado atual (05/10/2026)
+## 8. Estado atual (14/10/2026)
 
 - ✅ Home completa, responsiva, publicada via Vercel a partir do `main`.
 - ✅ Logo vetorizado do MIV, texturas geradas e documentadas, fotos reais otimizadas.
 - ✅ Deploy corrigido (Root Directory `site/`).
 - ✅ Páginas institucionais completas (17 páginas no build): disciplinas + 8 disciplinas, cursos livres, viagens culturais, confraternizações, unidades + 2 unidades, 404. Breadcrumb com JSON-LD, sitemap.xml, robots.txt, og:image por página, redirecionamentos das URLs antigas.
 - ✅ Testado em 1480, 1280, 800, 375, 360 e 320 px sem rolagem horizontal.
+- ✅ **No ar em https://ciclosmais.com (Hostinger)** desde 14/10/2026. Conferido: os 382 arquivos do `dist` estão no servidor. Publicação por `scripts/publicar_ftp.py`.
+- ✅ Fotos novas da Juliana e do Cristiano (`assets/img/equipe/juliana-enderle.png` e `cristiano-cunha.png`).
 
 ## 9. Pendências e próximos passos
+
+Segurança (urgente):
+- **WordPress antigo exposto:** `public_html/oldxxx/` tem o WordPress inteiro (13.701 arquivos, com `wp-config.php` e plugins desatualizados), e `ciclosmais.com/oldxxx/wp-login.php` responde 200. Confirmar que há backup baixado e então apagar a pasta ou movê-la para fora do `public_html`.
 
 Pendências que dependem da cliente (marcadas `PENDENTE` no código):
 - **WhatsApp oficial**: o site antigo usa dois números, (51) 99343-3639 (usado hoje) e (51) 98153-0001. Confirmar e decidir se cada unidade tem o seu (campo `whatsapp` opcional em `unidades.ts`).
@@ -172,7 +182,7 @@ Pendências que dependem da cliente (marcadas `PENDENTE` no código):
 - Masterclass de outubro (tema, data, preço, local), as 4 aulas de novembro / "Passaporte Novembro", grade 2027 de Pelotas, newsletter (manter ou não).
 
 Próximas etapas prováveis:
-1. Publicar na Hostinger em `ciclosmais.com` (backup do WordPress antigo, envio do `dist` por FTP, SSL, testes) e enviar o sitemap ao Google Search Console. Campanhas "Always On" apontando para a Home.
+1. Enviar `https://ciclosmais.com/sitemap.xml` ao Google Search Console. Campanhas "Always On" apontando para a Home.
 2. Integrar o backend do formulário.
 3. Landing pages da campanha de Pelotas (Masterclass → cursos livres de novembro → lista prioritária / inscrição 2027), reaproveitando `Abertura`, `QueroConhecer` (com `unidade="Pelotas"`) e registrando a origem do lead (UTM/QR).
 
@@ -180,4 +190,4 @@ Próximas etapas prováveis:
 
 - A memória do Claude Code fica na máquina local e **não** vem junto com a pasta: este arquivo é o contexto. Mantenha-o atualizado.
 - Para trabalho visual, o fluxo usado foi o skill `/impeccable` (ele lê `PRODUCT.md`, `DESIGN.md` e `.impeccable/`).
-- Verifique mudanças no preview (`ciclos-site`) antes de commitar e rode `npm --prefix site run build` para garantir que o build da Vercel vai passar.
+- Verifique mudanças no preview (`ciclos-site`) antes de commitar, rode `npm --prefix site run build` e publique com `python scripts/publicar_ftp.py` (seção 4). Commit e push no Git continuam sendo o histórico do projeto, mas não colocam nada no ar.

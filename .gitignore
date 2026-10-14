@@ -4,6 +4,9 @@ site/dist/
 site/.astro/
 .vercel/
 
+# Credenciais do FTP (Hostinger): nunca vão para o Git
+.ftp.env
+
 # Sistema
 .DS_Store
 Thumbs.db
