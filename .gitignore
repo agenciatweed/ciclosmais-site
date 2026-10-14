@@ -4,8 +4,9 @@ site/dist/
 site/.astro/
 .vercel/
 
-# Credenciais do FTP (Hostinger): nunca vão para o Git
+# Credenciais do FTP e do SMTP (Hostinger): nunca vão para o Git
 .ftp.env
+servidor/ciclos-form-config.php
 
 # Sistema
 .DS_Store

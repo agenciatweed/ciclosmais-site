@@ -67,6 +67,8 @@ const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens c
         <span>Aceito receber contato da CICLOS+ pelo WhatsApp.</span>
       </label>
 
+      <div class="isca" aria-hidden="true"><label>Não preencha este campo <input type="text" name="site_web" tabindex="-1" autocomplete="off" /></label></div>
+
       <button class="btn form__enviar" type="submit">Quero conhecer</button>
       <p class="form__status" role="status" aria-live="polite"></p>
     </form>
@@ -102,6 +104,8 @@ const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens c
       if (!valido()) { status.textContent = 'Confira os campos destacados.'; return; }
       const dados = new FormData(form);
       const payload = {
+        formulario: 'Quero conhecer a CICLOS+',
+        site_web: String(dados.get('site_web') || ''),
         nome: String(dados.get('nome')).trim(),
         telefone: String(dados.get('telefone')).trim(),
         unidade: String(dados.get('unidade')),
@@ -111,25 +115,29 @@ const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens c
         origem: new URLSearchParams(location.search).get('utm_source') || 'site',
         pagina: location.pathname,
       };
+      const texto = `Olá! Sou ${payload.nome} e quero conhecer a CICLOS+ ${payload.unidade}.` +
+        (payload.assuntos.length ? ` Tenho interesse em: ${payload.assuntos.join(', ')}.` : '') +
+        (payload.para !== 'Para mim' ? ` É para convidar ou presentear alguém.` : '') +
+        ` Meu telefone: ${payload.telefone}.`;
+      const linkWa = `https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(texto)}`;
       const endpoint = form.dataset.endpoint;
       botao.disabled = true; botao.textContent = 'Enviando…';
       try {
         if (endpoint) {
           const r = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-          if (!r.ok) throw new Error(String(r.status));
-          form.classList.add('is-enviado');
+          const resp = await r.json().catch(() => ({}));
+          if (!r.ok || !resp.ok) throw new Error(String(r.status));
+          form.reset();
           status.textContent = `Obrigado, ${payload.nome.split(' ')[0]}! Recebemos seu contato e retornamos em até 24 horas.`;
         } else {
           // Sem destino configurado, a conversa segue pelo WhatsApp com a mensagem pronta.
-          const texto = `Olá! Sou ${payload.nome} e quero conhecer a CICLOS+ ${payload.unidade}.` +
-            (payload.assuntos.length ? ` Tenho interesse em: ${payload.assuntos.join(', ')}.` : '') +
-            (payload.para !== 'Para mim' ? ` É para convidar ou presentear alguém.` : '') +
-            ` Meu telefone: ${payload.telefone}.`;
-          window.open(`https://wa.me/${form.dataset.whatsapp}?text=${encodeURIComponent(texto)}`, '_blank', 'noopener');
+          window.open(linkWa, '_blank', 'noopener');
           status.textContent = 'Abrimos o WhatsApp com sua mensagem pronta. É só enviar.';
         }
       } catch {
-        status.textContent = 'Não conseguimos enviar agora. Tente de novo ou chame a gente no WhatsApp.';
+        // Se o envio falhar, o contato não se perde: o WhatsApp já vem com a mensagem pronta.
+        const a = Object.assign(document.createElement('a'), { href: linkWa, target: '_blank', rel: 'noopener', textContent: 'fale com a gente pelo WhatsApp' });
+        status.replaceChildren('Não conseguimos enviar agora. Tente de novo em instantes ou ', a, '.');
       } finally {
         botao.disabled = false; botao.textContent = 'Quero conhecer';
       }
@@ -206,6 +214,7 @@ const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens c
   .form__enviar:hover { background: var(--petrol-deep); }
   .form__enviar:disabled { opacity: 0.7; cursor: progress; transform: none; }
   .form__status { min-height: 1.5rem; font-weight: 600; color: var(--petrol-ink); }
+  .isca { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
   @media (max-width: 60rem) { .qc__grade { grid-template-columns: 1fr; } }
 </style>

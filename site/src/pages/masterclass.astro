@@ -22,7 +22,7 @@ const wa = whatsappLink(`Olá! Quero saber da masterclass "${ev.titulo}" na CICL
 const fone = u.whatsapp?.display ?? site.whatsapp.display;
 
 const fatos = [
-  { termo: 'Quando', texto: `${ev.quando}, às ${ev.hora}` },
+  { termo: 'Quando', texto: `${ev.quando}, ${ev.horario}` },
   { termo: 'Onde', texto: `${u.local}, ${u.cidade}` },
   { termo: 'O que', texto: 'Aula de cerca de 40 minutos + degustação de vinhos' },
   { termo: 'Para quem', texto: 'Pessoas 60+ com curiosidade. Ninguém precisa entender de arte nem de vinho.' },
@@ -32,7 +32,7 @@ const paraQuem = [
   { termo: 'Sem pré-requisito', texto: 'A aula foi pensada para quem tem curiosidade, não para especialistas.' },
   { termo: 'Conversa de verdade', texto: 'Perguntar, comentar e trocar impressões faz parte da aula.' },
   { termo: 'Boa companhia', texto: 'Gente da cidade que também gosta de cultura, de vinho e de um bom papo.' },
-  { termo: 'No fim da tarde', texto: `Às ${ev.hora}, no ${u.local}, em ${u.cidade}.` },
+  { termo: 'Numa quarta à noite', texto: `${ev.quando}, ${ev.horario}, no ${u.local}.` },
 ];
 
 const caminho = [
@@ -43,19 +43,40 @@ const caminho = [
 
 const perguntas = [
   { p: 'Preciso entender de arte ou de vinho?', r: 'Não. A aula parte do zero e foi pensada para quem tem curiosidade. A sommelier conduz a degustação passo a passo.' },
-  { p: 'Quanto tempo dura a aula?', r: 'A aula de História da Arte tem cerca de 40 minutos. Em seguida, começa a degustação de vinhos com a sommelier.' },
+  { p: 'Quanto tempo dura?', r: `O encontro vai ${ev.horario}. Primeiro, a aula de História da Arte, de cerca de 40 minutos; em seguida, a degustação de vinhos com a sommelier.` },
   { p: 'Onde é?', r: `No ${u.local}: ${u.endereco}, ${u.cidade}/${u.uf}.` },
   { p: 'Como confirmo minha inscrição?', r: 'Preencha o formulário desta página. A equipe da CICLOS+ Pelotas confirma seu lugar pelo WhatsApp.' },
   { p: 'O que acontece depois da masterclass?', r: 'Quem participa recebe em primeira mão a programação das aulas livres de novembro, uma forma leve de conhecer outros assuntos antes das disciplinas de 2027.' },
 ];
+
+// Dados estruturados do evento (Google: resultados de evento).
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'EducationEvent',
+  name: `${ev.titulo} · ${ev.tipo}`,
+  description: ev.resumo,
+  startDate: ev.inicio,
+  endDate: ev.fim,
+  eventStatus: 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  inLanguage: 'pt-BR',
+  location: {
+    '@type': 'Place',
+    name: u.local,
+    address: { '@type': 'PostalAddress', streetAddress: u.endereco, addressLocality: u.cidade, addressRegion: u.uf, addressCountry: 'BR' },
+  },
+  organizer: { '@type': 'Organization', name: 'CICLOS+ Escola Cultural 60+', url: 'https://ciclosmais.com' },
+  image: [new URL(abertura.src, Astro.site).href],
+};
 ---
 <Base
   title={`Masterclass ${ev.titulo} · CICLOS+ ${u.cidade}`}
-  description={`${ev.voz} ${ev.quando}, às ${ev.hora}, no ${u.local}, em ${u.cidade}. Reserve seu lugar.`}
+  description={`${ev.voz} ${ev.quando}, ${ev.horario}, no ${u.local}, em ${u.cidade}. Reserve seu lugar.`}
   imagem={abertura}
   formNaPagina={false}
   landing={{ href: '#inscricao', texto: 'Reservar meu lugar', whatsappTexto: `Olá! Quero saber da masterclass "${ev.titulo}" na CICLOS+ ${u.cidade}.` }}
 >
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
   <section class="mc-hero" aria-labelledby="mc-titulo">
     <Marca tipo="simbolo" label={null} class="mc-hero__marca" />
     <div class="wrap mc-hero__grade">
@@ -128,7 +149,7 @@ const perguntas = [
   <section class="faixa-nm" aria-label="Natureza-morta barroca">
     <Image src={naturezaMorta} alt="" widths={[800, 1400, 2000, 2400]} sizes="100vw" class="faixa-nm__img" />
     <div class="wrap faixa-nm__texto">
-      <p class="faixa-nm__frase">Arte, sabores e sentidos.<span>Tudo o que um fim de tarde pode ter.</span></p>
+      <p class="faixa-nm__frase">Arte, sabores e sentidos.<span>Tudo o que uma noite pode ter.</span></p>
     </div>
   </section>
 
@@ -214,7 +235,7 @@ const perguntas = [
     <div class="wrap mc-final__grade">
       <div>
         <h2 id="final-titulo" class="mc-final__titulo">Reserve seu lugar</h2>
-        <p class="mc-final__voz">{ev.titulo}. {ev.quando}, às {ev.hora}, no {u.local}.</p>
+        <p class="mc-final__voz">{ev.titulo}. {ev.quando}, {ev.horario}, no {u.local}.</p>
       </div>
       <div class="mc-final__acoes">
         <a class="btn mc-final__btn" href="#inscricao">Quero reservar meu lugar</a>

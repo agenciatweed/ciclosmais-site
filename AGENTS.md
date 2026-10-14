@@ -100,7 +100,8 @@ Mundo visual:
 site/
   astro.config.mjs        site: https://ciclosmais.com
   vercel.json             framework: astro + redirecionamentos (só para a cópia de testes na Vercel)
-  public/                 favicon.svg, robots.txt, .htaccess (Hostinger), textures/
+  public/                 favicon.svg, robots.txt, .htaccess (Hostinger), textures/,
+                          api/formulario.php (envio dos formulários por SMTP)
   src/
     pages/
       index.astro         Home: monta as seções na ordem abaixo
@@ -133,7 +134,8 @@ site/
       img/                fotos reais (nome do arquivo = categoria - original)
       img/equipe/         Juliana Enderle e Cristiano Cunha
       img/geradas/        imagens ilustrativas geradas no Magnific (+ .json de origem)
-scripts/publicar_ftp.py   publica site/dist/ na Hostinger por FTPS (credenciais em .ftp.env)
+scripts/publicar_ftp.py   publica site/dist/ na Hostinger por FTPS (credenciais em .ftp.env; --config envia o SMTP)
+servidor/                 configuração do envio de formulários (o arquivo real com a senha fica fora do Git)
 marca-fontes/             SVGs/PNGs de trabalho da vetorização do logo
 ```
 
@@ -144,8 +146,11 @@ Páginas internas: todas começam com `Abertura` (trilha, título, voz itálica,
 ### Formulário "Quero conhecer"
 
 Em [site/src/components/QueroConhecer.astro](site/src/components/QueroConhecer.astro). Campos: nome, WhatsApp/telefone, unidade, assuntos (opcional), "para mim / para presentear" e aceite de WhatsApp. Validação acessível (mensagens por campo, `aria-invalid`). Captura `utm_source` como origem e a página de onde veio (`pagina`). Aparece no fim de todas as páginas; as props `assunto` e `unidade` deixam o assunto/unidade da página já marcados.
-- Se `site.formEndpoint` estiver **vazio** (situação atual), o envio abre o WhatsApp com uma mensagem pronta.
-- Quando houver backend, basta preencher `formEndpoint` em `site/src/data/site.ts`: o formulário passa a fazer POST de um JSON.
+- **Envio por e-mail (desde 14/10/2026):** `site.formEndpoint = '/api/formulario.php'`. Os dois formulários (`QueroConhecer` e `InscricaoEvento`) fazem POST de JSON para [site/public/api/formulario.php](site/public/api/formulario.php), que envia um e-mail para **contato@ciclosmais.com** pelo SMTP da Hostinger (`smtp.hostinger.com:465`, usuário `form@ciclosmais.com`).
+- A **senha do SMTP** fica em `servidor/ciclos-form-config.php` (fora do Git; modelo em `servidor/ciclos-form-config.example.php`), publicado com `python scripts/publicar_ftp.py --config` para `/domains/ciclosmais.com/ciclos-form-config.php`, **fora do public_html**.
+- Proteções: só aceita POST com `Origin` do próprio site, campo-isca `site_web` contra robôs, validação de nome e telefone, limite de 6 envios por IP a cada 10 min. Cada contato também é gravado em `/domains/ciclosmais.com/ciclos-form-dados/contatos.jsonl` (cópia de segurança, fora do public_html); falhas de SMTP vão para `erros.log` na mesma pasta.
+- Se o envio falhar, o formulário mostra um link de WhatsApp com a mensagem pronta, para o contato não se perder. Com `formEndpoint` vazio, o formulário volta a abrir o WhatsApp direto.
+- O PHP só roda na Hostinger: no `npm run dev` e na Vercel o envio falha (cai no link de WhatsApp).
 
 ## 7. Regras que não podem ser quebradas
 
@@ -174,9 +179,8 @@ Segurança (urgente):
 - **WordPress antigo exposto:** `public_html/oldxxx/` tem o WordPress inteiro (13.701 arquivos, com `wp-config.php` e plugins desatualizados), e `ciclosmais.com/oldxxx/wp-login.php` responde 200. Confirmar que há backup baixado e então apagar a pasta ou movê-la para fora do `public_html`.
 
 Pendências que dependem da cliente (marcadas `PENDENTE` no código):
-- **Masterclass:** data exata (hoje a página diz "Outubro de 2026, às 18h"), investimento (gratuita ou valor), nome da sommelier e da professora, número de vagas. Tudo em `data/eventos.ts`. Confirmar também o **WhatsApp de Pelotas** (sem ele, as inscrições vão para o número geral).
+- **Masterclass:** data confirmada (quarta, 28/10/2026, das 19h às 21h30). Faltam investimento (gratuita ou valor), nome da sommelier e da professora, número de vagas. Tudo em `data/eventos.ts`. Confirmar também o **WhatsApp de Pelotas** (sem ele, o link de WhatsApp da página vai para o número geral).
 - **WhatsApp oficial**: o site antigo usa dois números, (51) 99343-3639 (usado hoje) e (51) 98153-0001. Confirmar e decidir se cada unidade tem o seu (campo `whatsapp` opcional em `unidades.ts`).
-- **Destino do formulário** (CRM, planilha ou e-mail) → preencher `formEndpoint`.
 - **Fotos de Pelotas** (hoje todas são de Porto Alegre).
 - Revisar com a CICLOS+ as frases de **Literatura** e **Vida Digital**, que foram redigidas para o site.
 - Revisar com a CICLOS+ os **textos das páginas de disciplina** (resumo, "Sobre a disciplina" e "Perguntas que movem a turma"), todos redigidos para o site, e os textos curtos de cursos livres, viagens (descrição de cada roteiro) e confraternizações.
@@ -188,7 +192,7 @@ Pendências que dependem da cliente (marcadas `PENDENTE` no código):
 
 Próximas etapas prováveis:
 1. Enviar `https://ciclosmais.com/sitemap.xml` ao Google Search Console. Campanhas "Always On" apontando para a Home.
-2. Integrar o backend do formulário.
+2. Se o volume de contatos crescer, ligar o formulário a um CRM ou planilha (hoje: e-mail + cópia em `contatos.jsonl`).
 3. Próximas landing pages da campanha de Pelotas (aulas livres de novembro → lista prioritária / inscrição 2027), seguindo o modelo de `pages/masterclass.astro`: novo registro em `data/eventos.ts` + página com `landing` no `Base` e `InscricaoEvento`.
 
 ## 10. Dicas para o Codex na nova máquina

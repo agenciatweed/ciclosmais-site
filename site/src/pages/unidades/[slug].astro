@@ -66,7 +66,7 @@ const proximos = eventosDaUnidade(u.slug);
       <div class="wrap">
         {proximos.map((e) => (
           <a class="evento" href={`/${e.slug}`}>
-            <span class="evento__rotulo">Próximo evento · {e.quando}, às {e.hora}</span>
+            <span class="evento__rotulo">Próximo evento · {e.quando}, {e.horario}</span>
             <span class="evento__titulo">{e.titulo}</span>
             <span class="evento__voz">{e.voz}</span>
             <span class="evento__cta">Ver a masterclass e reservar lugar</span>

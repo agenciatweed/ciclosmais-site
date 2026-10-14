@@ -4,6 +4,8 @@ Uso (na raiz do projeto, depois de `npm --prefix site run build`):
     python scripts/publicar_ftp.py            # mostra o que vai subir e envia
     python scripts/publicar_ftp.py --simular  # só mostra, não envia
     python scripts/publicar_ftp.py --limpar   # também apaga do servidor arquivos antigos de _astro/
+    python scripts/publicar_ftp.py --config   # também envia servidor/ciclos-form-config.php (SMTP)
+                                              # para FORA do public_html
 
 Credenciais: variáveis FTP_HOST, FTP_USER, FTP_PASS (e opcional FTP_DIR) ou o arquivo
 .ftp.env na raiz do projeto (fora do Git), uma por linha no formato CHAVE=valor.
@@ -17,7 +19,8 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DIST = RAIZ / 'site' / 'dist'
-SEMPRE = {'.html', '.xml', '.txt', '.htaccess', '.json'}
+SEMPRE = {'.html', '.xml', '.txt', '.htaccess', '.json', '.php'}
+CONFIG_FORM = RAIZ / 'servidor' / 'ciclos-form-config.php'
 
 
 def credenciais():
@@ -143,6 +146,13 @@ def main():
     if limpar:
         for r in antigos:
             comando(lambda f, caminho: f.delete(caminho), posixpath.join(REMOTO, r))
+    if '--config' in sys.argv:
+        if not CONFIG_FORM.exists():
+            sys.exit(f'Não achei {CONFIG_FORM}. Copie o modelo ciclos-form-config.example.php e preencha.')
+        destino = posixpath.join(posixpath.dirname(REMOTO.rstrip('/')), CONFIG_FORM.name)
+        with open(CONFIG_FORM, 'rb') as arq:
+            comando(lambda f, caminho: (arq.seek(0), f.storbinary(f'STOR {caminho}', arq)), destino)
+        print(f'Configuração do formulário enviada para {destino} (fora do public_html).')
     print(f'Pronto: {len(subir)} enviados' + (f', {len(antigos)} apagados.' if limpar else '.'))
     try:
         ftp.quit()
