@@ -9,10 +9,11 @@ import { masterclassPelotas as ev } from '../data/eventos';
 import { unidadePorSlug } from '../data/unidades';
 import { disciplinas } from '../data/disciplinas';
 import { site, whatsappLink } from '../data/site';
-// Obras barrocas (domínio público) extraídas da apresentação da masterclass.
-import abertura from '../assets/img/obras/caravaggio-baco-detalhe.jpg';
-import retrato from '../assets/img/obras/leoni-retrato-de-caravaggio.jpg';
-import triunfo from '../assets/img/obras/velazquez-o-triunfo-de-baco.jpg';
+// Os três momentos do evento usam imagens ilustrativas geradas no Magnific (escolha da cliente);
+// os quatro atos e a faixa usam obras barrocas em domínio público, da apresentação da masterclass.
+import abertura from '../assets/img/geradas/masterclass-abertura.jpg';
+import aulaImg from '../assets/img/geradas/masterclass-aula.jpg';
+import degustacao from '../assets/img/geradas/masterclass-degustacao.jpg';
 import pozzo from '../assets/img/obras/pozzo-apoteose-de-santo-inacio.jpg';
 import vocacao from '../assets/img/obras/caravaggio-vocacao-de-sao-mateus.jpg';
 import baco from '../assets/img/obras/caravaggio-baco.jpg';
@@ -109,8 +110,8 @@ const ld = {
       </div>
 
       <figure class="mc-hero__foto">
-        <Image src={abertura} alt="Detalhe da pintura Baco, de Caravaggio: o jovem deus coroado de folhas de uva segura uma taça de vinho tinto" widths={[480, 720, 1000, 1400, 2000]} sizes="(max-width: 60rem) 92vw, 52vw" loading="eager" fetchpriority="high" />
-        <figcaption>Caravaggio, <em>Baco</em> (detalhe), 1596.</figcaption>
+        <Image src={abertura} alt="Grupo de pessoas 60+ com taças de vinho tinto observa, encantado, uma pintura de Caravaggio projetada na parede" widths={[480, 720, 1000, 1448]} sizes="(max-width: 60rem) 92vw, 52vw" loading="eager" fetchpriority="high" />
+        <figcaption>Imagem ilustrativa.</figcaption>
       </figure>
 
       <div class="mc-hero__form" id="inscricao">
@@ -126,8 +127,8 @@ const ld = {
 
       <div class="tempo">
         <figure class="tempo__foto tempo__foto--arco">
-          <Image src={retrato} alt="Retrato de Caravaggio desenhado a giz por Ottavio Leoni: homem de cabelos escuros, barba e olhar intenso" widths={[400, 640, 800]} sizes="(max-width: 56rem) 90vw, 36vw" />
-          <figcaption>Ottavio Leoni, retrato de Caravaggio.</figcaption>
+          <Image src={aulaImg} alt="Professora aponta o feixe de luz de uma pintura de Caravaggio projetada na parede, diante de alunos 60+ encantados" widths={[400, 640, 880, 1086]} sizes="(max-width: 56rem) 90vw, 36vw" />
+          <figcaption>Imagem ilustrativa.</figcaption>
         </figure>
         <div class="tempo__texto">
           <p class="tempo__num">1 · cerca de 40 minutos</p>
@@ -147,8 +148,8 @@ const ld = {
 
       <div class="tempo tempo--inverso">
         <figure class="tempo__foto tempo__foto--circulo">
-          <Image src={triunfo} alt="Pintura de Velázquez: Baco, coroado de folhas, brinda com um grupo de homens que bebem e sorriem ao ar livre" widths={[400, 640, 880, 1200]} sizes="(max-width: 56rem) 90vw, 36vw" />
-          <figcaption>Diego Velázquez, <em>O triunfo de Baco</em>, 1626.</figcaption>
+          <Image src={degustacao} alt="Sommelier serve vinho tinto a convidados 60+ que riem e brindam numa mesa à luz de velas" widths={[400, 640, 880]} sizes="(max-width: 56rem) 90vw, 36vw" />
+          <figcaption>Imagem ilustrativa.</figcaption>
         </figure>
         <div class="tempo__texto">
           <p class="tempo__num">2 · degustação com sommelier</p>
@@ -345,7 +346,7 @@ const ld = {
   .mc-hero__texto :focus-visible { outline-color: var(--yellow); }
 
   .mc-hero__foto :global(img) {
-    width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+    width: 100%; aspect-ratio: 4 / 3; object-fit: cover;
     border-radius: 999px 1.5rem 1.5rem 999px; border: 6px solid var(--yellow);
   }
   .mc-hero__foto figcaption { margin-top: 0.6rem; font-style: italic; font-size: 0.95rem; color: var(--on-petrol-soft); }
@@ -360,7 +361,7 @@ const ld = {
   .tempo__foto { margin: 0; max-width: 30rem; }
   .tempo__foto :global(img) { width: 100%; object-fit: cover; box-shadow: 0 30px 60px -40px rgba(0, 61, 89, 0.6); }
   .tempo__foto--arco :global(img) { aspect-ratio: 3 / 4; border-radius: 50% 50% 1.25rem 1.25rem / 36% 36% 1.25rem 1.25rem; border: 8px solid var(--mint); }
-  .tempo__foto--circulo :global(img) { aspect-ratio: 1; border-radius: 50%; border: 8px solid var(--yellow); object-position: 34% 45%; }
+  .tempo__foto--circulo :global(img) { aspect-ratio: 1; border-radius: 50%; border: 8px solid var(--yellow); object-position: 50% 30%; }
   .tempo__foto figcaption { margin-top: 0.7rem; font-style: italic; font-size: 0.95rem; color: var(--ink-soft); }
   .tempo__num { font-weight: 700; font-size: 0.95rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal-ink); }
   .tempo__titulo { margin-top: 0.5rem; font-size: clamp(2.4rem, 1.8rem + 2vw, 3.75rem); color: var(--petrol); }
