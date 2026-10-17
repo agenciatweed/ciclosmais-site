@@ -29,7 +29,7 @@ export const unidades: Unidade[] = [
     voz: 'Onde a CICLOS+ começou, e onde a conversa não para.',
     texto: [
       'Foi em Porto Alegre que a primeira turma da CICLOS+ se formou, em 2020: 13 pessoas, ainda pelo Zoom. Em 2022, as aulas passaram a ser presenciais, com História da Arte, Filosofia, Cinema e Música.',
-      'Hoje são mais de 100 alunos, disciplinas de segunda a quinta à tarde e uma sexta-feira reservada para cursos livres, clube do livro, roteiros culturais e confraternizações.',
+      'Hoje são mais de 100 alunos, disciplinas de segunda a quinta à tarde e encontros como aulas livres, clube do livro, roteiros culturais e confraternizações.',
     ],
     mostraGrade: true,
   },

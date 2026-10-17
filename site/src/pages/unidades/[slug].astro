@@ -8,6 +8,7 @@ import { unidades, type Unidade } from '../../data/unidades';
 import { disciplinas, type Foto } from '../../data/disciplinas';
 import { site, whatsappLink } from '../../data/site';
 import { eventosDaUnidade } from '../../data/eventos';
+import { aulasLivres, futuras } from '../../data/agenda';
 import escada from '../../assets/img/Viagens Culturais - 11-min.jpg';
 import jantar from '../../assets/img/Confraternizacoes - IMG_2716-scaled.jpg';
 import grupo from '../../assets/img/Cursos Livres - 11.jpg';
@@ -40,10 +41,11 @@ const mapaEmbed = `https://www.google.com/maps?q=${encodeURIComponent(u.mapaBusc
 const outras = unidades.filter((o) => o.slug !== u.slug);
 const fotos = galerias[u.slug];
 const proximos = eventosDaUnidade(u.slug);
+const temAulasLivres = aulasLivres.some((a) => a.unidade === u.slug && futuras(a.datas).length > 0);
 ---
 <Base
   title={`CICLOS+ ${u.cidade} · Escola Cultural 60+`}
-  description={`${u.voz} Unidade ${u.cidade} da CICLOS+: ${enderecoCompleto}. Disciplinas, cursos livres e encontros para pessoas 60+.`}
+  description={`${u.voz} Unidade ${u.cidade} da CICLOS+: ${enderecoCompleto}. Disciplinas, aulas livres e encontros para pessoas 60+.`}
   imagem={abertura[u.slug]?.src}
 >
   <Abertura
@@ -105,11 +107,12 @@ const proximos = eventosDaUnidade(u.slug);
         {!u.mostraGrade && (
           <p class="sobre-un__prog">
             A grade de {u.cidade} é montada para a cidade. Fale com a equipe para saber das turmas abertas,
-            dos cursos livres e dos próximos encontros.
+            das aulas livres e dos próximos encontros.
           </p>
         )}
         <div class="sobre-un__acoes">
           {!u.mostraGrade && <a class="btn" href={wa} target="_blank" rel="noopener">Pedir a programação</a>}
+          {temAulasLivres && <a class="link-arrow" href="/aulas-livres#proximas">Ver as próximas aulas livres</a>}
           <a class="link-arrow" href="/disciplinas">Conhecer as disciplinas</a>
         </div>
       </div>

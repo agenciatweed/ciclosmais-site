@@ -10,7 +10,8 @@ RewriteRule ^ https://ciclosmais.com%{REQUEST_URI} [L,R=301]
 
 # URLs antigas do WordPress
 RewriteRule ^disciplinas-semestrais/?$ /disciplinas/ [R=301,L]
-RewriteRule ^cursos-livres-2/?$ /cursos-livres/ [R=301,L]
+RewriteRule ^cursos-livres-2/?$ /aulas-livres/ [R=301,L]
+RewriteRule ^cursos-livres/?$ /aulas-livres/ [R=301,L]
 
 # Pagina de erro da CICLOS+
 ErrorDocument 404 /404.html

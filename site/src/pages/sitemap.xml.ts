@@ -8,7 +8,7 @@ export const GET: APIRoute = ({ site }) => {
     '/',
     '/disciplinas',
     ...disciplinas.map((d) => `/disciplinas/${d.slug}`),
-    '/cursos-livres',
+    '/aulas-livres',
     '/viagens-culturais',
     '/confraternizacoes',
     '/unidades',

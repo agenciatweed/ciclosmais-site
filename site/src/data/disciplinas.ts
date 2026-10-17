@@ -153,7 +153,7 @@ export const grade = {
     { dia: 'Terça', aulas: ['Aquarela · Arte Musical', 'Vida Digital'] },
     { dia: 'Quarta', aulas: ['Histórias Nacionais · turma 1', 'Histórias Nacionais · turma 2'] },
     { dia: 'Quinta', aulas: ['História da Arte', 'História Geral'] },
-    { dia: 'Sexta', aulas: ['Cursos livres, clube do livro, roteiros culturais e confraternizações'] },
+    { dia: 'Sexta', aulas: ['Aulas livres, clube do livro, roteiros culturais e confraternizações'] },
   ],
 };
 

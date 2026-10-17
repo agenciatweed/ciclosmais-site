@@ -1,6 +1,6 @@
 ---
 // Landing page da Masterclass de Pelotas: primeira etapa do funil
-// (Masterclass → cursos livres de novembro → disciplinas semestrais 2027).
+// (Masterclass → aulas livres de novembro a janeiro → disciplinas semestrais 2027).
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Marca from '../components/Marca.astro';
@@ -9,6 +9,7 @@ import { masterclassPelotas as ev } from '../data/eventos';
 import { unidadePorSlug } from '../data/unidades';
 import { disciplinas } from '../data/disciplinas';
 import { site, whatsappLink } from '../data/site';
+import { aulasLivres, matriculasPelotas, periodo } from '../data/agenda';
 // Os três momentos do evento usam imagens ilustrativas geradas no Magnific (escolha da cliente);
 // os quatro atos e a faixa usam obras barrocas em domínio público, da apresentação da masterclass.
 import abertura from '../assets/img/geradas/masterclass-abertura.jpg';
@@ -49,10 +50,12 @@ const paraQuem = [
   { termo: 'Numa quarta à noite', texto: `${ev.quando}, ${ev.horario}.` },
 ];
 
+const assuntosLivres = [...new Set(aulasLivres.filter((a) => a.unidade === ev.unidade).map((a) => a.assunto))];
+const listaAssuntos = `${assuntosLivres.slice(0, -1).join(', ')} e ${assuntosLivres.at(-1)}`;
 const caminho = [
-  { quando: 'Outubro', titulo: 'Masterclass', texto: 'Arte, Sabores e Sentidos: o primeiro encontro com a CICLOS+.', atual: true },
-  { quando: 'Novembro', titulo: 'Cursos livres', texto: 'Cursos curtos para experimentar outros assuntos da escola, um de cada vez.' },
-  { quando: 'Março de 2027', titulo: 'Disciplinas semestrais', texto: 'As turmas de Pelotas começam um novo ciclo, com aulas semanais ao longo do semestre.' },
+  { quando: '4 de novembro', titulo: 'Masterclass', texto: 'Arte, Sabores e Sentidos: o primeiro encontro com a CICLOS+.', atual: true },
+  { quando: 'Novembro a janeiro', titulo: 'Aulas livres', texto: `Aulas de ${listaAssuntos}, para experimentar os assuntos da escola, um de cada vez.` },
+  { quando: 'Março de 2027', titulo: 'Disciplinas semestrais', texto: `As aulas começam em 1º de março. Matrículas em ${matriculasPelotas.periodos.map(periodo).join(', ').replace(/, ([^,]*)$/, ' e $1')}.` },
 ];
 
 const perguntas = [
@@ -61,7 +64,7 @@ const perguntas = [
   { p: 'Quanto tempo dura?', r: `O encontro vai ${ev.horario}. Primeiro, a aula de História da Arte, de cerca de 40 minutos; em seguida, a degustação de vinhos com a sommelier.` },
   { p: 'Onde é?', r: 'O local será divulgado em breve!' },
   { p: 'Como confirmo minha inscrição?', r: 'Preencha o formulário desta página. A equipe da CICLOS+ Pelotas confirma seu lugar pelo WhatsApp.' },
-  { p: 'O que acontece depois da masterclass?', r: 'Quem participa recebe em primeira mão a programação dos cursos livres de novembro, uma forma leve de conhecer outros assuntos antes das disciplinas de 2027.' },
+  { p: 'O que acontece depois da masterclass?', r: `Quem participa recebe em primeira mão a programação das aulas livres de novembro a janeiro (${listaAssuntos}), uma forma leve de conhecer outros assuntos antes das disciplinas de 2027.` },
 ];
 
 // Dados estruturados do evento (Google: resultados de evento).
@@ -244,7 +247,7 @@ const ld = {
     <Marca tipo="simbolo" label={null} class="mc-caminho__marca" />
     <div class="wrap">
       <h2 id="caminho-titulo" class="secao__titulo">A masterclass é só o começo</h2>
-      <p class="secao__voz">Quem vem em outubro recebe em primeira mão o que vem depois.</p>
+      <p class="secao__voz">Quem vem à masterclass recebe em primeira mão o que vem depois.</p>
       <ol class="caminho">
         {caminho.map((c) => (
           <li class:list={{ 'is-atual': c.atual }}>

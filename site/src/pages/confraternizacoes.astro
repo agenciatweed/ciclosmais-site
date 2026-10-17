@@ -4,7 +4,9 @@ import Abertura from '../components/Abertura.astro';
 import Galeria from '../components/Galeria.astro';
 import Marca from '../components/Marca.astro';
 import QueroConhecer from '../components/QueroConhecer.astro';
-import { whatsappLink } from '../data/site';
+import { site, whatsappLink } from '../data/site';
+import { unidadePorSlug } from '../data/unidades';
+import { cafesDeSocializacao as cafe, noPalco2026, futuras, dataPorExtenso } from '../data/agenda';
 import f1 from '../assets/img/Confraternizacoes - 06a.jpg';
 import f2 from '../assets/img/Confraternizacoes - 20241025_1609472-scaled.jpg';
 import f3 from '../assets/img/Confraternizacoes - 32.jpg';
@@ -18,6 +20,11 @@ const ocasioes = [
   { termo: 'Datas especiais', texto: 'O fim de ano e outras datas que pedem comemoração.' },
   { termo: 'Entre turmas', texto: 'Um bom jeito de conhecer gente de outras disciplinas.' },
 ];
+
+const unidadeCafe = unidadePorSlug(cafe.unidade)!;
+const proximosCafes = futuras(cafe.datas);
+const waCafe = whatsappLink(`Olá! Quero participar do ${cafe.titulo} da CICLOS+ ${unidadeCafe.cidade}.`, unidadeCafe.whatsapp?.e164);
+const palcoFuturo = futuras([noPalco2026.data]).length > 0;
 ---
 <Base
   title="Confraternizações · CICLOS+ Escola Cultural 60+"
@@ -43,6 +50,29 @@ const ocasioes = [
       <a class="link-arrow" href={whatsappLink('Olá! Quero conhecer a CICLOS+.')} target="_blank" rel="noopener">Falar no WhatsApp</a>
     </Fragment>
   </Abertura>
+
+  {proximosCafes.length > 0 && (
+    <section class="secao secao--petroleo cafe" aria-labelledby="cafe-titulo">
+      <div class="wrap cafe__grade">
+        <div>
+          <p class="cafe__unidade">Na unidade <a href={`/unidades/${unidadeCafe.slug}`}>{unidadeCafe.cidade}</a></p>
+          <h2 id="cafe-titulo" class="secao__titulo">{cafe.titulo}</h2>
+          <p class="secao__voz">{cafe.descricao}</p>
+          <div class="cafe__acoes">
+            <a class="btn" href={waCafe} target="_blank" rel="noopener">Quero participar</a>
+            <a class="link-arrow" href={waCafe} target="_blank" rel="noopener">WhatsApp {unidadeCafe.cidade} {unidadeCafe.whatsapp?.display ?? site.whatsapp.display}</a>
+          </div>
+        </div>
+        <div>
+          <h3 class="cafe__subtitulo">Próximos encontros</h3>
+          <ul class="cafe__datas">
+            {proximosCafes.map((d) => <li>{dataPorExtenso(d)}</li>)}
+          </ul>
+          <p class="cafe__nota">Horários com a equipe da CICLOS+ {unidadeCafe.cidade}.</p>
+        </div>
+      </div>
+    </section>
+  )}
 
   <section class="secao" aria-labelledby="ocasioes-titulo">
     <div class="wrap ocasioes__grade">
@@ -70,6 +100,7 @@ const ocasioes = [
           da programação do ano seguinte.
         </p>
         <p>No encerramento, os professores subiram ao palco para tocar em banda.</p>
+        {palcoFuturo && <p class="palco__proximo">Próxima edição: {dataPorExtenso(noPalco2026.data)}, em {noPalco2026.cidade}.</p>}
       </div>
     </div>
   </section>
@@ -95,6 +126,20 @@ const ocasioes = [
 <style>
   .ocasioes__grade { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
 
+  .cafe__grade { display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+  .cafe__unidade { font-weight: 700; font-size: 1rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--yellow); margin-bottom: 0.75rem; }
+  .cafe__unidade a { color: inherit; }
+  .cafe__unidade a:hover { color: #fff; }
+  .cafe__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 2rem; }
+  .cafe__subtitulo { font-size: clamp(1.9rem, 1.5rem + 1.2vw, 2.6rem); color: var(--mint); }
+  .cafe__datas { list-style: none; margin: 1.25rem 0 0; padding: 0; border-top: 1px solid rgba(199, 227, 234, 0.3); }
+  .cafe__datas li {
+    padding-block: 0.9rem; border-bottom: 1px solid rgba(199, 227, 234, 0.3);
+    font-family: var(--font-display); text-transform: uppercase; font-size: clamp(1.6rem, 1.3rem + 0.9vw, 2.2rem); line-height: 1; color: var(--on-petrol);
+  }
+  .cafe__nota { margin-top: 1rem; font-style: italic; color: var(--on-petrol-soft); font-size: 1rem; }
+  .palco__proximo { font-weight: 700; color: var(--yellow); }
+
   .palco { position: relative; overflow: clip; }
   .palco :global(.palco__marca) { position: absolute; right: -6rem; bottom: -8rem; width: min(30rem, 55vw); color: var(--mint); opacity: 0.16; pointer-events: none; }
   .palco__grade { position: relative; display: grid; grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: end; }
@@ -105,6 +150,6 @@ const ocasioes = [
   .palco__texto p:first-child { color: var(--on-petrol); }
 
   @media (max-width: 56rem) {
-    .ocasioes__grade, .palco__grade { grid-template-columns: 1fr; }
+    .ocasioes__grade, .palco__grade, .cafe__grade { grid-template-columns: 1fr; }
   }
 </style>

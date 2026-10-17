@@ -26,12 +26,14 @@ export const masterclassPelotas: Evento = {
   resumo:
     'Uma noite para olhar a arte com outros olhos e provar o que ela tem de sabor: cerca de 40 minutos de História da Arte sobre Caravaggio e o Barroco e, depois, uma degustação de vinhos conduzida por uma sommelier.',
   unidade: 'pelotas',
-  quando: 'Quarta-feira, 28 de outubro',
+  // Data mudou para 04/11 no calendário de Pelotas de 17/10/2026; horário mantido (confirmar).
+  quando: 'Quarta-feira, 4 de novembro',
   hora: '19h',
   horario: 'das 19h às 21h30',
-  inicio: '2026-10-28T19:00:00-03:00',
-  fim: '2026-10-28T21:30:00-03:00',
+  inicio: '2026-11-04T19:00:00-03:00',
+  fim: '2026-11-04T21:30:00-03:00',
 };
 
 export const eventos: Evento[] = [masterclassPelotas];
-export const eventosDaUnidade = (unidade: string) => eventos.filter((e) => e.unidade === unidade);
+// Só eventos que ainda não terminaram (a página é gerada no build).
+export const eventosDaUnidade = (unidade: string) => eventos.filter((e) => e.unidade === unidade && new Date(e.fim) >= new Date());

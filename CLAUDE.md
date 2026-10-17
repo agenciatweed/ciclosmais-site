@@ -63,7 +63,7 @@ No Claude Code Desktop, o arquivo [.claude/launch.json](.claude/launch.json) já
   2. `96bbde5` — tentativa de `vercel.json` na raiz com `npm ci --prefix site` (falhou: o npm 10 da Vercel não achava o lockfile).
   3. `8234746` — solução final: o projeto na Vercel usa **Root Directory = `site/`** com detecção automática do Astro. O `vercel.json` da raiz foi removido; ficou só `site/vercel.json` com `"framework": "astro"`.
   4. Depois: ajuste da foto do mosaico de Confraternizações e as páginas internas (out/2026). Veja `git log`.
-- `site/vercel.json` também guarda os **redirecionamentos 301** das URLs antigas do WordPress (`/disciplinas-semestrais` → `/disciplinas`, `/cursos-livres-2` → `/cursos-livres`). `/viagens-culturais`, `/confraternizacoes` e `/unidades` mantêm o mesmo endereço do site antigo.
+- `site/vercel.json` também guarda os **redirecionamentos 301** das URLs antigas do WordPress (`/disciplinas-semestrais` → `/disciplinas`, `/cursos-livres-2` e `/cursos-livres` → `/aulas-livres`). `/viagens-culturais`, `/confraternizacoes` e `/unidades` mantêm o mesmo endereço do site antigo.
 - **Produção = Hostinger (desde 14/10/2026).** O site está no ar em `https://ciclosmais.com`, servido da pasta `/domains/ciclosmais.com/public_html` da Hostinger. **Toda atualização vai por FTP**; a Vercel deixou de ser o ambiente oficial (ainda recebe os pushes, mas é só uma cópia de testes).
 - **Como publicar:** `npm --prefix site run build`, depois `python scripts/publicar_ftp.py --simular` para ver o que vai subir, depois `python scripts/publicar_ftp.py` para enviar. O script usa FTPS. Arquivos de `_astro/` (com hash no nome) só sobem se não existirem no servidor; HTML, XML, TXT e `.htaccess` sobem sempre; nada é apagado, a não ser com `--limpar` (só arquivos antigos de `_astro/`).
 - **Credenciais do FTP** ficam em `.ftp.env` na raiz (no `.gitignore`, nunca vão para o Git). Numa máquina nova, crie esse arquivo com `FTP_HOST`, `FTP_USER`, `FTP_PASS` e `FTP_DIR=/domains/ciclosmais.com/public_html`; os dados estão no hPanel da Hostinger → Arquivos → Contas FTP.
@@ -107,7 +107,7 @@ site/
       index.astro         Home: monta as seções na ordem abaixo
       disciplinas/index.astro    índice das disciplinas + como funcionam + grade + galeria
       disciplinas/[slug].astro   uma página por disciplina (gerada de data/disciplinas.ts)
-      cursos-livres.astro        cursos de curta duração, clube do livro, roteiros culturais
+      aulas-livres.astro         próximas aulas livres por unidade (de data/agenda.ts), clube do livro, roteiros culturais
       viagens-culturais.astro    roteiros já realizados + jeito de viajar + galeria
       confraternizacoes.astro    abertura menta + No Palco 60+ + galeria
       unidades/index.astro       todas as unidades
@@ -122,8 +122,9 @@ site/
       disciplinas.ts      disciplinas (slug, frase, resumo, textos, perguntas, horários, fotos),
                           a grade de horários 2026/2 e "como funcionam"
       eventos.ts          eventos de campanha (masterclass etc.); cada um vira landing page
+      agenda.ts           calendário das unidades: aulas livres, cafés de socialização, matrículas, início das aulas
     components/
-      Header, Hero, Sobre, Disciplinas, CursosLivres, Encontros (confraternizações),
+      Header, Hero, Sobre, Disciplinas, AulasLivres, Encontros (confraternizações),
       Viagens, Equipe, Unidades, Midia, QueroConhecer (formulário), Footer,
       Marca (renderiza wordmark/símbolo/logo SVG em currentColor),
       Abertura (topo das páginas internas), Trilha (breadcrumb + JSON-LD),
@@ -140,9 +141,9 @@ servidor/                 configuração do envio de formulários (o arquivo rea
 marca-fontes/             SVGs/PNGs de trabalho da vetorização do logo
 ```
 
-Ordem das seções na Home: Hero → Sobre + história → Disciplinas + a semana (petróleo) → Cursos livres → Confraternizações (campo menta) → Viagens culturais → Equipe → Unidades (petróleo, com cartão "Sua cidade?") → Na mídia → Quero conhecer (campo amarelo) → Rodapé. Cada seção da Home tem um link para a página interna correspondente.
+Ordem das seções na Home: Hero → Sobre + história → Disciplinas + a semana (petróleo) → Aulas livres → Confraternizações (campo menta) → Viagens culturais → Equipe → Unidades (petróleo, com cartão "Sua cidade?") → Na mídia → Quero conhecer (campo amarelo) → Rodapé. Cada seção da Home tem um link para a página interna correspondente.
 
-Páginas internas: todas começam com `Abertura` (trilha, título, voz itálica, texto, botões e foto em forma da marca), alternam campos de cor (papel → petróleo → papel…) e terminam no formulário "Quero conhecer". O menu principal aponta para as páginas (Disciplinas, Cursos livres, Viagens, Confraternizações, Unidades) e marca a página atual; vira botão "Menu" abaixo de 79rem.
+Páginas internas: todas começam com `Abertura` (trilha, título, voz itálica, texto, botões e foto em forma da marca), alternam campos de cor (papel → petróleo → papel…) e terminam no formulário "Quero conhecer". O menu principal aponta para as páginas (Disciplinas, Aulas livres, Viagens, Confraternizações, Unidades) e marca a página atual; vira botão "Menu" abaixo de 79rem.
 
 ### Formulário "Quero conhecer"
 
@@ -174,15 +175,20 @@ Em [site/src/components/QueroConhecer.astro](site/src/components/QueroConhecer.a
 - ✅ Fotos novas da Juliana e do Cristiano (`assets/img/equipe/juliana-enderle.png` e `cristiano-cunha.png`).
 - ✅ **Landing page da Masterclass de Pelotas** em `https://ciclosmais.com/masterclass` ("Arte, Sabores e Sentidos": aula de ~40 min sobre o Barroco + degustação de vinhos com sommelier, 18h, Rampa Innovation Hub). Dados em `data/eventos.ts`; formulário curto `components/InscricaoEvento.astro` (nome + WhatsApp obrigatórios; origem e assuntos opcionais; envia `utm_source`/`utm_campaign`); cabeçalho reduzido sem menu (`landing` em `Base`/`Header`); barra fixa "Reservar meu lugar" no celular; seção do funil (outubro → cursos livres de novembro → disciplinas 2027). A página da unidade Pelotas mostra o evento em destaque. Conteúdo e imagens vêm do PDF da cliente (`Arte, Sabores e Sentidos_CARAVAGGIO_23.09.pdf`): conceito "Caravaggio: entre luz, sombra e vinho", seção "Caravaggio em quatro atos" (A Luz, O Desejo, A Sombra, A Redenção, com as frases e obras do PDF) e obras barrocas reais, em domínio público, em `assets/img/obras/` (Caravaggio e Andrea Pozzo; origem no `.json` ao lado) na seção dos quatro atos e na faixa. Os **três momentos do evento** (abertura, "A aula" e "A degustação") usam, por escolha da cliente em 15/10/2026, imagens geradas no Magnific: `geradas/masterclass-abertura.jpg` e `masterclass-aula.jpg` (versões com pinturas de Caravaggio projetadas na parede, enviadas pela cliente) e `masterclass-degustacao.jpg` (a original), sem legenda de obra, só "Imagem ilustrativa.".
 
+- ✅ **Calendário de Pelotas (17/10/2026)** em `data/agenda.ts`: aulas livres (História da Arte, Filosofia, Histórias Nacionais e Fotografia, de novembro a janeiro), Cafés de Socialização (27/11, 11/12, 22/01, 19/03), matrículas (14–15/12, 25–26/01, 22–26/02), início das aulas (01/03/2027) e No Palco 60+ (24/11, Porto Alegre). "Cursos livres" voltou a se chamar **Aulas livres** (página `/aulas-livres`, com 301 de `/cursos-livres`), sem a menção a "sextas-feiras". O Café de Socialização aparece em Confraternizações. Datas que já passaram somem no próximo build. Para Porto Alegre, basta incluir itens com `unidade: 'porto-alegre'`.
+- ✅ **Masterclass** mudou para quarta, 04/11/2026 (horário 19h–21h30 mantido; confirmar). O funil da LP usa as datas reais da agenda.
+- ✅ Rodapé: endereço numa linha própria e o WhatsApp de cada unidade embaixo do endereço; a coluna Contato ficou só com e-mail e Instagram.
+
 ## 9. Pendências e próximos passos
 
 Segurança (urgente):
 - **WordPress antigo exposto:** `public_html/oldxxx/` tem o WordPress inteiro (13.701 arquivos, com `wp-config.php` e plugins desatualizados), e `ciclosmais.com/oldxxx/wp-login.php` responde 200. Confirmar que há backup baixado e então apagar a pasta ou movê-la para fora do `public_html`.
 
 Pendências que dependem da cliente (marcadas `PENDENTE` no código):
-- **Masterclass:** data confirmada (quarta, 28/10/2026, das 19h às 21h30). Faltam investimento (gratuita ou valor), nome da sommelier e da professora, número de vagas. Tudo em `data/eventos.ts`. Confirmar se a degustação segue de fato os quatro atos da aula (a página afirma isso com base nos slides finais do PDF).
+- **Masterclass:** data 04/11/2026; confirmar se o horário continua das 19h às 21h30. Faltam investimento (gratuita ou valor), nome da sommelier e da professora, número de vagas. Tudo em `data/eventos.ts`. Confirmar se a degustação segue de fato os quatro atos da aula (a página afirma isso com base nos slides finais do PDF).
 - ✅ **WhatsApp de Pelotas:** (53) 99996-3630, confirmado pela cliente e em `unidades.ts` (usado na página de Pelotas e na LP da masterclass).
 - **WhatsApp oficial**: o site antigo usa dois números, (51) 99343-3639 (usado hoje) e (51) 98153-0001. Confirmar e decidir se cada unidade tem o seu (campo `whatsapp` opcional em `unidades.ts`).
+- **Horários das aulas livres e dos cafés de Pelotas** (a página diz para confirmar com a equipe) e revisar a descrição da aula de **Fotografia** (redigida para o site).
 - **Fotos de Pelotas** (hoje todas são de Porto Alegre).
 - Revisar com a CICLOS+ as frases de **Literatura** e **Vida Digital**, que foram redigidas para o site.
 - Revisar com a CICLOS+ os **textos das páginas de disciplina** (resumo, "Sobre a disciplina" e "Perguntas que movem a turma"), todos redigidos para o site, e os textos curtos de cursos livres, viagens (descrição de cada roteiro) e confraternizações.

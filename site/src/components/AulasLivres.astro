@@ -3,24 +3,35 @@ import { Image } from 'astro:assets';
 import xadrez from '../assets/img/Cursos Livres - 02.jpg';
 import verao from '../assets/img/Cursos Livres - IMG_77551-scaled.jpg';
 import palestra from '../assets/img/Cursos Livres - 09.jpg';
+import { aulasLivres, futuras } from '../data/agenda';
+import { unidadePorSlug } from '../data/unidades';
+
+// Uma linha com os assuntos das próximas aulas livres, por unidade.
+const proximas = [...new Set(aulasLivres.filter((a) => futuras(a.datas).length).map((a) => a.unidade))].map((slug) => {
+  const assuntos = [...new Set(aulasLivres.filter((a) => a.unidade === slug && futuras(a.datas).length).map((a) => a.assunto))];
+  return { cidade: unidadePorSlug(slug)?.cidade, lista: `${assuntos.slice(0, -1).join(', ')}${assuntos.length > 1 ? ' e ' : ''}${assuntos.at(-1)}` };
+});
 ---
-<section class="livres" id="cursos-livres" aria-labelledby="livres-titulo">
+<section class="livres" id="aulas-livres" aria-labelledby="livres-titulo">
   <div class="wrap livres__grade">
     <div class="livres__texto">
-      <h2 id="livres-titulo" class="livres__titulo">Cursos livres</h2>
+      <h2 id="livres-titulo" class="livres__titulo">Aulas livres</h2>
       <p class="livres__voz">O aprendizado nunca tem idade para começar ou recomeçar.</p>
       <p>
-        Cursos de curta duração que estimulam a criatividade, o desenvolvimento pessoal e a
-        qualidade de vida. A abordagem é integrativa e acolhedora, no ritmo e nos interesses de cada aluno.
+        Aulas avulsas, em poucos encontros, para experimentar um assunto novo sem compromisso de semestre.
+        A abordagem é integrativa e acolhedora, no ritmo e nos interesses de cada aluno.
       </p>
+      {proximas.map((p) => (
+        <p class="livres__agenda"><strong>Próximas em {p.cidade}:</strong> {p.lista}.</p>
+      ))}
       <div class="livres__acoes">
-        <a class="btn" href="/cursos-livres">Conhecer os cursos livres</a>
-        <a class="link-arrow" href="#quero-conhecer">Quero saber dos próximos cursos</a>
+        <a class="btn" href="/aulas-livres">Ver as próximas aulas livres</a>
+        <a class="link-arrow" href="#quero-conhecer">Quero receber a programação</a>
       </div>
     </div>
 
     <div class="livres__fotos">
-      <Image class="livres__f1" src={xadrez} alt="Alunos jogando xadrez durante um curso livre, com a professora ao fundo" widths={[360, 560, 760]} sizes="(max-width: 56rem) 60vw, 26vw" />
+      <Image class="livres__f1" src={xadrez} alt="Alunos jogando xadrez durante uma aula livre, com a professora ao fundo" widths={[360, 560, 760]} sizes="(max-width: 56rem) 60vw, 26vw" />
       <Image class="livres__f2" src={verao} alt="Turma assiste a uma apresentação do Ciclo Verão num espaço com sofás" widths={[320, 480, 640]} sizes="(max-width: 56rem) 45vw, 20vw" />
       <Image class="livres__f3" src={palestra} alt="Professor apresenta conteúdo projetado para alunos atentos" widths={[320, 480, 640]} sizes="(max-width: 56rem) 45vw, 18vw" />
     </div>
@@ -39,6 +50,7 @@ import palestra from '../assets/img/Cursos Livres - 09.jpg';
     font-size: clamp(1.35rem, 1.1rem + 0.8vw, 1.85rem); line-height: 1.3; max-width: 24ch;
   }
   .livres__texto p:not(.livres__voz) { max-width: 44ch; margin-bottom: 1.75rem; }
+  .livres__agenda { margin-top: -0.75rem; margin-bottom: 1.75rem; color: var(--petrol-ink); }
   .livres__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; }
 
   .livres__fotos {

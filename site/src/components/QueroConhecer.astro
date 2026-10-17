@@ -8,7 +8,7 @@ import { disciplinas } from '../data/disciplinas';
 interface Props { assunto?: string; unidade?: string }
 const { assunto, unidade } = Astro.props;
 
-const assuntos = [...disciplinas.map((d) => d.nome), 'Cursos livres', 'Viagens culturais', 'Confraternizações'];
+const assuntos = [...disciplinas.map((d) => d.nome), 'Aulas livres', 'Viagens culturais', 'Confraternizações'];
 ---
 <section class="qc" id="quero-conhecer" aria-labelledby="qc-titulo">
   <Marca tipo="simbolo" label={null} class="qc__marca" />

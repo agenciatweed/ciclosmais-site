@@ -1,0 +1,207 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Abertura from '../components/Abertura.astro';
+import Galeria from '../components/Galeria.astro';
+import QueroConhecer from '../components/QueroConhecer.astro';
+import { site, whatsappLink } from '../data/site';
+import { unidades } from '../data/unidades';
+import { aulasLivres, futuras, datasPorMes } from '../data/agenda';
+import xadrez from '../assets/img/Cursos Livres - 02.jpg';
+import computadores from '../assets/img/Cursos Livres - 06.jpg';
+import palestra from '../assets/img/Cursos Livres - 09.jpg';
+import grupo from '../assets/img/Cursos Livres - 11.jpg';
+import verao from '../assets/img/Cursos Livres - IMG_77551-scaled.jpg';
+import clube from '../assets/img/geradas/clube-do-livro.jpg';
+import roteiros from '../assets/img/geradas/roteiros-culturais.jpg';
+
+// Próximas aulas por unidade (só datas que ainda não passaram; a página é gerada no build).
+const porUnidade = unidades
+  .map((u) => ({
+    u,
+    aulas: aulasLivres
+      .filter((a) => a.unidade === u.slug)
+      .map((a) => ({ ...a, proximas: futuras(a.datas) }))
+      .filter((a) => a.proximas.length > 0)
+      .sort((a, b) => a.proximas[0].localeCompare(b.proximas[0])),
+  }))
+  .filter((g) => g.aulas.length > 0);
+
+const fatos = [
+  { termo: 'Aulas avulsas', texto: 'Poucos encontros por assunto, sem compromisso de semestre.' },
+  { termo: 'Sem pré-requisito', texto: 'Basta a curiosidade. Ninguém precisa saber nada antes.' },
+  { termo: 'Porta de entrada', texto: 'Para conhecer a escola e os professores antes de escolher uma disciplina.' },
+  { termo: 'Temas que mudam', texto: 'A programação se renova ao longo do ano.' },
+];
+
+const formatos = [
+  {
+    nome: 'Clube do livro',
+    texto: 'Um livro lido por todos e uma roda de conversa para dividir impressões, dúvidas e trechos favoritos.',
+    foto: { src: clube, alt: 'Roda de leitura com pessoas 60+ em poltronas, cada uma com o mesmo livro nas mãos' },
+  },
+  {
+    nome: 'Roteiros culturais',
+    texto: 'Museus, exposições, teatros e o patrimônio da cidade, visitados em grupo e com o olhar de quem estuda.',
+    foto: { src: roteiros, alt: 'Grupo de pessoas 60+ observa o teto pintado de um teatro histórico, com uma guia explicando' },
+  },
+];
+---
+<Base
+  title="Aulas livres · CICLOS+ Escola Cultural 60+"
+  description="Aulas livres para pessoas 60+: História da Arte, Filosofia, Histórias Nacionais, Fotografia e outros assuntos, em poucos encontros. Veja as próximas datas."
+  imagem={xadrez}
+>
+  <Abertura
+    titulo="Aulas livres"
+    voz="O aprendizado nunca tem idade para começar ou recomeçar."
+    trilha={[{ href: '/aulas-livres', label: 'Aulas livres' }]}
+    foto={{ src: xadrez, alt: 'Alunos jogando xadrez durante uma aula livre, com a professora ao fundo' }}
+  >
+    <p>
+      Aulas avulsas, em poucos encontros, para pessoas 60+ experimentarem um assunto novo sem compromisso
+      de semestre. A abordagem é integrativa e acolhedora, no ritmo e nos interesses de cada aluno.
+    </p>
+    <Fragment slot="acoes">
+      <a class="btn" href="#proximas">Ver as próximas aulas</a>
+      <a class="link-arrow" href={whatsappLink('Olá! Quero saber das próximas aulas livres da CICLOS+.')} target="_blank" rel="noopener">Falar no WhatsApp</a>
+    </Fragment>
+  </Abertura>
+
+  <section class="secao secao--petroleo proximas" id="proximas" aria-labelledby="proximas-titulo">
+    <div class="wrap">
+      <h2 id="proximas-titulo" class="secao__titulo">Próximas aulas livres</h2>
+      {porUnidade.length === 0 && (
+        <p class="secao__voz">A próxima programação sai em breve. Peça a agenda pelo WhatsApp.</p>
+      )}
+      {porUnidade.map(({ u, aulas }) => {
+        const wa = whatsappLink(`Olá! Quero me inscrever nas aulas livres da CICLOS+ ${u.cidade}.`, u.whatsapp?.e164);
+        return (
+          <div class="unidade-ag">
+            <p class="unidade-ag__nome">Na unidade <a href={`/unidades/${u.slug}`}>{u.cidade}</a></p>
+            <ul class="aulas">
+              {aulas.map((a) => (
+                <li class="aula">
+                  <h3 class="aula__nome">{a.assunto}</h3>
+                  <p class="aula__desc">{a.descricao}</p>
+                  <dl class="aula__datas">
+                    {datasPorMes(a.proximas).map((g) => (
+                      <div><dt>{g.mes}</dt><dd>{g.texto} <span>({g.semana})</span></dd></div>
+                    ))}
+                  </dl>
+                  {a.disciplina && <a class="link-arrow aula__link" href={`/disciplinas/${a.disciplina}`}>Sobre {a.assunto}</a>}
+                </li>
+              ))}
+            </ul>
+            <div class="unidade-ag__acoes">
+              <a class="btn" href="#quero-conhecer">Quero me inscrever</a>
+              <a class="link-arrow" href={wa} target="_blank" rel="noopener">WhatsApp {u.cidade} {u.whatsapp?.display ?? site.whatsapp.display}</a>
+            </div>
+            <p class="unidade-ag__nota">Horários e inscrições com a equipe da CICLOS+ {u.cidade}.</p>
+          </div>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="secao comecar" aria-labelledby="comecar-titulo">
+    <div class="wrap comecar__grade">
+      <div>
+        <h2 id="comecar-titulo" class="secao__titulo">Um jeito leve de começar</h2>
+        <p class="secao__voz">Para conhecer a escola, a turma e os professores antes de escolher uma disciplina.</p>
+        <div class="comecar__acoes">
+          <a class="btn" href="#quero-conhecer">Quero receber a programação</a>
+          <a class="link-arrow" href="/disciplinas">Conhecer as disciplinas</a>
+        </div>
+      </div>
+      <ul class="fatos">
+        {fatos.map((f) => <li><span class="fatos__termo">{f.termo}</span><span class="fatos__texto">{f.texto}</span></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="secao secao--petroleo" aria-labelledby="outros-titulo">
+    <div class="wrap">
+      <h2 id="outros-titulo" class="secao__titulo">Outros encontros da CICLOS+</h2>
+      <p class="secao__voz">Para quem quer mais do que a aula da semana.</p>
+      <ul class="formatos">
+        {formatos.map((f) => (
+          <li>
+            <figure class="formato__foto">
+              <Image src={f.foto.src} alt={f.foto.alt} widths={[360, 520, 720]} sizes="(max-width: 56rem) 90vw, 40vw" />
+              <figcaption>Imagem ilustrativa.</figcaption>
+            </figure>
+            <h3 class="formato__nome">{f.nome}</h3>
+            <p class="formato__texto">{f.texto}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Galeria
+    id="ja-aconteceu"
+    titulo="Aulas que já aconteceram"
+    voz="Fotos de encontros da CICLOS+ em Porto Alegre."
+    fotos={[
+      { src: grupo, alt: 'Grande grupo de alunas e alunos posa junto numa sala com parede amarela' },
+      { src: palestra, alt: 'Professor apresenta conteúdo projetado para alunos atentos' },
+      { src: computadores, alt: 'Alunos acompanham uma aula numa sala com computadores' },
+      { src: xadrez, alt: 'Alunos jogando xadrez durante uma aula livre' },
+      { src: verao, alt: 'Turma assiste a uma apresentação do Ciclo Verão' },
+    ]}
+  />
+
+  <QueroConhecer assunto="Aulas livres" unidade={porUnidade[0]?.u.cidade} />
+</Base>
+
+<style>
+  .unidade-ag + .unidade-ag { margin-top: clamp(3rem, 6vw, 5rem); }
+  .unidade-ag__nome { margin-top: 1rem; font-weight: 700; font-size: 1rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--yellow); }
+  .unidade-ag__nome a { color: inherit; }
+  .unidade-ag__nome a:hover { color: #fff; }
+
+  .aulas {
+    list-style: none; margin: clamp(2rem, 4vw, 2.75rem) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: clamp(1rem, 2vw, 1.5rem);
+  }
+  .aula {
+    display: grid; gap: 0.6rem; align-content: start;
+    padding: clamp(1.5rem, 2.6vw, 2rem); border-radius: 1.5rem;
+    background: rgba(255, 255, 255, 0.07);
+  }
+  .aula__nome { font-size: clamp(2.1rem, 1.7rem + 1.2vw, 2.9rem); color: var(--mint); }
+  .aula__desc { color: var(--on-petrol-soft); line-height: 1.45; }
+  .aula__datas { margin: 0.5rem 0 0; display: grid; gap: 0.6rem; }
+  .aula__datas div { padding-top: 0.6rem; border-top: 1px solid rgba(199, 227, 234, 0.25); }
+  .aula__datas dt { font-weight: 700; font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--on-petrol-soft); }
+  .aula__datas dd { margin: 0.2rem 0 0; font-family: var(--font-display); font-size: 1.9rem; line-height: 1; color: var(--on-petrol); }
+  .aula__datas dd span { font-family: var(--font-text); font-size: 1rem; font-style: italic; color: var(--on-petrol-soft); }
+  .aula__link { margin-top: 0.5rem; }
+  .unidade-ag__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: clamp(2rem, 4vw, 2.75rem); }
+  .unidade-ag__nota { margin-top: 1rem; font-style: italic; color: var(--on-petrol-soft); font-size: 1rem; }
+
+  .comecar__grade { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+  .comecar__grade .fatos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .comecar__acoes { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 2rem; }
+
+  .formatos {
+    list-style: none; margin: clamp(2.5rem, 5vw, 3.5rem) 0 0; padding: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(2.5rem, 4vw, 3.5rem) clamp(1.5rem, 3vw, 3rem);
+  }
+  .formatos li { display: grid; gap: 0.6rem; align-content: start; }
+  .formato__foto { margin: 0 0 0.75rem; max-width: 30rem; }
+  .formato__foto :global(img) {
+    width: 100%; aspect-ratio: 4 / 5; object-fit: cover;
+    border-radius: 999px 999px 1.25rem 1.25rem; border: 6px solid var(--mint);
+  }
+  .formatos li:nth-child(2) .formato__foto :global(img) { border-color: var(--yellow); }
+  .formato__foto figcaption { margin-top: 0.6rem; font-style: italic; font-size: 0.95rem; color: var(--on-petrol-soft); }
+  .formato__nome { font-size: clamp(2.1rem, 1.7rem + 1.2vw, 2.9rem); color: var(--mint); }
+  .formato__texto { color: var(--on-petrol-soft); max-width: 36ch; }
+
+  @media (max-width: 56rem) {
+    .formatos, .comecar__grade { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 30rem) { .comecar__grade .fatos { grid-template-columns: 1fr; } }
+</style>
