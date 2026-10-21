@@ -185,7 +185,7 @@ Segurança (urgente):
 - **WordPress antigo exposto:** `public_html/oldxxx/` tem o WordPress inteiro (13.701 arquivos, com `wp-config.php` e plugins desatualizados), e `ciclosmais.com/oldxxx/wp-login.php` responde 200. Confirmar que há backup baixado e então apagar a pasta ou movê-la para fora do `public_html`.
 
 Pendências que dependem da cliente (marcadas `PENDENTE` no código):
-- **Masterclass:** faltam nome da sommelier e da professora, número de vagas e a **forma de pagamento dos R$ 60,00** (a página só diz que a equipe confirma o lugar pelo WhatsApp). Tudo em `data/eventos.ts`. Confirmar se a degustação segue de fato os quatro atos da aula (a página afirma isso com base nos slides finais do PDF).
+- **Masterclass:** faltam nome da sommelier e da professora, número de vagas e a **forma de pagamento dos R$ 60,00** (a página só diz que a equipe confirma o lugar pelo WhatsApp). Tudo em `data/eventos.ts`. A página não afirma mais que a degustação segue os quatro atos da aula (texto ajustado a pedido da cliente em 21/10/2026).
 - ✅ **WhatsApp de Pelotas:** (53) 99996-3630, confirmado pela cliente e em `unidades.ts` (usado na página de Pelotas e na LP da masterclass).
 - **WhatsApp oficial**: o site antigo usa dois números, (51) 99343-3639 (usado hoje) e (51) 98153-0001. Confirmar e decidir se cada unidade tem o seu (campo `whatsapp` opcional em `unidades.ts`).
 - **Horários das aulas livres e dos cafés de Pelotas** (a página diz para confirmar com a equipe) e revisar a descrição da aula de **Fotografia** (redigida para o site).
