@@ -30,9 +30,9 @@ const fone = u.whatsapp?.display ?? site.whatsapp.display;
 
 const fatos = [
   { termo: 'Quando', texto: `${ev.quando}, ${ev.horario}` },
-  { termo: 'Onde', texto: 'A definir' },
-  { termo: 'O que', texto: 'Aula de cerca de 40 minutos + degustação de vinhos' },
-  { termo: 'Para quem', texto: 'Pessoas 60+ com curiosidade. Ninguém precisa entender de arte nem de vinho.' },
+  { termo: 'Onde', texto: `${ev.local!.nome}, ${ev.local!.endereco}, ${ev.local!.cidade}` },
+  { termo: 'O que', texto: 'Aula de cerca de 40 minutos + degustação e harmonização de vinhos' },
+  { termo: 'Investimento', texto: `${ev.valor!.texto} por pessoa, com aula, degustação e harmonização` },
 ];
 
 // Os quatro atos da aula, com frases e obras da apresentação da masterclass.
@@ -47,13 +47,13 @@ const paraQuem = [
   { termo: 'Sem pré-requisito', texto: 'A aula foi pensada para quem tem curiosidade, não para especialistas.' },
   { termo: 'Conversa de verdade', texto: 'Perguntar, comentar e trocar impressões faz parte da aula.' },
   { termo: 'Boa companhia', texto: 'Gente da cidade que também gosta de cultura, de vinho e de um bom papo.' },
-  { termo: 'Numa quarta à noite', texto: `${ev.quando}, ${ev.horario}.` },
+  { termo: 'Numa quinta à noite', texto: `${ev.quando}, ${ev.horario}, no ${ev.local!.nome}.` },
 ];
 
 const assuntosLivres = [...new Set(aulasLivres.filter((a) => a.unidade === ev.unidade).map((a) => a.assunto))];
 const listaAssuntos = `${assuntosLivres.slice(0, -1).join(', ')} e ${assuntosLivres.at(-1)}`;
 const caminho = [
-  { quando: '4 de novembro', titulo: 'Masterclass', texto: 'Arte, Sabores e Sentidos: o primeiro encontro com a CICLOS+.', atual: true },
+  { quando: '5 de novembro', titulo: 'Masterclass', texto: 'Arte, Sabores e Sentidos: o primeiro encontro com a CICLOS+.', atual: true },
   { quando: 'Novembro a janeiro', titulo: 'Aulas livres', texto: `Aulas de ${listaAssuntos}, para experimentar os assuntos da escola, um de cada vez.` },
   { quando: 'Março de 2027', titulo: 'Disciplinas semestrais', texto: `As aulas começam em 1º de março. Matrículas em ${matriculasPelotas.periodos.map(periodo).join(', ').replace(/, ([^,]*)$/, ' e $1')}.` },
 ];
@@ -62,7 +62,8 @@ const perguntas = [
   { p: 'Sobre o que é a aula?', r: 'Sobre Caravaggio e o Barroco: a vida do pintor e as suas obras em quatro atos (a luz, o desejo, a sombra e a redenção), com um olhar também para Rubens, Velázquez e Ribera.' },
   { p: 'Preciso entender de arte ou de vinho?', r: 'Não. A aula parte do zero e foi pensada para quem tem curiosidade. A sommelier conduz a degustação passo a passo.' },
   { p: 'Quanto tempo dura?', r: `O encontro vai ${ev.horario}. Primeiro, a aula de História da Arte, de cerca de 40 minutos; em seguida, a degustação de vinhos com a sommelier.` },
-  { p: 'Onde é?', r: 'O local será divulgado em breve!' },
+  { p: 'Onde é?', r: `No ${ev.local!.nome}: ${ev.local!.endereco}, ${ev.local!.cidade}/${ev.local!.uf}.` },
+  { p: 'Quanto custa?', r: `${ev.valor!.texto} por pessoa. Está incluído o encontro completo: a aula sobre Caravaggio e a degustação e harmonização de vinhos com a sommelier.` },
   { p: 'Como confirmo minha inscrição?', r: 'Preencha o formulário desta página. A equipe da CICLOS+ Pelotas confirma seu lugar pelo WhatsApp.' },
   { p: 'O que acontece depois da masterclass?', r: `Quem participa recebe em primeira mão a programação das aulas livres de novembro a janeiro (${listaAssuntos}), uma forma leve de conhecer outros assuntos antes das disciplinas de 2027.` },
 ];
@@ -80,8 +81,16 @@ const ld = {
   inLanguage: 'pt-BR',
   location: {
     '@type': 'Place',
-    name: `${u.cidade}, ${u.uf} (local a definir)`,
-    address: { '@type': 'PostalAddress', addressLocality: u.cidade, addressRegion: u.uf, addressCountry: 'BR' },
+    name: ev.local!.nome,
+    address: { '@type': 'PostalAddress', streetAddress: ev.local!.endereco, addressLocality: ev.local!.cidade, addressRegion: ev.local!.uf, addressCountry: 'BR' },
+  },
+  offers: {
+    '@type': 'Offer',
+    price: ev.valor!.numero,
+    priceCurrency: 'BRL',
+    availability: 'https://schema.org/InStock',
+    url: new URL('/masterclass', Astro.site).href,
+    validFrom: '2026-10-21',
   },
   organizer: { '@type': 'Organization', name: 'CICLOS+ Escola Cultural 60+', url: 'https://ciclosmais.com' },
   image: [new URL(abertura.src, Astro.site).href],
@@ -89,7 +98,7 @@ const ld = {
 ---
 <Base
   title={`Masterclass ${ev.titulo} · CICLOS+ ${u.cidade}`}
-  description={`${ev.voz} ${ev.quando}, ${ev.horario}, em ${u.cidade}. Reserve seu lugar.`}
+  description={`${ev.voz} ${ev.quando}, ${ev.horario}, no ${ev.local!.nome}, em ${u.cidade}. ${ev.valor!.texto}. Reserve seu lugar.`}
   imagem={abertura}
   formNaPagina={false}
   landing={{ href: '#inscricao', texto: 'Reservar meu lugar', whatsappTexto: `Olá! Quero saber da masterclass "${ev.titulo}" na CICLOS+ ${u.cidade}.` }}
@@ -108,6 +117,7 @@ const ld = {
         </dl>
         <div class="mc-hero__acoes">
           <a class="link-arrow" href="#a-noite">Como vai ser a noite</a>
+          <a class="link-arrow" href={ev.local!.mapa} target="_blank" rel="noopener">Como chegar</a>
           <a class="link-arrow" href={wa} target="_blank" rel="noopener">Dúvidas? WhatsApp {fone}</a>
         </div>
       </div>
@@ -158,7 +168,7 @@ const ld = {
           <p class="tempo__num">2 · degustação com sommelier</p>
           <h3 class="tempo__titulo">A degustação: a arte também se prova</h3>
           <p>
-            Depois da aula, a conversa continua à mesa. Uma sommelier conduz a degustação de vinhos, que percorre
+            Depois da aula, a conversa continua à mesa. Uma sommelier conduz a degustação e a harmonização de vinhos, que percorrem
             os mesmos quatro atos da aula, agora na taça: aromas, cores e sabores também contam histórias.
           </p>
           <p>É o momento de brindar, comparar impressões e conhecer quem também estava ali pela curiosidade.</p>
@@ -281,7 +291,7 @@ const ld = {
     <div class="wrap mc-final__grade">
       <div>
         <h2 id="final-titulo" class="mc-final__titulo">Reserve seu lugar</h2>
-        <p class="mc-final__voz">{ev.titulo}. {ev.quando}, {ev.horario}, em {u.cidade}.</p>
+        <p class="mc-final__voz">{ev.titulo}. {ev.quando}, {ev.horario}, no {ev.local!.nome}, em {u.cidade}. {ev.valor!.texto}.</p>
       </div>
       <div class="mc-final__acoes">
         <a class="btn mc-final__btn" href="#inscricao">Quero reservar meu lugar</a>
