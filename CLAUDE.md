@@ -177,6 +177,7 @@ Em [site/src/components/QueroConhecer.astro](site/src/components/QueroConhecer.a
 
 - ✅ **Calendário de Pelotas (17/10/2026)** em `data/agenda.ts`: aulas livres (História da Arte, Filosofia, Histórias Nacionais e Fotografia, de novembro a janeiro), Cafés de Socialização (27/11, 11/12, 22/01, 19/03), matrículas (14–15/12, 25–26/01, 22–26/02), início das aulas (01/03/2027) e No Palco 60+ (24/11, Porto Alegre). "Cursos livres" voltou a se chamar **Aulas livres** (página `/aulas-livres`, com 301 de `/cursos-livres`), sem a menção a "sextas-feiras". O Café de Socialização aparece em Confraternizações. Datas que já passaram somem no próximo build. Para Porto Alegre, basta incluir itens com `unidade: 'porto-alegre'`.
 - ✅ **Masterclass — dados finais (21/10/2026):** quinta-feira, **05/11/2026, das 19h às 21h**, no **Hangar 516** (R. Gonçalves Chaves, 516B, Pelotas/RS), **R$ 60,00** por pessoa, "aula + degustação e harmonização de vinhos". Tudo em `data/eventos.ts` (local e valor também alimentam o JSON-LD do Google, FAQ "Quanto custa?" e o link "Como chegar"). O funil da LP usa as datas reais da agenda.
+- ✅ **Pixel da Meta** (ID 1591797315434315) instalado no <head> de todas as páginas, em layouts/Base.astro (script com is:inline + noscript). Eventos além do PageView (ex.: Lead no envio dos formulários) ainda não foram configurados.
 - ✅ Rodapé: endereço numa linha própria e o WhatsApp de cada unidade embaixo do endereço; a coluna Contato ficou só com e-mail e Instagram.
 
 ## 9. Pendências e próximos passos
